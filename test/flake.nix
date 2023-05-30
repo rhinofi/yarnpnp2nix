@@ -2,7 +2,7 @@
   description = "A very basic flake";
 
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs/nixos-22.05;
+    nixpkgs.url = github:nixos/nixpkgs?rev=8e3fad82be64c06fbfb9fd43993aec9ef4623936;
     utils.url = github:gytis-ivaskevicius/flake-utils-plus;
     yarnpnp2nix.url = "../.";
     yarnpnp2nix.inputs.nixpkgs.follows = "nixpkgs";
