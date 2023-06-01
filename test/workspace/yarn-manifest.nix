@@ -1704,9 +1704,7 @@ let
       reference = "npm:12.3.1";
       linkType = "HARD";
       outputName = "next-swc-darwin-arm64-12.3.1-de8a19538c";
-      outputHashByPlatform = {
-        "aarch64-darwin" = "sha512-4xsDS4PrKPG3+qZC1clxo6bpG69DxeHt7FG34kOwQVDtZUZwp/W8UdBWz3FOTzbNiIyF7OBv+KETYb1MU+Umug==";
-      };
+      outputHash = "";
       shouldBeUnplugged = true;
       installCondition = stdenv: (stdenv.isDarwin) && (stdenv.isAarch64);
       flatName = "swc-darwin-arm64";
@@ -3457,8 +3455,7 @@ let
       linkType = "HARD";
       outputName = "canvas-2.10.1-2f4cd381e7";
       outputHashByPlatform = {
-        "aarch64-darwin" = "sha512-mM5kVat75TLZDEGd4PQ23PsBq2mWSXGzCt8xaBmvyBBMlSWZI0iUAfXMXwRsMUPpOKLo27nDsoSjpEF+/ZlgNA==";
-        "x86_64-linux" = "sha512-Y1CKmGQparqpkDOU54UV2Jq9xGJU8v+Y/wyh1F1YkZiYgeEvC2KMiA74kXvcHsoT0ynXHIwe2dS1ZD0RyyNwsw==";
+        "x86_64-linux" = "sha512-9wARcn5zOhGmknWlnnBu++DEKVbRvRzSp2ip4yo1KLkjdaQjuNmqdDOTFbU/V4pr/sGTKpBNk2MCPwFchCse4A==";
       };
       shouldBeUnplugged = true;
       flatName = "canvas";
@@ -4284,9 +4281,7 @@ let
       reference = "npm:0.15.10";
       linkType = "HARD";
       outputName = "esbuild-darwin-arm64-0.15.10-11087d1896";
-      outputHashByPlatform = {
-        "aarch64-darwin" = "sha512-Y5+ADVjp0WbzDUXRVintz+Tk0Wf3aUCzQvA1zWSxGlOrsttAkAJdt069ERiFN3EmICIu74R566OiplD6bRl/fA==";
-      };
+      outputHash = "";
       shouldBeUnplugged = true;
       installCondition = stdenv: (stdenv.isDarwin) && (stdenv.isAarch64);
       flatName = "esbuild-darwin-arm64";
@@ -4510,7 +4505,6 @@ let
       linkType = "HARD";
       outputName = "esbuild-0.15.10-cd7bf58045";
       outputHashByPlatform = {
-        "aarch64-darwin" = "sha512-1vaO639lFTNMppXf76TOY6NEbmVUkAiCNlYM/f3Q7Plf1TIGnyKgfHK7YiCwS8wtLYzzvrEp2JyIewZfhlu2xw==";
         "x86_64-linux" = "sha512-1vaO639lFTNMppXf76TOY6NEbmVUkAiCNlYM/f3Q7Plf1TIGnyKgfHK7YiCwS8wtLYzzvrEp2JyIewZfhlu2xw==";
       };
       shouldBeUnplugged = true;
@@ -7183,7 +7177,6 @@ let
       linkType = "HARD";
       outputName = "nan-2.17.0-bf36a21d6f";
       outputHashByPlatform = {
-        "aarch64-darwin" = "sha512-vaHklwbCugGO1eXXYwW7TmwZUx06adQReESZw4KTdbNPoP0ioUIBnAjBWaWPrhxQEE/czsGxJh504Ce/+/dHyA==";
         "x86_64-linux" = "sha512-vaHklwbCugGO1eXXYwW7TmwZUx06adQReESZw4KTdbNPoP0ioUIBnAjBWaWPrhxQEE/czsGxJh504Ce/+/dHyA==";
       };
       shouldBeUnplugged = true;
@@ -7356,7 +7349,6 @@ let
       linkType = "HARD";
       outputName = "node-addon-api-5.0.0-c0def7fecf";
       outputHashByPlatform = {
-        "aarch64-darwin" = "sha512-Uw8BXOHMOmRcUkY4xfrITrenvBWpuTVhA33ECB4RkI8R1USvopS9t8XRjrqUKtlQ2L9qoa5KzBbTpWtJDnQwUg==";
         "x86_64-linux" = "sha512-Uw8BXOHMOmRcUkY4xfrITrenvBWpuTVhA33ECB4RkI8R1USvopS9t8XRjrqUKtlQ2L9qoa5KzBbTpWtJDnQwUg==";
       };
       shouldBeUnplugged = true;
@@ -7418,7 +7410,6 @@ let
       linkType = "HARD";
       outputName = "node-gyp-9.3.0-21c41a4dfd";
       outputHashByPlatform = {
-        "aarch64-darwin" = "sha512-3Ct9L1Ijy3qX2zq3Rf+lGjHMbrK8SUa2jQCdWB8RCo4pktb97WJ1JkxhJdC7tPSLlgQ2htJIH8wyKCB6bgMR6g==";
         "x86_64-linux" = "sha512-3Ct9L1Ijy3qX2zq3Rf+lGjHMbrK8SUa2jQCdWB8RCo4pktb97WJ1JkxhJdC7tPSLlgQ2htJIH8wyKCB6bgMR6g==";
       };
       shouldBeUnplugged = true;
@@ -8718,7 +8709,6 @@ let
       linkType = "HARD";
       outputName = "sharp-0.31.1-5baac7078b";
       outputHashByPlatform = {
-        "aarch64-darwin" = "sha512-5DMQOkRDmf0tbAgvGSEikgINATLcRm8WKkaLyp1XOurtG0LIMJUlz8mB5E2cNpFuigLIrr7LrK+mtaUL/QSxkQ==";
         "x86_64-linux" = "sha512-jirTC3XTIyBYEe1l9IgSr8S4zkkl6YvRNaqeQk1itXmbibRfk0KxziApSAmNByf+y0Z9vmMPmnJpr6OE3PODOg==";
       };
       shouldBeUnplugged = true;
