@@ -26,6 +26,7 @@
       in
       rec {
         packages = {
+          default = pkgs.yarn-plugin-yarnpnp2nix;
           yarn-plugin = pkgs.yarn-plugin-yarnpnp2nix;
           yarnBerry = pkgs.yarnBerry;
           yarnpnp2nix-test = pkgs.writeShellApplication {
