@@ -12,6 +12,8 @@
     utils.lib.mkFlake {
       inherit self inputs;
 
+      sharedOverlays = [ yarnpnp2nix.overlays.default ];
+
       outputsBuilder = channels: rec {
         packages =
           let
@@ -79,9 +81,19 @@
             config.Cmd = "${packages.testb}/bin/testb";
           };
         };
-        devShell = import ./shell.nix {
-          pkgs = channels.nixpkgs;
-        };
+        devShell =
+          let
+            pkgs = channels.nixpkgs;
+          in pkgs.mkShell {
+            packages = with pkgs; [
+              nodejs
+              yarnBerry
+            ];
+
+            shellHook = ''
+              export YARN_PLUGINS=${pkgs.yarn-plugin-yarnpnp2nix}/plugin.js
+            '';
+          };
       };
     };
 }

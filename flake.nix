@@ -35,8 +35,11 @@
           };
         };
         lib = pkgs.yarnpnp2nixLib;
-        devShell = import ./shell.nix {
-          inherit pkgs;
+        devShell = pkgs.mkShell {
+          packages = with pkgs; [
+            nodejs
+            yarnBerry
+          ];
         };
       }
     ))
