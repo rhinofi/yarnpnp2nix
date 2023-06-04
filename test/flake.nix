@@ -39,7 +39,7 @@
                 ] ++ (if channels.nixpkgs.stdenv.isDarwin then [ darwin.apple_sdk.frameworks.CoreText ] else []));
               };
               "sharp@npm:0.31.1" = {
-                outputHashByPlatform."x86_64-linux" = "sha512-jirTC3XTIyBYEe1l9IgSr8S4zkkl6YvRNaqeQk1itXmbibRfk0KxziApSAmNByf+y0Z9vmMPmnJpr6OE3PODOg==";
+                outputHashByPlatform."x86_64-linux" = "sha512-QNlzKHUYpREc1KyjQuLbNHJ4FMyw4K4ZKCvFwUTCCwyJ2LNfYHiCk3b0cIhH54D6EkLJPBpVIBlA3yOv6tBk8A==";
               };
               "testa@workspace:packages/testa" = {
                 filterDependencies = dep: dep != "color" && dep != "testf";
@@ -51,6 +51,7 @@
               };
               "testb@workspace:packages/testb" = {
                 build = ''
+                  LD_LIBRARY_PATH=${channels.nixpkgs.lib.makeLibraryPath [channels.nixpkgs.libuuid]} node build
                   node build
                   webpack --version
                 '';
