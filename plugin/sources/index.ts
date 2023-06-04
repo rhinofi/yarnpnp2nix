@@ -1,6 +1,3 @@
-import {Plugin} from '@yarnpkg/core';
-import {BaseCommand} from '@yarnpkg/cli';
-import {Option} from 'clipanion';
 import { execa, execaSync } from 'execa';
 
 let getExistingManifestNix = require('../../lib/getExistingManifest.nix.txt')
@@ -53,14 +50,14 @@ export async function getExistingYarnManifest(manifestPath: string) {
   }
 }
 
-const { Configuration, Project, Cache, StreamReport, Manifest, tgzUtils, structUtils, miscUtils, scriptUtils } = require("@yarnpkg/core")
-const { BaseCommand } = require('@yarnpkg/cli')
-const { xfs, CwdFS, PortablePath, VirtualFS } = require('@yarnpkg/fslib')
-const { ZipOpenFS } = require('@yarnpkg/libzip')
-const { getPnpPath, pnpUtils } = require('@yarnpkg/plugin-pnp')
-const { fileUtils } = require('@yarnpkg/plugin-file')
-const { Option } = require('clipanion')
-const t = require('typanion')
+import { Configuration, Project, Cache, StreamReport, Manifest, tgzUtils, structUtils, miscUtils, scriptUtils, Workspace } from "@yarnpkg/core";
+import { BaseCommand } from '@yarnpkg/cli';
+import { xfs, CwdFS, PortablePath, VirtualFS } from '@yarnpkg/fslib';
+import { ZipOpenFS } from '@yarnpkg/libzip';
+import { getPnpPath, pnpUtils } from '@yarnpkg/plugin-pnp';
+import { fileUtils } from '@yarnpkg/plugin-file';
+import { Option } from 'clipanion';
+import t = require('typanion');
 
 class FetchCommand extends BaseCommand {
   static paths = [['nix', 'fetch-by-locator']]
@@ -782,7 +779,10 @@ export default {
         for (const pkg of packageRegistryPackages) {
           if (pkg.canonicalReference.startsWith('workspace:')) {
             if (pkg.drvPath !== process.env.out) {
-              await project.addWorkspace(pkg.packageLocation ?? path.join(pkg.drvPath, 'node_modules', pkg.name))
+              const workspaceCwd = pkg.packageLocation ?? path.join(pkg.drvPath, 'node_modules', pkg.name)
+              const workspace = new Workspace(workspaceCwd, { project })
+              await workspace.setup()
+              project.addWorkspace(workspace)
             }
           }
         }
