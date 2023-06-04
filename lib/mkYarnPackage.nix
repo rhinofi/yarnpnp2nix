@@ -123,7 +123,7 @@ let
       isSourceTgz = src != null && (last (splitString "." src)) == "tgz";
       isSourcePatch = src != null && (substring 0 6 reference) == "patch:";
 
-      willFetch = if src == null || isSourceTgz || isSourcePatch then true else false;
+      willFetch = src == null || isSourcePatch || isSourceTgz;
       willBuild = !willFetch;
       willOutputBeZip = src == null && shouldBeUnplugged == false;
 
@@ -209,16 +209,41 @@ let
         inherit locatorString;
       };
 
-      fetchDerivation = pkgs.stdenv.mkDerivation {
+      makeFetchOnlyDerivation = outputHash: pkgs.stdenv.mkDerivation {
+        name = outputName + (if willOutputBeZip then ".zip" else "");
+        phases = ["fetchPhase"];
+        outputHashMode = "flat";
+        outputHashAlgo = "sha512";
+        outputHash = outputHash;
+
+        buildInputs = with pkgs; [
+          defaultPkgs.yarnBerry
+          unzip
+        ];
+
+        fetchPhase = ''
+          set -euo pipefail
+          tmpDir=$PWD
+          ${setupYarnBinScript}
+          touch yarn.lock
+          echo locatorToFetchJSON: ${locatorToFetchJSON}
+
+          ${if isSourceTgz
+            then "yarn nix convert-to-zip ${locatorToFetchJSON} ${src} $tmpDir/output.zip"
+            else "yarn nix fetch-by-locator ${locatorToFetchJSON} $tmpDir"
+          }
+          mv $tmpDir/output.zip $out
+        '';
+      };
+      unpluggedDerivation = pkgs.stdenv.mkDerivation {
         name = outputName + (if willOutputBeZip then ".zip" else "");
         phases =
-          (if willFetch then [ "fetchPhase" ] else [ "buildPhase" "packPhase" ]) ++
-          (if shouldBeUnplugged then [ "unplugPhase" ] else [ "movePhase" ]);
+          (lib.optionals willBuild [ "buildPhase" "packPhase" ])
+          ++
+          [( if shouldBeUnplugged then "unplugPhase" else "movePhase")]
+        ;
 
         inherit __noChroot;
-        outputHashMode = if __noChroot != true && outputHash != null then (if shouldBeUnplugged then "recursive" else "flat") else null;
-        outputHashAlgo = if __noChroot != true && outputHash != null then "sha512" else null;
-        outputHash = if __noChroot != true && outputHash != null then outputHash else null;
 
         buildInputs = with pkgs; [
           nodejsPackage
@@ -229,22 +254,8 @@ let
           xcbuild
         ] else [])
         ++ buildInputs;
-
-        fetchPhase =
-          if willFetch then ''
-            tmpDir=$PWD
-            ${setupYarnBinScript}
-
-            packageLocation=$out/node_modules/${name}
-            touch yarn.lock
-
-            ${if src == null || isSourcePatch then "yarn nix fetch-by-locator ${locatorToFetchJSON} $tmpDir"
-            else if isSourceTgz then "yarn nix convert-to-zip ${locatorToFetchJSON} ${src} $tmpDir/output.zip"
-            else ""}
-          '' else " ";
-
         buildPhase =
-          if !willFetch then ''
+          if willBuild then ''
             tmpDir=$PWD
             ${setupYarnBinScript}
 
@@ -279,7 +290,7 @@ let
           '' else " ";
 
         packPhase =
-          if !willFetch then ''
+          if willBuild then ''
             touch yarn.lock
 
             ${if build != "" then ''
@@ -305,12 +316,29 @@ let
           # cp ${./pnptemp.cjs} $out/.pnp.cjs
           # sed -i "s!__PACKAGE_PATH_HERE__!$packageLocation/!" $out/.pnp.cjs
           if shouldBeUnplugged then ''
+            tmpDir=$PWD
             mkdir -p $out
-            unzip -qq -d $out $tmpDir/output.zip
+
+            echo ${name}
+            ${if willFetch
+              then ''
+                pkg_src=${makeFetchOnlyDerivation outputHash}
+                ${setupYarnBinScript}
+                touch yarn.lock
+                ''
+              else ''
+                pkg_src=$tmpDir/output.zip
+              ''
+            }
+
+            unzip -qq -d $out $pkg_src
 
             packageLocation="$out/node_modules/${name}"
             packageDrvLocation="$out"
-            ${if build == "" then createLockFileScript else ""}
+
+            # TODO: build does not make sense here. Seems like some legacy or
+            # unfinished work
+            ${if build == "" then (createLockFileScript) else ""}
 
             yarn nix generate-pnp-file $out $tmpDir/packageRegistryData.json "${locatorString}"
             cp --no-preserve=mode "${./.pnp.loader.mjs}" $out/.pnp.loader.mjs
@@ -350,7 +378,10 @@ let
             mv $tmpDir/output.zip $out
           '' else " ";
       };
-
+      packageDerivation = if shouldBeUnplugged
+        then unpluggedDerivation
+        else makeFetchOnlyDerivation outputHash
+      ;
       # have a separate derivation that includes the .pnp.cjs and wrapped bins
       # as Nix is unable to shasum the derivation $out if it contains files that contain /nix/store paths
       # to other derivations that are fixed output derivations.
@@ -373,8 +404,8 @@ let
           tmpDir=$PWD
           ${setupYarnBinScript}
 
-          packageLocation=${fetchDerivation}/node_modules/${name}
-          packageDrvLocation=${fetchDerivation}
+          packageLocation=${packageDerivation}/node_modules/${name}
+          packageDrvLocation=${packageDerivation}
           ${createLockFileScriptForRuntime}
 
           mkdir -p $out
@@ -395,8 +426,8 @@ let
             nodeOptions="--require $out/.pnp.cjs --loader $out/.pnp.loader.mjs"
             export NODE_OPTIONS="\''$NODE_OPTIONS \''$nodeOptions"
 
-            ${if shouldBeUnplugged then ''exec ${fetchDerivation}/node_modules/${name}/${binScript} "\$@"''
-            else ''exec node ${fetchDerivation}/node_modules/${name}/${binScript} "\$@"''}
+            ${if shouldBeUnplugged then ''exec ${packageDerivation}/node_modules/${name}/${binScript} "\$@"''
+            else ''exec node ${packageDerivation}/node_modules/${name}/${binScript} "\$@"''}
             EOF
             chmod +x $out/bin/${binKey}
             '') bin)}
@@ -449,7 +480,7 @@ let
       };
     in
     finalDerivation // {
-      package = fetchDerivation;
+      package = packageDerivation;
       manifest = packageManifest;
       transitiveRuntimePackages = filter (pkg: pkg != null) (mapAttrsToList (key: pkg: if pkg != null && !isString pkg.drvPath then pkg.drvPath.binDrvPath else null) packageRegistryRuntimeOnly);
       inherit shellRuntimeEnvironment;

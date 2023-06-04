@@ -50,7 +50,7 @@ export async function getExistingYarnManifest(manifestPath: string) {
   }
 }
 
-import { Configuration, Project, Cache, StreamReport, Manifest, tgzUtils, structUtils, miscUtils, scriptUtils, Workspace } from "@yarnpkg/core";
+import { Configuration, Project, Cache, StreamReport, Manifest, tgzUtils, hashUtils, structUtils, miscUtils, scriptUtils, Workspace } from "@yarnpkg/core";
 import { BaseCommand } from '@yarnpkg/cli';
 import { xfs, CwdFS, PortablePath, VirtualFS } from '@yarnpkg/fslib';
 import { ZipOpenFS } from '@yarnpkg/libzip';
@@ -416,11 +416,11 @@ class RunBuildScriptsCommand extends BaseCommand {
 
 export default {
   hooks: {
-    afterAllInstalled: async (project, opts) => {
+    afterAllInstalled: async (project: Project, opts) => {
       const linkers = project.configuration.getLinkers();
       const linkerOptions = {project, report: null};
 
-      const existingManifest = await getExistingYarnManifest(path.join(project.cwd, 'yarn-manifest.nix'))
+      // const existingManifest = await getExistingYarnManifest(path.join(project.cwd, 'yarn-manifest.nix'))
 
       const installers = new Map(linkers.map(linker => {
         const installer = linker.makeInstaller(linkerOptions);
@@ -432,6 +432,9 @@ export default {
 
         return [linker, installer] as [Linker, Installer];
       }));
+
+      const cache = await Cache.find(project.configuration);
+
 
       const fetcher = project.configuration.makeFetcher();
       const fetchOptions = { checksums: new Map(), project, cache: null, fetcher, report: null }
@@ -601,10 +604,10 @@ export default {
 
         const manifestPackageId = structUtils.stringifyIdent(pkg) + '@' + pkg.reference
 
-        const packageInExistingManifest = existingManifest?.[manifestPackageId]
+        // const packageInExistingManifest = existingManifest?.[manifestPackageId]
 
-        let outputHash = packageInExistingManifest?.outputHash
-        let outputHashByPlatform: any = packageInExistingManifest?.outputHashByPlatform ?? {}
+        let outputHash = null
+        let outputHashByPlatform: any = null
 
         await (async function() {
           if (src != null && !isSourcePatch) {
@@ -618,32 +621,42 @@ export default {
             outputHashByPlatform = null
             return
           } else if (shouldBeUnplugged) {
-            const shouldHashBePlatformSpecific = true // TODO only if package or dependencies have platform conditions maybe?
-            if (shouldHashBePlatformSpecific) {
-              if (outputHashByPlatform[nixCurrentSystem()] && !isSourcePatch) {
-                // got existing hash for this platform in the manifest, use existing hash
-                outputHash = null
-                return
-              } else {
-                const unplugPath = pnpUtils.getUnpluggedPath(pkg, {configuration: project.configuration});
-                if (unplugPath != null && await xfs.existsPromise(unplugPath)) {
-                  // console.log('fetching hash for', unplugPath)
-                  const res = await execaSync('nix', ['hash', 'path', '--type', 'sha512', unplugPath])
-                  if (res.stdout != null) {
-                    outputHash = null
-                    if (!outputHashByPlatform) outputHashByPlatform = {}
-                    outputHashByPlatform[nixCurrentSystem()] = res.stdout
-                    return
-                  }
-                } else {
-                  // leave as is? to avoid removing hashes from incompatible platforms
-                  if (Object.keys(outputHashByPlatform).length > 0 && outputHash == null) {
-                    return
-                  }
-                }
+
+            // const shouldHashBePlatformSpecific = true // TODO only if package or dependencies have platform conditions maybe?
+            // if (shouldHashBePlatformSpecific) {
+            //   if (outputHashByPlatform[nixCurrentSystem()] && !isSourcePatch) {
+            //     // got existing hash for this platform in the manifest, use existing hash
+            //     outputHash = null
+            //     return
+            //   } else {
+            //     const unplugPath = pnpUtils.getUnpluggedPath(pkg, {configuration: project.configuration});
+            //     if (unplugPath != null && await xfs.existsPromise(unplugPath)) {
+            //       // console.log('fetching hash for', unplugPath)
+            //       const res = await execaSync('nix', ['hash', 'path', '--type', 'sha512', unplugPath])
+            //       if (res.stdout != null) {
+            //         outputHash = null
+            //         if (!outputHashByPlatform) outputHashByPlatform = {}
+            //         outputHashByPlatform[nixCurrentSystem()] = res.stdout
+            //         return
+            //       }
+            //     } else {
+            //       // leave as is? to avoid removing hashes from incompatible platforms
+            //       if (Object.keys(outputHashByPlatform).length > 0 && outputHash == null) {
+            //         return
+            //       }
+            //     }
+            //   }
+            // }
+            outputHash = project.storedChecksums.get(pkg.locatorHash)?.substring(2)
+            if (!outputHash) {
+              console.log('got package unplugged package with no hash', pkg)
+              try {
+                const cachePath = cache.getLocatorPath(pkg, null)
+                outputHash = await hashUtils.checksumFile(cachePath)
+              } catch (error) {
+                console.log('error getting outputHash', error.message)
               }
             }
-            outputHash = ''
             outputHashByPlatform = null
             return
           } else {
