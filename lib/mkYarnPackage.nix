@@ -49,7 +49,15 @@ let
       merged = mapAttrs (key: packageManifest:
         let
           mergedPackage = if hasAttr key packageOverrides
-            then recursiveUpdate packageManifest packageOverrides."${key}"
+            then
+              let
+                overridesAsAttrsOrFunc = packageOverrides."${key}";
+                overridesAsAttrs = if builtins.isFunction overridesAsAttrsOrFunc
+                  then overridesAsAttrsOrFunc packageManifest
+                  else overridesAsAttrsOrFunc
+                ;
+              in
+                recursiveUpdate packageManifest overridesAsAttrs
             else packageManifest;
         in
         mergedPackage //
