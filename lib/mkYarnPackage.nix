@@ -377,6 +377,7 @@ let
             # set executable bit with chmod for all bin scripts
             ${concatStringsSep "\n" (mapAttrsToList (binKey: binScript: ''
             chmod +x $out/node_modules/${name}/${binScript}
+            patchShebangs $out/node_modules/${name}/${binScript}
             '') (if bin != null then bin else {}))}
           '' else " ";
 
