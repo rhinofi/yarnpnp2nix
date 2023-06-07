@@ -117,6 +117,7 @@ let
       __noChroot ? null,
     }:
     let
+      finalDerivationOverrides = packageManifest.finalDerivationOverrides or {};
       shouldBeUnplugged = if builtins.hasAttr "shouldBeUnplugged" packageManifest then packageManifest.shouldBeUnplugged else false;
       locatorString = "${name}@${reference}";
       reference = packageManifest.reference;
@@ -398,7 +399,11 @@ let
       # https://github.com/NixOS/nix/issues/6660
       # https://github.com/NixOS/nix/issues/7148 (maybe)
       # without this workaround we get error: unexpected end-of-file errors
-      finalDerivation = pkgs.stdenv.mkDerivation {
+      finalDerivation = pkgs.stdenv.mkDerivation
+        # Apply overrides from packageOverrides
+        (recursiveUpdate finalDerivationAttrs finalDerivationOverrides)
+      ;
+      finalDerivationAttrs = {
         name = outputName;
         phases =
           [ "generateRuntimePhase" ] ++
