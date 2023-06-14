@@ -59,6 +59,12 @@ import { fileUtils } from '@yarnpkg/plugin-file';
 import { Option } from 'clipanion';
 import t = require('typanion');
 
+const debug = (...args) => {
+  if (process.env.YARNNIX_DEBUG) {
+    console.log(...args)
+  }
+}
+
 class FetchCommand extends BaseCommand {
   static paths = [['nix', 'fetch-by-locator']]
 
@@ -563,7 +569,7 @@ export default {
           let resolvedPkg = resolutionHash != null ? project.storedPackages.get(resolutionHash) :
             null
           if (!resolvedPkg) {
-            console.log('failed to resolve', value)
+            debug('failed to resolve pkg', value)
             return null
           }
           // reference virtual packages instead so that peerDependencies are respected
@@ -582,7 +588,7 @@ export default {
           let resolvedPkg = resolutionHash != null ? project.storedPackages.get(resolutionHash) :
             null
           if (!resolvedPkg) {
-            console.log('failed to resolve', value)
+            debug('failed to resolve pkg', value)
             return null
           }
           // reference virtual packages instead so that peerDependencies are respected
@@ -649,12 +655,12 @@ export default {
             // }
             outputHash = project.storedChecksums.get(pkg.locatorHash)?.substring(2)
             if (!outputHash) {
-              console.log('got package unplugged package with no hash', pkg)
+              debug('got package unplugged package with no hash', pkg)
               try {
                 const cachePath = cache.getLocatorPath(pkg, null)
                 outputHash = await hashUtils.checksumFile(cachePath)
               } catch (error) {
-                console.log('error getting outputHash', error.message)
+                debug('error getting outputHash', error.message)
               }
             }
             outputHashByPlatform = null
