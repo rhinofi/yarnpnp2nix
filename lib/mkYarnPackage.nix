@@ -228,6 +228,11 @@ let
         buildInputs = with pkgs; [
           defaultPkgs.yarnBerry
           unzip
+          git
+          curl
+          openssl
+          cacert
+          nodejs
         ];
 
         fetchPhase = ''
@@ -237,6 +242,8 @@ let
           touch yarn.lock
           echo locatorToFetchJSON: ${locatorToFetchJSON}
 
+          export HOME="$tmpDir/fake-home"
+          mkdir -p "$HOME"
           ${if isSourceTgz
             then "yarn nix convert-to-zip ${locatorToFetchJSON} ${src} $tmpDir/output.zip"
             else "yarn nix fetch-by-locator ${locatorToFetchJSON} $tmpDir"
