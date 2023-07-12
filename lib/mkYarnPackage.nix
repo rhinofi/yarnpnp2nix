@@ -229,8 +229,6 @@ let
           defaultPkgs.yarnBerry
           unzip
           git
-          curl
-          openssl
           cacert
           nodejs
         ];
