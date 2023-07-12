@@ -112,6 +112,7 @@ let
       nodejsPackage,
       build ? "",
       buildInputs ? [],
+      nativeBuildInputs ? [],
       preInstallScript ? "",
       postInstallScript ? "",
       __noChroot ? null,
@@ -268,6 +269,7 @@ let
           xcbuild
         ] else [])
         ++ buildInputs;
+        inherit nativeBuildInputs;
         buildPhase =
           if willBuild then ''
             tmpDir=$PWD
@@ -543,6 +545,7 @@ let
       buildInputs = if hasAttr "buildInputs" packageManifest then packageManifest.buildInputs else [];
       preInstallScript = if hasAttr "preInstallScript" packageManifest then packageManifest.preInstallScript else "";
       postInstallScript = if hasAttr "postInstallScript" packageManifest then packageManifest.postInstallScript else "";
+      nativeBuildInputs = packageManifest.nativeBuildInputs or [];
       __noChroot = if hasAttr "__noChroot" packageManifest then packageManifest.__noChroot else null;
     });
 
