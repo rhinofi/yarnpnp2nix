@@ -564,12 +564,16 @@ export default {
           }
         }
 
-        const dependencies = (await Promise.all(Array.from(pkgDependencies).map(async ([key, value]) => {
+        const processDendencies = deps => Promise.all(Array.from(deps).map(async ([key, value]) => {
+          if (!value) {
+            debug(`failed to resolve pkg ${key}`, value)
+            return null
+          }
           const resolutionHash = project.storedResolutions.get(value.descriptorHash)
           let resolvedPkg = resolutionHash != null ? project.storedPackages.get(resolutionHash) :
             null
           if (!resolvedPkg) {
-            debug('failed to resolve pkg', value)
+            debug(`failed to resolve pkg ${key}`, value)
             return null
           }
           // reference virtual packages instead so that peerDependencies are respected
@@ -581,26 +585,10 @@ export default {
             name: structUtils.stringifyIdent(value),
             packageManifestId: structUtils.stringifyIdent(resolvedPkg) + '@' + resolvedPkg.reference,
           }
-        }))).filter(pkg => !!pkg)
+        })).then(xs => xs.filter(pkg => !!pkg))
 
-        const devDependencies = (await Promise.all(Array.from(pkgDevDependencies).map(async ([key, value]) => {
-          const resolutionHash = project.storedResolutions.get(value.descriptorHash)
-          let resolvedPkg = resolutionHash != null ? project.storedPackages.get(resolutionHash) :
-            null
-          if (!resolvedPkg) {
-            debug('failed to resolve pkg', value)
-            return null
-          }
-          // reference virtual packages instead so that peerDependencies are respected
-          // if (structUtils.isVirtualLocator(resolvedPkg)) {
-          //   resolvedPkg = structUtils.devirtualizeLocator(resolvedPkg)
-          // }
-          return {
-            key,
-            name: structUtils.stringifyIdent(value),
-            packageManifestId: structUtils.stringifyIdent(resolvedPkg) + '@' + resolvedPkg.reference,
-          }
-        }))).filter(pkg => !!pkg)
+        const dependencies = await processDendencies(pkgDependencies)
+        const devDependencies = await processDendencies(pkgDevDependencies)
 
         const packagePeers = []
 
