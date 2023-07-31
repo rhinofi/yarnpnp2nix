@@ -197,7 +197,7 @@ let
 
             export PATH="${nodejsPackage}/bin:\''$PATH"
 
-            nodeOptions="--require \$pnpDir/.pnp.cjs"
+            nodeOptions="--require \$pnpDir/.pnp.cjs --loader ${./.pnp.loader.mjs}"
             export NODE_OPTIONS="\''$NODE_OPTIONS \''$nodeOptions"
 
             exec ${nodejsPackage}/bin/node \$binPackageLocation./${binScript} "\$@"
