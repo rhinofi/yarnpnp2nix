@@ -8,3 +8,4 @@ result
 **/.yarn/install-state.gz
 tsconfig.tsbuildinfo
 test/workspace/.yarn/cache
+**/.yarn/cache

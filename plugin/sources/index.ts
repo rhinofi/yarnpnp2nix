@@ -67,6 +67,12 @@ const debug = (...args) => {
   }
 }
 
+// Copied from: https://github.com/yarnpkg/berry/blob/5cebf76352881fab6ed039762a7eb08143d04c0b/packages/yarnpkg-core/sources/Cache.ts#L412-L415
+function getHashComponent(checksum: string) {
+  const split = checksum.indexOf(`/`);
+  return split !== -1 ? checksum.slice(split + 1) : checksum;
+}
+
 class FetchCommand extends BaseCommand {
   static paths = [['nix', 'fetch-by-locator']]
 
@@ -641,7 +647,7 @@ export default {
             return
           } else if (willOutputBeZip) {
             // simple, use the hash of the zip file
-            outputHash = project.storedChecksums.get(pkg.locatorHash)?.substring(2) // first 2 characters are like a checksum version that yarn uses, we can discard
+            outputHash = getHashComponent(project.storedChecksums.get(pkg.locatorHash) ?? '')
             outputHashByPlatform = null
             return
           } else if (shouldBeUnplugged) {
@@ -671,7 +677,7 @@ export default {
             //     }
             //   }
             // }
-            outputHash = project.storedChecksums.get(pkg.locatorHash)?.substring(2)
+            outputHash = getHashComponent(project.storedChecksums.get(pkg.locatorHash) ?? '')
             if (!outputHash) {
               debug('got package unplugged package with no hash', pkg)
               try {
