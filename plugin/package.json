@@ -3,16 +3,22 @@
   "main": "./sources/index.ts",
   "dependencies": {
     "@types/node": "^16.0.0",
-    "@yarnpkg/builder": "4.0.0-rc.44",
-    "@yarnpkg/cli": "4.0.0-rc.44",
-    "@yarnpkg/core": "4.0.0-rc.44",
-    "@yarnpkg/pnp": "4.0.0-rc.44",
+    "@yarnpkg/builder": "4.0.0-rc.45",
+    "@yarnpkg/cli": "4.0.0-rc.45",
+    "@yarnpkg/core": "4.0.0-rc.45",
+    "@yarnpkg/fslib": "3.0.0-rc.45",
+    "@yarnpkg/libzip": "3.0.0-rc.45",
+    "@yarnpkg/plugin-file": "3.0.0-rc.45",
+    "@yarnpkg/plugin-pnp": "4.0.0-rc.45",
+    "@yarnpkg/pnp": "4.0.0-rc.45",
+    "clipanion": "^3.2.0-rc.10",
     "execa": "^6.1.0",
+    "typanion": "^3.3.0",
     "typescript": "4.9.1-beta"
   },
   "scripts": {
     "build": "builder build plugin && mv bundles/@yarnpkg/plugin-yarnpnp2nix.js dist/",
     "build-dev": "builder build plugin --no-minify && mv bundles/@yarnpkg/plugin-yarnpnp2nix.js dist/"
   },
-  "packageManager": "yarn@4.0.0-rc.44"
+  "packageManager": "yarn@4.0.0-rc.45"
 }

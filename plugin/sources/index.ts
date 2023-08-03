@@ -50,14 +50,16 @@ export async function getExistingYarnManifest(manifestPath: string) {
   }
 }
 
-import { Configuration, Project, Cache, StreamReport, Manifest, tgzUtils, hashUtils, structUtils, miscUtils, scriptUtils, Workspace } from "@yarnpkg/core";
+import { Configuration, Project, Cache, StreamReport, Manifest, tgzUtils, hashUtils, structUtils, miscUtils, scriptUtils, Workspace, Linker, Installer } from "@yarnpkg/core";
 import { BaseCommand } from '@yarnpkg/cli';
-import { xfs, CwdFS, PortablePath, VirtualFS } from '@yarnpkg/fslib';
+import { xfs, CwdFS, PortablePath, VirtualFS, ppath, npath, Filename } from '@yarnpkg/fslib';
 import { ZipOpenFS } from '@yarnpkg/libzip';
 import { getPnpPath, pnpUtils } from '@yarnpkg/plugin-pnp';
 import { fileUtils } from '@yarnpkg/plugin-file';
 import { Option } from 'clipanion';
-import t = require('typanion');
+import t from 'typanion';
+
+const { toPortablePath } = npath
 
 const debug = (...args) => {
   if (process.env.YARNNIX_DEBUG) {
@@ -72,8 +74,8 @@ class FetchCommand extends BaseCommand {
   outDirectory = Option.String({validator: t.isString()})
 
   async execute() {
-    const configuration = await Configuration.find(process.cwd(), this.context.plugins);
-    const {project, workspace} = await Project.find(configuration, process.cwd());
+    const configuration = await Configuration.find(ppath.cwd(), this.context.plugins);
+    const {project, workspace} = await Project.find(configuration, ppath.cwd());
 
     const fetcher = configuration.makeFetcher()
 
@@ -94,7 +96,14 @@ class FetchCommand extends BaseCommand {
         locator = structUtils.devirtualizeLocator(locator)
       }
 
-      const fetchOptions = { checksums: new Map(), project, cache: new Cache(this.outDirectory, { check: false, configuration, immutable: false }), fetcher, report }
+      const fetchOptions = {
+        checksums: new Map(), project, cache: new Cache(
+          toPortablePath(this.outDirectory),
+          { check: false, configuration, immutable: false }
+        ),
+        fetcher,
+        report
+      }
       const fetched = await fetcher.fetch(locator, fetchOptions)
 
       fs.renameSync(fetched.packageFs.target, path.join(this.outDirectory, 'output.zip'))
@@ -108,14 +117,14 @@ class CreateLockFileCommand extends BaseCommand {
   packageRegistryDataPath = Option.String({validator: t.isString()})
 
   async execute() {
-    const configuration = await Configuration.find(process.cwd(), this.context.plugins);
+    const configuration = await Configuration.find(ppath.cwd(), this.context.plugins);
 
-    const project = new Project(process.cwd(), { configuration })
+    const project = new Project(ppath.cwd(), { configuration })
     await project.setupResolutions()
 
     const packageRegistryData = JSON.parse(fs.readFileSync(this.packageRegistryDataPath, 'utf8'))
 
-    const packageRegistryPackages: any[] = Object.values(packageRegistryData).filter(pkg => !!pkg?.manifest)
+    const packageRegistryPackages: any[] = Object.values(packageRegistryData).filter((pkg: any) => !!pkg?.manifest)
 
     for (const _package of packageRegistryPackages) {
       const pkg = Object.assign({}, _package.manifest, { name: _package.name, reference: _package.reference })
@@ -199,8 +208,8 @@ class ConvertToZipCommand extends BaseCommand {
   outPath = Option.String({validator: t.isString()})
 
   async execute() {
-    const configuration = await Configuration.find(process.cwd(), this.context.plugins);
-    const {project, workspace} = await Project.find(configuration, process.cwd());
+    const configuration = await Configuration.find(ppath.cwd(), this.context.plugins);
+    const {project, workspace} = await Project.find(configuration, ppath.cwd());
 
     const locator = {
       ...(JSON.parse(this.locator)),
@@ -208,12 +217,13 @@ class ConvertToZipCommand extends BaseCommand {
       identHash: '',
     }
 
-    const { path } = await tgzUtils.convertToZip(fs.readFileSync(this.tgzPath), {
+    const archive = await tgzUtils.convertToZip(fs.readFileSync(this.tgzPath), {
       compressionLevel: project.configuration.get(`compressionLevel`),
       prefixPath: structUtils.getIdentVendorPath(locator),
       stripComponents: 1,
     })
-    fs.copyFileSync(path, this.outPath)
+
+    fs.copyFileSync(archive.getRealPath(), this.outPath)
   }
 }
 
@@ -225,10 +235,10 @@ class GeneratePnpFile extends BaseCommand {
   topLevelPackageLocator = Option.String({validator: t.isString()})
 
   async execute() {
-    const configuration = await Configuration.find(process.cwd(), this.context.plugins);
-    const {project, workspace} = await Project.find(configuration, process.cwd());
+    const configuration = await Configuration.find(ppath.cwd(), this.context.plugins);
+    const {project, workspace} = await Project.find(configuration, ppath.cwd());
 
-    const pnpPath = getPnpPath({ cwd: this.outDirectory });
+    const pnpPath = ppath.join(toPortablePath(this.outDirectory), Filename.pnpCjs)
 
     const pnpFallbackMode = project.configuration.get(`pnpFallbackMode`);
 
@@ -274,7 +284,9 @@ class GeneratePnpFile extends BaseCommand {
       let packageLocation = (relativePackageLocation.startsWith('../') ? relativePackageLocation : ('./' + relativePackageLocation)) + '/'
 
       if (isVirtual) {
-        packageLocation = './' + VirtualFS.makeVirtualPath('./.yarn/__virtual__', structUtils.slugifyLocator(locator), relativePackageLocation) + '/'
+        packageLocation = './' + VirtualFS.makeVirtualPath(
+          toPortablePath('./.yarn/__virtual__'),
+          structUtils.slugifyLocator(locator), relativePackageLocation) + '/'
       }
 
       const packageData = {
@@ -317,7 +329,7 @@ class GeneratePnpFile extends BaseCommand {
 
     const loaderFile = generateInlinedScript(pnpSettings);
 
-    await xfs.changeFilePromise(pnpPath.cjs, loaderFile, {
+    await xfs.changeFilePromise(pnpPath, loaderFile, {
       automaticNewlines: true,
       mode: 0o755,
     });
@@ -354,7 +366,10 @@ class MakePathWrappers extends BaseCommand {
       if (isTopLevelPackage) continue
 
       if (isVirtual) {
-        packageLocation = path.join(outDirectoryReal, VirtualFS.makeVirtualPath('./.yarn/__virtual__', structUtils.slugifyLocator(locator), relativePackageLocation))
+        packageLocation = path.join(outDirectoryReal, VirtualFS.makeVirtualPath(
+          toPortablePath('./.yarn/__virtual__'),
+          structUtils.slugifyLocator(locator), relativePackageLocation)
+        )
       }
 
       for (const bin of Object.keys(pkg?.manifest?.bin ?? {})) {
@@ -375,8 +390,8 @@ class RunBuildScriptsCommand extends BaseCommand {
   packageDirectory = Option.String({validator: t.isString()})
 
   async execute() {
-    const configuration = await Configuration.find(process.cwd(), this.context.plugins);
-    const {project, workspace} = await Project.find(configuration, process.cwd());
+    const configuration = await Configuration.find(ppath.cwd(), this.context.plugins);
+    const {project, workspace} = await Project.find(configuration, ppath.cwd());
 
     const _locator = JSON.parse(this.locator)
     const ident = structUtils.makeIdent(_locator.scope, _locator.name)
@@ -411,7 +426,13 @@ class RunBuildScriptsCommand extends BaseCommand {
     for (const scriptName of [`preinstall`, `install`, `postinstall`]) {
       if (!manifest.scripts.has(scriptName)) continue
 
-      const exitCode = await scriptUtils.executePackageScript(pkg, scriptName, [], {cwd: this.packageDirectory, project, stdin: process.stdin, stdout: process.stdout, stderr: process.stderr});
+      const exitCode = await scriptUtils.executePackageScript(pkg, scriptName, [], {
+        cwd: toPortablePath(this.packageDirectory),
+        project,
+        stdin: process.stdin,
+        stdout: process.stdout,
+        stderr: process.stderr
+      });
 
       if (exitCode > 0) {
         return exitCode
@@ -436,7 +457,7 @@ export default {
         if (typeof customData !== `undefined`)
           installer.attachCustomData(customData);
 
-        return [linker, installer] as [Linker, Installer];
+        return [linker, installer];
       }));
 
       const cache = await Cache.find(project.configuration);
@@ -482,7 +503,16 @@ export default {
         const src = pkg.reference.startsWith('workspace:') ? `./${pkg.reference.substring('workspace:'.length)}` : (localPathRelative != null ? localPathRelative : null)
         const bin = pkg.bin != null ? Object.fromEntries(pkg.bin) : null
 
-        const shouldBeUnplugged = src != null ? true : (installer?.shouldBeUnplugged != null ? installer.customData.store.get(pkg.locatorHash) != null ? installer.shouldBeUnplugged(pkg, installer.customData.store.get(pkg.locatorHash), project.getDependencyMeta(structUtils.isVirtualLocator(pkg) ? structUtils.devirtualizeLocator(pkg) : pkg, pkg.version)) : false : true)
+        const shouldBeUnplugged = src != null
+          ? true
+          : (installer?.shouldBeUnplugged != null
+            ? installer.customData.store.get(pkg.locatorHash) != null
+              ? installer.shouldBeUnplugged(pkg, installer.customData.store.get(pkg.locatorHash), project.getDependencyMeta(structUtils.isVirtualLocator(pkg)
+                ? structUtils.devirtualizeLocator(pkg)
+                : pkg, pkg.version))
+              : false
+            : true)
+
         const willOutputBeZip = !src && !shouldBeUnplugged
 
         const isSourcePatch = src != null && pkg.reference.startsWith('patch:')
@@ -670,7 +700,11 @@ export default {
           name: structUtils.stringifyIdent(pkg),
           reference: pkg.reference,
           linkType: pkg.linkType, // HARD package links are the most common, and mean that the target location is fully owned by the package manager. SOFT links, on the other hand, typically point to arbitrary user-defined locations on disk.
-          outputName: [structUtils.stringifyIdent(pkg), pkg.version, pkg.locatorHash.substring(0, 10)].filter(part => !!part).join('-').replace(/@/g, '').replace(/[\/]/g, '-'),
+          outputName: [
+            structUtils.stringifyIdent(pkg),
+            pkg.version,
+            pkg.locatorHash.substring(0, 10)
+          ].filter(part => !!part).join('-').replace(/@/g, '').replace(/[\/]/g, '-'),
           outputHash,
           outputHashByPlatform,
           src,
@@ -781,7 +815,7 @@ export default {
       const packageRegistryDataPath = process.env.YARNNIX_PACKAGE_REGISTRY_DATA_PATH
       if (!!packageRegistryDataPath) {
         const packageRegistryData = JSON.parse(fs.readFileSync(packageRegistryDataPath, 'utf8'))
-        const packageRegistryPackages: any[] = Object.values(packageRegistryData).filter(pkg => !!pkg?.manifest)
+        const packageRegistryPackages: any[] = Object.values(packageRegistryData).filter((pkg: any) => !!pkg?.manifest)
 
         for (const pkg of packageRegistryPackages) {
           if (pkg.canonicalReference.startsWith('workspace:')) {
