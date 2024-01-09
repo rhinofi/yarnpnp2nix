@@ -123,6 +123,7 @@ let
       locatorString = "${name}@${reference}";
       reference = packageManifest.reference;
       bin = if builtins.hasAttr "bin" packageManifest && packageManifest.bin != null then packageManifest.bin else null;
+      useMjsLoader = packageManifest.useMjsLoader or true;
 
       _outputHash = if builtins.hasAttr "outputHash" packageManifest && packageManifest.outputHash != null then packageManifest.outputHash else null;
       _platformOutputHash = if builtins.hasAttr "outputHashByPlatform" packageManifest && packageManifest.outputHashByPlatform != null then (
@@ -444,7 +445,7 @@ let
 
             export PATH="${nodejsPackage}/bin:\''$PATH"
 
-            nodeOptions="--require $out/.pnp.cjs --loader $out/.pnp.loader.mjs"
+            nodeOptions="--require $out/.pnp.cjs${lib.optionalString useMjsLoader " --loader $out/.pnp.loader.mjs" }"
             export NODE_OPTIONS="\''$NODE_OPTIONS \''$nodeOptions"
 
             ${if shouldBeUnplugged then ''exec ${packageDerivation}/node_modules/${name}/${binScript} "\$@"''
