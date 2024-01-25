@@ -90,16 +90,20 @@ let
         builtins.unsafeDiscardStringContext packageRegistryJSON
       );
 
-      createLockFileScript = builtins.appendContext ''
+      createPackageRegistryData = builtins.appendContext ''
         cat ${packageRegistryFile} | ${defaultPkgs.jq}/bin/jq -rcM \
           --arg packageLocation "$packageLocation" \
           --arg locatorString ${builtins.toJSON locatorString} \
           '.[$locatorString].packageLocation = $packageLocation' > $tmpDir/packageRegistryData.json
+      '' packageRegistryContext;
+
+      createLockFileScript = ''
+        ${createPackageRegistryData}
 
         yarn nix create-lockfile $tmpDir/packageRegistryData.json
-      '' packageRegistryContext;
+      '';
     in
-    createLockFileScript;
+    { inherit createPackageRegistryData createLockFileScript; };
 
   mkYarnPackage_internal =
     {
@@ -156,10 +160,14 @@ let
         inherit allPackageData;
       };
 
-      createLockFileScript = mkCreateLockFileScript_internal {
-        inherit packageRegistry;
-        inherit locatorString;
-      };
+      inherit
+        (mkCreateLockFileScript_internal {
+          inherit packageRegistry;
+          inherit locatorString;
+        })
+        createLockFileScript
+        createPackageRegistryData
+      ;
 
       createShellRuntimeEnvironment =
         {
@@ -215,10 +223,10 @@ let
         excludeDevDependencies = true;
       };
 
-      createLockFileScriptForRuntime = mkCreateLockFileScript_internal {
+      createLockFileScriptForRuntime = (mkCreateLockFileScript_internal {
         packageRegistry = packageRegistryRuntimeOnly;
         inherit locatorString;
-      };
+      }).createLockFileScript;
 
       makeFetchOnlyDerivation = outputHash: pkgs.stdenv.mkDerivation {
         name = outputName + (if willOutputBeZip then ".zip" else "");
@@ -251,6 +259,13 @@ let
           mv $tmpDir/output.zip $out
         '';
       };
+      set_packageLocation_create_packageRegistryData_lockFile_and_pnp = packageLocation: ''
+        packageLocation="${packageLocation}"
+        mkdir -p $packageLocation
+        ${createLockFileScript}
+        yarn nix generate-pnp-file $out $tmpDir/packageRegistryData.json "${locatorString}"
+        cp --no-preserve=mode "${./.pnp.loader.mjs}" $out/.pnp.loader.mjs
+      '';
       unpluggedDerivation = pkgs.stdenv.mkDerivation {
         name = outputName + (if willOutputBeZip then ".zip" else "");
         phases =
@@ -272,18 +287,12 @@ let
         ++ buildInputs;
         inherit nativeBuildInputs;
         buildPhase =
-          if willBuild then ''
+          if willBuild && build != "" then ''
             tmpDir=$PWD
             ${setupYarnBinScript}
 
-            packageLocation="$out/node_modules/${name}"
-            packageDrvLocation="$out"
-            mkdir -p $packageLocation
-            ${createLockFileScript}
-            yarn nix generate-pnp-file $out $tmpDir/packageRegistryData.json "${locatorString}"
-            cp --no-preserve=mode "${./.pnp.loader.mjs}" $out/.pnp.loader.mjs
+            ${set_packageLocation_create_packageRegistryData_lockFile_and_pnp "$out/tmp/${name}"}
 
-            ${if build != "" then ''
             cp -rT ${src} $packageLocation
             chmod -R +w $packageLocation
 
@@ -302,26 +311,28 @@ let
             export NODE_OPTIONS="$oldNodeOptions"
             export PATH="$oldPath"
             cd $tmpDir
-            '' else ""}
-
           '' else " ";
 
         packPhase =
           if willBuild then ''
-            touch yarn.lock
+            tmpDir=$PWD
+            ${setupYarnBinScript}
 
-            ${if build != "" then ''
-            export YARNNIX_PACK_DIRECTORY="$packageLocation"
-            '' else ''
-            export YARNNIX_PACK_DIRECTORY="${src}"
-            ''}
+            ${
+              if build != ""
+              then ''
+                export YARNNIX_PACK_DIRECTORY="$packageLocation"
+              ''
+              else ''
+                touch yarn.lock
+                packageLocation=$out/node_modules/${name}
+                ${createPackageRegistryData}
+                export YARNNIX_PACK_DIRECTORY="${src}"
+              ''
+            }
 
-            packageLocation="$out/node_modules/${name}"
-            packageDrvLocation="$out"
+            export YARNNIX_PACKAGE_REGISTRY_DATA_PATH="$tmpDir/packageRegistryData.json"
 
-            if [ -f "$tmpDir/packageRegistryData.json" ]; then
-              export YARNNIX_PACKAGE_REGISTRY_DATA_PATH="$tmpDir/packageRegistryData.json"
-            fi
             yarn pack -o $tmpDir/package.tgz
             yarn nix convert-to-zip ${locatorJSON} $tmpDir/package.tgz $tmpDir/output.zip
 
@@ -336,7 +347,6 @@ let
             tmpDir=$PWD
             mkdir -p $out
 
-            echo ${name}
             ${if willFetch
               then ''
                 pkg_src=${makeFetchOnlyDerivation outputHash}
@@ -350,15 +360,7 @@ let
 
             unzip -qq -d $out $pkg_src
 
-            packageLocation="$out/node_modules/${name}"
-            packageDrvLocation="$out"
-
-            # TODO: build does not make sense here. Seems like some legacy or
-            # unfinished work
-            ${if build == "" then (createLockFileScript) else ""}
-
-            yarn nix generate-pnp-file $out $tmpDir/packageRegistryData.json "${locatorString}"
-            cp --no-preserve=mode "${./.pnp.loader.mjs}" $out/.pnp.loader.mjs
+            ${set_packageLocation_create_packageRegistryData_lockFile_and_pnp "$out/node_modules/${name}"}
 
             # create dummy home directory in case any build scripts need it
             export HOME=$tmpDir/home
