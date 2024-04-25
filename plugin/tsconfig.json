@@ -2,9 +2,9 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "module": "commonjs",
-    "target": "ES2019",
+    "target": "ES2021",
     "lib": [
-      "ES2019"
+      "ES2021"
     ]
   },
   "include": [

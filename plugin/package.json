@@ -2,25 +2,25 @@
   "name": "yarn-plugin-yarnpnp2nix",
   "main": "./sources/index.ts",
   "dependencies": {
-    "@yarnpkg/cli": "4.0.0-rc.48",
-    "@yarnpkg/core": "4.0.0-rc.48",
-    "@yarnpkg/fslib": "3.0.0-rc.48",
-    "@yarnpkg/libzip": "3.0.0-rc.48",
-    "@yarnpkg/plugin-file": "3.0.0-rc.48",
-    "@yarnpkg/plugin-pnp": "4.0.0-rc.48",
-    "@yarnpkg/pnp": "4.0.0-rc.48",
-    "clipanion": "^3.2.0-rc.10",
+    "@yarnpkg/cli": "4.1.1",
+    "@yarnpkg/core": "4.0.3",
+    "@yarnpkg/fslib": "3.0.2",
+    "@yarnpkg/libzip": "3.0.1",
+    "@yarnpkg/plugin-file": "3.0.0",
+    "@yarnpkg/plugin-pnp": "4.0.2",
+    "@yarnpkg/pnp": "4.0.2",
+    "clipanion": "4.0.0-rc.3",
     "execa": "^7.2.0",
-    "typanion": "^3.3.0"
+    "typanion": "3.14.0"
   },
   "devDependencies": {
-    "@types/node": "^18.0.0",
-    "@yarnpkg/builder": "patch:@yarnpkg/builder@npm%3A4.0.0-rc.48#~/.yarn/patches/@yarnpkg-builder-npm-4.0.0-rc.48-8bac97c91e.patch",
+    "@types/node": "^20.12.7",
+    "@yarnpkg/builder": "4.0.0",
     "typescript": "^5.1.6"
   },
   "scripts": {
     "build": "builder build plugin && mv bundles/@yarnpkg/plugin-yarnpnp2nix.js dist/",
     "build-dev": "builder build plugin --no-minify && mv bundles/@yarnpkg/plugin-yarnpnp2nix.js dist/"
   },
-  "packageManager": "yarn@4.0.0-rc.48"
+  "packageManager": "yarn@4.1.1"
 }
