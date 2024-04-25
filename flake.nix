@@ -2,7 +2,7 @@
   description = "yarnpnp2nix";
 
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs?rev=8e3fad82be64c06fbfb9fd43993aec9ef4623936;
+    nixpkgs.url = github:nixos/nixpkgs?rev=ff0dbd94265ac470dda06a657d5fe49de93b4599;
     utils.url = github:numtide/flake-utils;
     flake-compat ={
       url = "github:edolstra/flake-compat";
@@ -24,8 +24,8 @@
           overlays = [overlay];
         };
       in
-      rec {
-        packages = {
+      {
+        packages = rec {
           default = pkgs.yarn-plugin-yarnpnp2nix;
           yarn-plugin = pkgs.yarn-plugin-yarnpnp2nix;
           yarnBerry = pkgs.yarnBerry;
@@ -33,6 +33,15 @@
             name = "yarnpnp2nix-test";
             runtimeInputs = [ pkgs.jq ];
             text = builtins.readFile ./runTests.sh;
+          };
+          yarnpnp2nix-build-plugin = pkgs.writeShellApplication {
+            name = "yarnpnp2nix-build-plugin";
+            runtimeInputs = [ yarnBerry ];
+            text = ''
+              cd plugin
+              yarn
+              yarn build
+            '';
           };
         };
         lib = pkgs.yarnpnp2nixLib;
