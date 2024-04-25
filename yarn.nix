@@ -11,6 +11,8 @@ stdenv.mkDerivation {
 
   patches = [
     ./yarnPatches/pack-specific-project.patch
+    # Needed because of this: https://github.com/yarnpkg/berry/pull/5997
+    ./yarnPatches/allow-node-collon-imports.patch
   ];
 
   buildInputs = [
