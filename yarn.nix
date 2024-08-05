@@ -3,8 +3,8 @@
 stdenv.mkDerivation {
   name = "yarn-berry";
   src = builtins.fetchTarball {
-    url = "https://github.com/yarnpkg/berry/archive/refs/tags/@yarnpkg/cli/4.1.1.tar.gz";
-    sha256 = "sha256:047x0g85jv9mda4bg8yba2sq13wky989qcrn6aqfqrbf1m2c95pg";
+    url = "https://github.com/yarnpkg/berry/archive/refs/tags/@yarnpkg/cli/4.4.0.tar.gz";
+    sha256 = "sha256:014x1sg4vknmwmk5s4236rcr7ih2415f10cz20vfkibc0igb3xjz";
   };
 
   phases = [ "getSource" "patchPhase" "build" ];
