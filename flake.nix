@@ -34,13 +34,23 @@
             runtimeInputs = [ pkgs.jq ];
             text = builtins.readFile ./runTests.sh;
           };
-          yarnpnp2nix-build-plugin = pkgs.writeShellApplication {
-            name = "yarnpnp2nix-build-plugin";
+          yarnpnp2nix-plugin-build = pkgs.writeShellApplication {
+            name = "yarnpnp2nix-plugin-build";
             runtimeInputs = [ yarnBerry ];
             text = ''
               cd plugin
               yarn
               yarn build
+              # shellcheck disable=SC2016
+              ${pkgs.lib.getExe pkgs.sd} '"node:([a-zA-Z_]*)"' '"$1"' dist/plugin-yarnpnp2nix.js
+            '';
+          };
+          yarnpnp2nix-plugin-upgrade-deps = pkgs.writeShellApplication {
+            name = "yarnpnp2nix-plugin-upgrade-deps";
+            runtimeInputs = [ yarnBerry ];
+            text = ''
+              cd plugin
+              yarn up -E @yarnpkg/cli @yarnpkg/core @yarnpkg/fslib @yarnpkg/libzip @yarnpkg/plugin-file @yarnpkg/plugin-pnp @yarnpkg/pnp
             '';
           };
         };
