@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
     "module": "commonjs",
     "target": "ES2021",
     "lib": [
