@@ -4,6 +4,7 @@ with lib;
 
 let
   nixPlugin = "${defaultPkgs.callPackage ../yarnPlugin.nix {}}/plugin.js";
+  yarnBin = "${defaultPkgs.yarnBerry}/bin/yarn";
 
   setupYarnBinScript = ''
     export YARN_PLUGINS=${nixPlugin}
@@ -100,7 +101,7 @@ let
       createLockFileScript = ''
         ${createPackageRegistryData}
 
-        yarn nix create-lockfile $tmpDir/packageRegistryData.json
+        ${yarnBin} nix create-lockfile $tmpDir/packageRegistryData.json
       '';
     in
     { inherit createPackageRegistryData createLockFileScript; };
@@ -122,6 +123,7 @@ let
       __noChroot ? null,
     }:
     let
+      nodeBin = "${nodejsPackage}/bin/node";
       finalDerivationOverrides = packageManifest.finalDerivationOverrides or {};
       shouldBeUnplugged = if builtins.hasAttr "shouldBeUnplugged" packageManifest then packageManifest.shouldBeUnplugged else false;
       locatorString = "${name}@${reference}";
@@ -180,8 +182,8 @@ let
           phases = [ "generateRuntimePhase" ];
 
           buildInputs = with pkgs; [
-            nodejsPackage
             defaultPkgs.yarnBerry
+            nodejsPackage
           ];
 
           generateRuntimePhase = ''
@@ -201,15 +203,15 @@ let
             #!${pkgs.bashInteractive}/bin/bash
 
             pnpDir="\$(mktemp -d)"
-            (cd $out && YARN_PLUGINS=${nixPlugin} ${defaultPkgs.yarnBerry}/bin/yarn nix generate-pnp-file \$pnpDir $out/packageRegistryData.json "${locatorString}")
-            binPackageLocation="\$(${nodejsPackage}/bin/node -r \$pnpDir/.pnp.cjs -e 'console.log(require("pnpapi").getPackageInformation({ name: process.argv[1], reference: process.argv[2] })?.packageLocation)' "${pkg.name}" "${pkg.reference}")"
+            (cd $out && YARN_PLUGINS=${nixPlugin} ${yarnBin} nix generate-pnp-file \$pnpDir $out/packageRegistryData.json "${locatorString}")
+            binPackageLocation="\$(${nodeBin} -r \$pnpDir/.pnp.cjs -e 'console.log(require("pnpapi").getPackageInformation({ name: process.argv[1], reference: process.argv[2] })?.packageLocation)' "${pkg.name}" "${pkg.reference}")"
 
             export PATH="${nodejsPackage}/bin:\''$PATH"
 
             nodeOptions="--require \$pnpDir/.pnp.cjs --loader ${./.pnp.loader.mjs}"
             export NODE_OPTIONS="\''$NODE_OPTIONS \''$nodeOptions"
 
-            exec ${nodejsPackage}/bin/node \$binPackageLocation./${binScript} "\$@"
+            exec ${nodeBin} \$binPackageLocation./${binScript} "\$@"
             EOF
             chmod +x $out/bin/${binKey}
             '') dependencyBins)}
@@ -253,8 +255,8 @@ let
           export HOME="$tmpDir/fake-home"
           mkdir -p "$HOME"
           ${if isSourceTgz
-            then "yarn nix convert-to-zip ${locatorToFetchJSON} ${src} $tmpDir/output.zip"
-            else "yarn nix fetch-by-locator ${locatorToFetchJSON} $tmpDir"
+            then "${yarnBin} nix convert-to-zip ${locatorToFetchJSON} ${src} $tmpDir/output.zip"
+            else "${yarnBin} nix fetch-by-locator ${locatorToFetchJSON} $tmpDir"
           }
           mv $tmpDir/output.zip $out
         '';
@@ -263,7 +265,7 @@ let
         packageLocation="${packageLocation}"
         mkdir -p $packageLocation
         ${createLockFileScript}
-        yarn nix generate-pnp-file $out $tmpDir/packageRegistryData.json "${locatorString}"
+        ${yarnBin} nix generate-pnp-file $out $tmpDir/packageRegistryData.json "${locatorString}"
         cp --no-preserve=mode "${./.pnp.loader.mjs}" $out/.pnp.loader.mjs
       '';
       unpluggedDerivation = pkgs.stdenv.mkDerivation {
@@ -277,8 +279,8 @@ let
         inherit __noChroot;
 
         buildInputs = with pkgs; [
-          nodejsPackage
           defaultPkgs.yarnBerry
+          nodejsPackage
           unzip
         ]
         ++ (if stdenv.isDarwin then [
@@ -297,7 +299,7 @@ let
             chmod -R +w $packageLocation
 
             mkdir -p $tmpDir/wrappedbins
-            yarn nix make-path-wrappers $tmpDir/wrappedbins $out $tmpDir/packageRegistryData.json "${locatorString}"
+            ${yarnBin} nix make-path-wrappers $tmpDir/wrappedbins $out $tmpDir/packageRegistryData.json "${locatorString}"
 
             cd $packageLocation
             nodeOptions="--require $out/.pnp.cjs --loader $out/.pnp.loader.mjs"
@@ -333,8 +335,8 @@ let
 
             export YARNNIX_PACKAGE_REGISTRY_DATA_PATH="$tmpDir/packageRegistryData.json"
 
-            yarn pack -o $tmpDir/package.tgz
-            yarn nix convert-to-zip ${locatorJSON} $tmpDir/package.tgz $tmpDir/output.zip
+            ${yarnBin} pack -o $tmpDir/package.tgz
+            ${yarnBin} nix convert-to-zip ${locatorJSON} $tmpDir/package.tgz $tmpDir/output.zip
 
             ${if build != "" then "rm -rf $out" else ""}
           '' else " ";
@@ -367,7 +369,7 @@ let
             mkdir -p $HOME
 
             ${preInstallScript}
-            yarn nix run-build-scripts ${locatorJSON} $out $packageLocation
+            ${yarnBin} nix run-build-scripts ${locatorJSON} $out $packageLocation
 
             cd $packageLocation
             ${postInstallScript}
@@ -420,8 +422,8 @@ let
           (if bin != null then [ "wrapBinPhase" ] else []);
 
         buildInputs = with pkgs; [
-          nodejsPackage
           defaultPkgs.yarnBerry
+          nodejsPackage
         ];
 
         generateRuntimePhase = ''
@@ -433,7 +435,7 @@ let
           ${createLockFileScriptForRuntime}
 
           mkdir -p $out
-          yarn nix generate-pnp-file $out $tmpDir/packageRegistryData.json "${locatorString}"
+          ${yarnBin} nix generate-pnp-file $out $tmpDir/packageRegistryData.json "${locatorString}"
           cp --no-preserve=mode "${./.pnp.loader.mjs}" $out/.pnp.loader.mjs
         '';
 
@@ -464,13 +466,13 @@ let
           packageLocation="/"
           packageDrvLocation="/"
           (cd $tmpDir && ${createLockFileScript})
-          (cd $tmpDir && yarn nix generate-pnp-file $tmpDir $tmpDir/packageRegistryData.json "${locatorString}")
+          (cd $tmpDir && ${yarnBin} nix generate-pnp-file $tmpDir $tmpDir/packageRegistryData.json "${locatorString}")
 
           nodeOptions="--require $TMPDIR/.pnp.cjs"
           export NODE_OPTIONS="$NODE_OPTIONS $nodeOptions"
 
           mkdir -p $tmpDir/wrappedbins
-          yarn nix make-path-wrappers $tmpDir/wrappedbins $tmpDir $tmpDir/packageRegistryData.json "${locatorString}"
+          ${yarnBin} nix make-path-wrappers $tmpDir/wrappedbins $tmpDir $tmpDir/packageRegistryData.json "${locatorString}"
           export PATH="$PATH:$tmpDir/wrappedbins"
         '';
       };
