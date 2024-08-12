@@ -344,6 +344,7 @@ let
           # cp ${./pnptemp.cjs} $out/.pnp.cjs
           # sed -i "s!__PACKAGE_PATH_HERE__!$packageLocation/!" $out/.pnp.cjs
           if shouldBeUnplugged then ''
+            set -x
             tmpDir=$PWD
             mkdir -p $out
 
