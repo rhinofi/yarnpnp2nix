@@ -346,6 +346,11 @@ let
           # cp ${./pnptemp.cjs} $out/.pnp.cjs
           # sed -i "s!__PACKAGE_PATH_HERE__!$packageLocation/!" $out/.pnp.cjs
           if shouldBeUnplugged then ''
+            set -x
+
+            echo PATH: $PATH
+            ${pkgs.which}/bin/which yarn
+
             tmpDir=$PWD
             mkdir -p $out
 
@@ -368,6 +373,7 @@ let
             export HOME=$tmpDir/home
             mkdir -p $HOME
 
+            echo PATH: $PATH
             ${preInstallScript}
             ${yarnBin} nix run-build-scripts ${locatorJSON} $out $packageLocation
 
