@@ -41,8 +41,6 @@
               cd plugin
               yarn
               yarn build
-              # shellcheck disable=SC2016
-              ${pkgs.lib.getExe pkgs.sd} '"node:([a-zA-Z_]*)"' '"$1"' dist/plugin-yarnpnp2nix.js
             '';
           };
           yarnpnp2nix-plugin-upgrade-deps = pkgs.writeShellApplication {

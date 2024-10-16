@@ -3,16 +3,14 @@
 stdenv.mkDerivation {
   name = "yarn-berry";
   src = builtins.fetchTarball {
-    url = "https://github.com/yarnpkg/berry/archive/refs/tags/@yarnpkg/cli/4.4.0.tar.gz";
-    sha256 = "sha256:014x1sg4vknmwmk5s4236rcr7ih2415f10cz20vfkibc0igb3xjz";
+    url = "https://github.com/yarnpkg/berry/archive/refs/tags/@yarnpkg/cli/4.5.0.tar.gz";
+    sha256 = "sha256:0dqklcc0clfkv6l4d2vlhh2icamm5a16kah4y4c5k3r0h598ac1r";
   };
 
   phases = [ "getSource" "patchPhase" "build" ];
 
   patches = [
     ./yarnPatches/pack-specific-project.patch
-    # Needed because of this: https://github.com/yarnpkg/berry/pull/5997
-    ./yarnPatches/allow-node-collon-imports.patch
   ];
 
   buildInputs = [
