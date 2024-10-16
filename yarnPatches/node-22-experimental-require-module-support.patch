@@ -1,0 +1,69 @@
+diff --git a/packages/yarnpkg-pnp/sources/loader/applyPatch.ts b/packages/yarnpkg-pnp/sources/loader/applyPatch.ts
+index d1bfe2988..1bd30d7ee 100644
+--- a/packages/yarnpkg-pnp/sources/loader/applyPatch.ts
++++ b/packages/yarnpkg-pnp/sources/loader/applyPatch.ts
+@@ -275,6 +275,8 @@ export function applyPatch(pnpapi: PnpApi, opts: ApplyPatchOptions) {
+     return false;
+   };
+ 
++  const nodeOptions = nodeUtils.getNodeOptionsEnvArgv()
++  const experimentalRequireModuleEnabled = nodeOptions.findIndex(x => x.startsWith('--experimental-require-module')) !== -1
+   // https://github.com/nodejs/node/blob/3743406b0a44e13de491c8590386a964dbe327bb/lib/internal/modules/cjs/loader.js#L1110-L1154
+   const originalExtensionJSFunction = Module._extensions[`.js`] as (module: NodeModule, filename: string) => void;
+   Module._extensions[`.js`] = function (module: NodeModule, filename: string) {
+diff --git a/packages/yarnpkg-pnp/sources/loader/nodeUtils.ts b/packages/yarnpkg-pnp/sources/loader/nodeUtils.ts
+index 0c1bbf290..8df985b01 100644
+--- a/packages/yarnpkg-pnp/sources/loader/nodeUtils.ts
++++ b/packages/yarnpkg-pnp/sources/loader/nodeUtils.ts
+@@ -66,3 +66,51 @@ export function reportRequiredFilesToWatchMode(files: Array<NativePath>) {
+     }
+   }
+ }
++
++export function getNodeOptionsEnvArgv() {
++  const errors: Array<string> = [];
++  const envArgv = ParseNodeOptionsEnvVar(process.env.NODE_OPTIONS || '', errors);
++  if (errors.length !== 0) {
++    // TODO: handle errors somehow
++  }
++  return envArgv;
++}
++
++// Direct JS port of C implementation: https://github.com/nodejs/node/blob/67ba825037b4082d5d16f922fb9ce54516b4a869/src/node_options.cc#L1024-L1063
++function ParseNodeOptionsEnvVar(node_options: string, errors: Array<string>) {
++  const env_argv = [];
++
++  let is_in_string = false;
++  let will_start_new_arg = true;
++  for (let index = 0; index < node_options.length; ++index) {
++    let c = node_options[index];
++
++    // Backslashes escape the following character
++    if (c === '\\' && is_in_string) {
++      if (index + 1 === node_options.length) {
++        errors.push('invalid value for NODE_OPTIONS ' + '(invalid escape)\n');
++        return env_argv;
++      } else {
++        c = node_options[++index];
++      }
++    } else if (c === ' ' && !is_in_string) {
++      will_start_new_arg = true;
++      continue;
++    } else if (c === '"') {
++      is_in_string = !is_in_string;
++      continue;
++    }
++
++    if (will_start_new_arg) {
++      env_argv.push(c);
++      will_start_new_arg = false;
++    } else {
++      env_argv[env_argv.length - 1] += c;
++    }
++  }
++
++  if (is_in_string) {
++    errors.push('invalid value for NODE_OPTIONS ' + '(unterminated string)\n');
++  }
++  return env_argv;
++}

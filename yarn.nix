@@ -11,6 +11,7 @@ stdenv.mkDerivation {
 
   patches = [
     ./yarnPatches/pack-specific-project.patch
+    ./yarnPatches/node-22-experimental-require-module-support.patch
   ];
 
   buildInputs = [
@@ -28,8 +29,8 @@ stdenv.mkDerivation {
   '';
 
   build = ''
+    (cd packages/yarnpkg-pnp && yarn build:pnp:hook && yarn pack -o package.tgz)
     yarn build:cli
-    (cd packages/yarnpkg-pnp && yarn pack -o package.tgz)
     mkdir -p $out/bin $out/packages
     mv packages/yarnpkg-cli/bundles/yarn.js $out/bin/yarn
     chmod +x $out/bin/yarn
