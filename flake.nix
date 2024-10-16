@@ -2,7 +2,7 @@
   description = "yarnpnp2nix";
 
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs?rev=ff0dbd94265ac470dda06a657d5fe49de93b4599;
+    nixpkgs.url = github:nixos/nixpkgs?rev=159be5db480d1df880a0135ca0bfed84c2f88353;
     utils.url = github:numtide/flake-utils;
     flake-compat ={
       url = "github:edolstra/flake-compat";
