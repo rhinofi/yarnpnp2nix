@@ -1,16 +1,31 @@
 diff --git a/packages/yarnpkg-pnp/sources/loader/applyPatch.ts b/packages/yarnpkg-pnp/sources/loader/applyPatch.ts
-index d1bfe2988..1bd30d7ee 100644
+index d1bfe2988..b7705cef6 100644
 --- a/packages/yarnpkg-pnp/sources/loader/applyPatch.ts
 +++ b/packages/yarnpkg-pnp/sources/loader/applyPatch.ts
-@@ -275,6 +275,8 @@ export function applyPatch(pnpapi: PnpApi, opts: ApplyPatchOptions) {
+@@ -1,6 +1,7 @@
+ import {FakeFS, PosixFS, npath, patchFs, PortablePath, NativePath, VirtualFS} from '@yarnpkg/fslib';
+ import fs                                                                     from 'fs';
+ import {Module, isBuiltin}                                                    from 'module';
++import semver                                                                 from 'semver';
+ import {fileURLToPath}                                                        from 'url';
+ 
+ import {PnpApi}                                                               from '../types';
+@@ -274,11 +275,14 @@ export function applyPatch(pnpapi: PnpApi, opts: ApplyPatchOptions) {
+ 
      return false;
    };
++  const experimentalRequireModuleEnabled =
++    semver.gte(process.version, '20.17.0')
++    && nodeUtils.getNodeOptionsEnvArgv().findIndex(x => x.startsWith('--experimental-require-module')) !== -1
  
-+  const nodeOptions = nodeUtils.getNodeOptionsEnvArgv()
-+  const experimentalRequireModuleEnabled = nodeOptions.findIndex(x => x.startsWith('--experimental-require-module')) !== -1
    // https://github.com/nodejs/node/blob/3743406b0a44e13de491c8590386a964dbe327bb/lib/internal/modules/cjs/loader.js#L1110-L1154
    const originalExtensionJSFunction = Module._extensions[`.js`] as (module: NodeModule, filename: string) => void;
    Module._extensions[`.js`] = function (module: NodeModule, filename: string) {
+-    if (filename.endsWith(`.js`)) {
++    if (!experimentalRequireModuleEnabled && filename.endsWith(`.js`)) {
+       const pkg = nodeUtils.readPackageScope(filename);
+       if (pkg && pkg.data?.type === `module`) {
+         const err = nodeUtils.ERR_REQUIRE_ESM(filename, module.parent?.filename);
 diff --git a/packages/yarnpkg-pnp/sources/loader/nodeUtils.ts b/packages/yarnpkg-pnp/sources/loader/nodeUtils.ts
 index 0c1bbf290..8df985b01 100644
 --- a/packages/yarnpkg-pnp/sources/loader/nodeUtils.ts
