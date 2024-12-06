@@ -112,7 +112,11 @@ class FetchCommand extends BaseCommand {
       }
       const fetched = await fetcher.fetch(locator, fetchOptions)
 
-      fs.renameSync(fetched.packageFs.target, path.join(this.outDirectory, 'output.zip'))
+      fs.renameSync(
+        // @ts-expect-error
+        fetched.packageFs.target,
+        path.join(this.outDirectory, 'output.zip')
+      )
     });
   }
 }
@@ -126,6 +130,7 @@ class CreateLockFileCommand extends BaseCommand {
     const configuration = await Configuration.find(ppath.cwd(), this.context.plugins);
 
     const project = new Project(ppath.cwd(), { configuration })
+    // @ts-expect-error
     await project.setupResolutions()
 
     const packageRegistryData = JSON.parse(fs.readFileSync(this.packageRegistryDataPath, 'utf8'))
@@ -171,7 +176,11 @@ class CreateLockFileCommand extends BaseCommand {
         dependencies,
         bin,
       }
-      project.originalPackages.set(pkg.locatorHash, origPackage)
+      project.originalPackages.set(
+        pkg.locatorHash,
+        // @ts-expect-error
+        origPackage
+      )
 
       // storedResolutions is a map of descriptorHash -> locatorHash
       project.storedResolutions.set(pkg.descriptorHash, pkg.locatorHash)
@@ -404,7 +413,7 @@ class RunBuildScriptsCommand extends BaseCommand {
     const locator = structUtils.makeLocator(ident, _locator.reference)
 
     const pkg = project.originalPackages.get(locator.locatorHash)
-
+    // @ts-expect-error
     project.cwd = this.pnpRootDirectory
 
     // need to find a way to make this work without restoring install state...
@@ -511,8 +520,11 @@ export default {
 
         const shouldBeUnplugged = src != null
           ? true
+          // @ts-expect-error
           : (installer?.shouldBeUnplugged != null
+            // @ts-expect-error
             ? installer.customData.store.get(pkg.locatorHash) != null
+            // @ts-expect-error
               ? installer.shouldBeUnplugged(pkg, installer.customData.store.get(pkg.locatorHash), project.getDependencyMeta(structUtils.isVirtualLocator(pkg)
                 ? structUtils.devirtualizeLocator(pkg)
                 : pkg, pkg.version))
@@ -829,6 +841,7 @@ export default {
               const workspaceCwd = pkg.packageLocation ?? path.join(pkg.drvPath, 'node_modules', pkg.name)
               const workspace = new Workspace(workspaceCwd, { project })
               await workspace.setup()
+              // @ts-expect-error
               project.addWorkspace(workspace)
             }
           }
