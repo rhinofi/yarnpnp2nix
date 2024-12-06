@@ -98,7 +98,7 @@
 
           shellHook = ''
             export LD_LIBRARY_PATH=${pkgs.lib.makeLibraryPath [pkgs.libuuid]}
-            export YARN_PLUGINS=${pkgs.yarn-plugin-yarnpnp2nix}/plugin.js
+            export YARN_PLUGINS=${pkgs.yarn-plugin-yarnpnp2nix}
           '';
         };
       };

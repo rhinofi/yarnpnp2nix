@@ -34,15 +34,6 @@
             runtimeInputs = [ pkgs.jq ];
             text = builtins.readFile ./runTests.sh;
           };
-          yarnpnp2nix-plugin-build = pkgs.writeShellApplication {
-            name = "yarnpnp2nix-plugin-build";
-            runtimeInputs = [ yarnBerry ];
-            text = ''
-              cd plugin
-              yarn
-              yarn build
-            '';
-          };
           yarnpnp2nix-plugin-upgrade-deps = pkgs.writeShellApplication {
             name = "yarnpnp2nix-plugin-upgrade-deps";
             runtimeInputs = [ yarnBerry ];

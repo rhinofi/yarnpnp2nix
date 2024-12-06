@@ -3,7 +3,7 @@
 with lib;
 
 let
-  nixPlugin = "${defaultPkgs.callPackage ../yarnPlugin.nix {}}/plugin.js";
+  nixPlugin = defaultPkgs.callPackage ../yarnPlugin.nix {};
   yarnBin = "${defaultPkgs.yarnBerry}/bin/yarn";
 
   setupYarnBinScript = ''

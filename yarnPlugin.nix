@@ -10,11 +10,6 @@ stdenv.mkDerivation {
   name = "yarn-plugin-yarnpnp2nix.js";
   phases = [ "build" ];
 
-  buildInputs = [
-    yarnBerry
-    nodejs
-  ];
-
   src = lib.fileset.toSource {
     root = ./.;
     fileset = lib.fileset.unions [
