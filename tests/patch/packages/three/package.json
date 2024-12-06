@@ -1,0 +1,11 @@
+{
+  "name": "three",
+  "packageManager": "yarn@4.5.1",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "one": "workspace:^",
+    "two": "workspace:^"
+  },
+  "bin": "./index.js"
+}

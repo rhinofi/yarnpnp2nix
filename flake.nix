@@ -42,14 +42,30 @@
               yarn up -E @yarnpkg/cli @yarnpkg/core @yarnpkg/fslib @yarnpkg/libzip @yarnpkg/plugin-file @yarnpkg/plugin-pnp @yarnpkg/pnp @yarnpkg/builder
             '';
           };
+          tests = {
+            patch = pkgs.yarnpnp2nixLib.mkYarnPackagesFromManifest {
+              yarnManifest = import ./tests/patch/yarn-manifest.nix;
+            };
+          };
+          devShells = {
+            default = pkgs.mkShell {
+              packages = with pkgs; [
+                nodejs
+                yarnBerry
+              ];
+            };
+            tests-patch = pkgs.mkShell {
+              packages = with pkgs; [
+                nodejs
+                yarnBerry
+              ];
+              shellHook = ''
+                export YARN_PLUGINS=${pkgs.yarn-plugin-yarnpnp2nix};
+              '';
+            };
+          };
         };
         lib = pkgs.yarnpnp2nixLib;
-        devShell = pkgs.mkShell {
-          packages = with pkgs; [
-            nodejs
-            yarnBerry
-          ];
-        };
       }
     ))
     //

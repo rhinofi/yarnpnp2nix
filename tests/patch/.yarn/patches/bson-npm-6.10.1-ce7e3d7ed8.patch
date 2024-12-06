@@ -1,0 +1,12 @@
+diff --git a/package.json b/package.json
+index cd41027ae388b0e28fd6098d1b107d3a4dc04e4c..bdc54f680f95553b7c8ce9808a7a87f3293d7d3d 100644
+--- a/package.json
++++ b/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "bson",
+-  "description": "A bson parser for node.js and the browser",
++  "description": "A bson parser for node.js and the browser (patched)",
+   "keywords": [
+     "mongodb",
+     "bson",

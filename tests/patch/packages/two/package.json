@@ -1,0 +1,9 @@
+{
+  "name": "two",
+  "packageManager": "yarn@4.5.1",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "bson": "patch:bson@npm%3A6.10.1#~/.yarn/patches/bson-npm-6.10.1-ce7e3d7ed8.patch"
+  }
+}
