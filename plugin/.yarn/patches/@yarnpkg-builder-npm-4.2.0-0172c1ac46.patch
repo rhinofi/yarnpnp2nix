@@ -1,0 +1,29 @@
+diff --git a/lib/commands/build/plugin.js b/lib/commands/build/plugin.js
+index f32bc4334113e3621b156713c858d022459b5ff1..7bcd814f2fc5c4f3a64918eda2f8eb2259048268 100644
+--- a/lib/commands/build/plugin.js
++++ b/lib/commands/build/plugin.js
+@@ -34,6 +34,9 @@ class BuildPluginCommand extends clipanion_1.Command {
+         this.metafile = clipanion_1.Option.Boolean(`--metafile`, false, {
+             description: `Emit a metafile next to the bundle`,
+         });
++        this.outDir = clipanion_1.Option.String(`--out-dir`, 'bundles', {
++            description: `path to output directory`,
++        });
+     }
+     async execute() {
+         const basedir = process.cwd();
+@@ -41,9 +44,12 @@ class BuildPluginCommand extends clipanion_1.Command {
+         const configuration = core_1.Configuration.create(portableBaseDir);
+         const { name: rawName, main } = require(`${basedir}/package.json`);
+         const name = getNormalizedName(rawName);
++        const bundlesDir = path_1.default.isAbsolute(this.outDir)
++            ? this.outDir
++            : fslib_1.ppath.join(portableBaseDir, this.outDir);
+         const prettyName = core_1.structUtils.prettyIdent(configuration, core_1.structUtils.parseIdent(name));
+-        const output = fslib_1.ppath.join(portableBaseDir, `bundles/${name}.js`);
+-        const metafile = this.metafile ? fslib_1.ppath.join(portableBaseDir, `bundles/${name}.meta.json`) : false;
++        const output = fslib_1.ppath.join(bundlesDir, `${name}.js`);
++        const metafile = this.metafile ? fslib_1.ppath.join(bundlesDir, `${name}.meta.json`) : false;
+         await fslib_1.xfs.mkdirPromise(fslib_1.ppath.dirname(output), { recursive: true });
+         const report = await core_1.StreamReport.start({
+             configuration,

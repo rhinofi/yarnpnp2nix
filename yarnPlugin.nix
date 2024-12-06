@@ -1,11 +1,42 @@
-{ stdenv, lib, yarnBerry, nodejs, jq }:
-
+{ stdenv, lib, yarnBerry, nodejs, writeShellApplication }:
+let
+  build = writeShellApplication {
+    name = "build-yarn-plugin";
+    runtimeInputs = [ yarnBerry nodejs ];
+    text = builtins.readFile ./plugin/build.sh;
+  };
+in
 stdenv.mkDerivation {
-  name = "yarn-plugin-yarnpnp2nix";
+  name = "yarn-plugin-yarnpnp2nix.js";
   phases = [ "build" ];
 
+  buildInputs = [
+    yarnBerry
+    nodejs
+  ];
+
+  src = lib.fileset.toSource {
+    root = ./.;
+    fileset = lib.fileset.unions [
+      ./plugin/sources/index.ts
+      ./plugin/.yarnrc.yml
+      ./plugin/.yarn/cache
+      ./plugin/.yarn/patches
+      ./plugin/package.json
+      ./plugin/tsconfig.json
+      ./plugin/yarn.lock
+      ./plugin/.pnp.cjs
+      ./plugin/.pnp.loader.mjs
+      ./lib/getExistingManifest.nix.txt
+    ];
+  };
   build = ''
-    mkdir -p $out
-    cp ${./plugin/dist/plugin-yarnpnp2nix.js} $out/plugin.js
+    tmpDir=$PWD
+    cd $src/plugin
+
+    export YARN_INSTALL_STATE_PATH=$tmpDir/install-state.gz
+    ${lib.getExe build} --out-dir $tmpDir
+
+    mv $tmpDir/@yarnpkg/* $out
   '';
 }
