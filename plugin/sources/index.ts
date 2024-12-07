@@ -487,6 +487,7 @@ export default {
       const packageManifest: any = {}
 
       for (const [__, pkg] of project.storedPackages) {
+        const isPatch = pkg.reference?.startsWith?.('patch:')
         // include virtual packages so that peerDependencies work easily
         const isVirtual = structUtils.isVirtualLocator(pkg)
         // if (structUtils.isVirtualLocator(pkg)) {
@@ -504,11 +505,19 @@ export default {
 
         if (!localPath) {
           const fileParsedSpec = fileUtils.parseSpec(canonicalPackage.reference)
-          if (fileParsedSpec?.parentLocator != null && fileParsedSpec?.path != null) {
-            const parentLocalPath = fetcher.getLocalPath(fileParsedSpec.parentLocator, fetchOptions)
-            const resolvedPath = path.resolve(parentLocalPath, fileParsedSpec.path)
-            if (resolvedPath != null) {
-              localPath = resolvedPath
+
+          if (fileParsedSpec != null && fileParsedSpec.path != null) {
+            const { parentLocator, path: pkgPath } = fileParsedSpec
+            if (parentLocator == null) {
+              if (isPatch && pkgPath.startsWith(`~/`)) {
+                localPath = path.join(project.cwd, pkgPath.slice(2))
+              }
+            } else {
+              const parentLocalPath = fetcher.getLocalPath(parentLocator, fetchOptions)
+              const resolvedPath = path.resolve(parentLocalPath, pkgPath)
+              if (resolvedPath != null) {
+                localPath = resolvedPath
+              }
             }
           }
         }

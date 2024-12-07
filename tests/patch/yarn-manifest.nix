@@ -21,6 +21,8 @@ let
       linkType = "HARD";
       outputName = "bson-6.10.1-57604a837f";
       outputHash = "304561ab6e32a26a2220015870f43fdc885878e88eb3a8be83af721bedcf5fefc2314b4433363818ef5d062b72dd9a2e6502a67abec752d36017cd122e49a97d";
+      src = ./.yarn/patches/bson-npm-6.10.1-ce7e3d7ed8.patch;
+      shouldBeUnplugged = true;
       flatName = "bson";
       languageName = "node";
       scope = null;
