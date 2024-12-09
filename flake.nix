@@ -23,6 +23,7 @@
           inherit system;
           overlays = [overlay];
         };
+        inherit (pkgs) lib;
       in
       {
         packages = rec {
@@ -43,9 +44,22 @@
             '';
           };
           tests = {
-            patch = pkgs.yarnpnp2nixLib.mkYarnPackagesFromManifest {
-              yarnManifest = import ./tests/patch/yarn-manifest.nix;
-            };
+            patch = let
+              workspace = pkgs.yarnpnp2nixLib.mkYarnPackagesFromManifest {
+                yarnManifest = import ./tests/patch/yarn-manifest.nix;
+              };
+            in
+            pkgs.runCommand "test-patch" {} ''
+              result=$(${lib.getExe workspace."three@workspace:packages/three"})
+              echo result: $result
+
+              if [[ $result == true ]]; then
+                echo ok > $out
+              else
+                echo "expected true, got: $result"
+                exit 1
+              fi
+            '';
           };
         };
         devShells = {

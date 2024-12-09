@@ -4,6 +4,8 @@ set -e
 
 system="$(nix eval --impure --json --expr builtins.currentSystem | jq -r)"
 
+nix build -L ".#packages.$system.tests.patch" --no-link -L
+
 pushd test
 
 nix eval --json .#packages.aarch64-darwin.testa.transitiveRuntimePackages
