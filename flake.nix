@@ -47,22 +47,22 @@
               yarnManifest = import ./tests/patch/yarn-manifest.nix;
             };
           };
-          devShells = {
-            default = pkgs.mkShell {
-              packages = with pkgs; [
-                nodejs
-                yarnBerry
-              ];
-            };
-            tests-patch = pkgs.mkShell {
-              packages = with pkgs; [
-                nodejs
-                yarnBerry
-              ];
-              shellHook = ''
-                export YARN_PLUGINS=${pkgs.yarn-plugin-yarnpnp2nix};
-              '';
-            };
+        };
+        devShells = {
+          default = pkgs.mkShell {
+            packages = with pkgs; [
+              nodejs
+              yarnBerry
+            ];
+          };
+          tests-patch = pkgs.mkShell {
+            packages = with pkgs; [
+              nodejs
+              yarnBerry
+            ];
+            shellHook = ''
+              export YARN_PLUGINS=${pkgs.yarn-plugin-yarnpnp2nix};
+            '';
           };
         };
         lib = pkgs.yarnpnp2nixLib;
