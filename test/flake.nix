@@ -2,7 +2,7 @@
   description = "A very basic flake";
 
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs?rev=8e3fad82be64c06fbfb9fd43993aec9ef4623936;
+    nixpkgs.url = github:nixos/nixpkgs?rev=566e53c2ad750c84f6d31f9ccb9d00f823165550;
     utils.url = github:gytis-ivaskevicius/flake-utils-plus;
     yarnpnp2nix.url = "../.";
     yarnpnp2nix.inputs.nixpkgs.follows = "nixpkgs";
@@ -21,7 +21,7 @@
           inherit packageOverrides;
         };
         packageOverrides = {
-          "canvas@npm:2.10.1" = {
+          "canvas@npm:2.11.2" = {
             # Let node-gyp find node headers
             # see:
             # - https://github.com/NixOS/nixpkgs/issues/195404
@@ -37,11 +37,12 @@
               autoconf zlib gcc automake pkg-config libtool file
               python3
               pixman cairo pango libpng libjpeg giflib librsvg libwebp libuuid
+              python3Packages.distutils
             ] ++ (if pkgs.stdenv.isDarwin then [ darwin.apple_sdk.frameworks.CoreText ] else []));
           };
           "sharp@npm:0.31.1" = {
             preInstallScript = "export npm_config_nodedir=${pkgs.nodejs}";
-            buildInputs = with pkgs; [pkg-config vips nodejs.python];
+            buildInputs = with pkgs; [pkg-config vips python3 python3Packages.distutils];
           };
           "testa@workspace:packages/testa" = {
             filterDependencies = dep: dep != "color" && dep != "testf";
@@ -70,7 +71,7 @@
           testb = yarnPackages."testb@workspace:packages/testb";
           teste = yarnPackages."teste@workspace:packages/teste";
           sharp = yarnPackages."sharp@npm:0.31.1";
-          canvas = yarnPackages."canvas@npm:2.10.1";
+          canvas = yarnPackages."canvas@npm:2.11.2";
           open = yarnPackages."open@patch:open@npm%3A8.4.0#.yarn/patches/open-npm-8.4.0-df63cfe537::version=8.4.0&hash=caabd2&locator=root-workspace-0b6124%40workspace%3A.";
           test-tgz = yarnPackages."test-tgz-redux-saga-core@file:../../localPackageTests/test-tgz-redux-saga-core.tgz#../../localPackageTests/test-tgz-redux-saga-core.tgz::hash=b2ff7c&locator=testb%40workspace%3Apackages%2Ftestb";
         };
@@ -92,7 +93,7 @@
           packages = with pkgs; [
             nodejs
             yarnBerry
-          ] ++ packageOverrides."canvas@npm:2.10.1".buildInputs;
+          ] ++ packageOverrides."canvas@npm:2.11.2".buildInputs;
 
           # inputsFrom = builtins.filter (p: p.shouldBeUnplugged or false) allYarnPackages;
 

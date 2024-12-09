@@ -3447,21 +3447,21 @@ let
       descriptorRange = "npm:^1.0.30001400";
       checksum = "10c0/ae6c3ef46ef62fa18ca31ab049d00ce63ed84bf3c4aa8e2a723b3907eb15341b6456538cab6a52f228bd90b201deba62c105767989b35294dd8ff9188ac0a1fc";
     };
-    "canvas@npm:2.10.1" = {
+    "canvas@npm:2.11.2" = {
       name = "canvas";
-      reference = "npm:2.10.1";
+      reference = "npm:2.11.2";
       linkType = "HARD";
-      outputName = "canvas-2.10.1-2f4cd381e7";
-      outputHash = "7fd224e9f36d6e22ce20f7be2eb24b75a4cff5557fec6ac1286dff259705f2cb48aa15c8374813fbbb610be81f39e39cbcfcbb7918d1436ae5fcdc07e0872ea9";
+      outputName = "canvas-2.11.2-824d893a31";
+      outputHash = "943368798ad1b66b18633aa34b6181e1038dac5433fc9727cd07be35f0a633f572b60d9edb95f5ff90b6a9128e86d5312035f91a2934101c73185b15d906230a";
       shouldBeUnplugged = true;
       flatName = "canvas";
       languageName = "node";
       scope = null;
-      descriptorRange = "npm:^2.10.1";
-      checksum = "10c0/7fd224e9f36d6e22ce20f7be2eb24b75a4cff5557fec6ac1286dff259705f2cb48aa15c8374813fbbb610be81f39e39cbcfcbb7918d1436ae5fcdc07e0872ea9";
+      descriptorRange = "npm:2.11.2";
+      checksum = "10c0/943368798ad1b66b18633aa34b6181e1038dac5433fc9727cd07be35f0a633f572b60d9edb95f5ff90b6a9128e86d5312035f91a2934101c73185b15d906230a";
       dependencies = {
         "@mapbox/node-pre-gyp" = packages."@mapbox/node-pre-gyp@npm:1.0.10";
-        "nan" = packages."nan@npm:2.17.0";
+        "nan" = packages."nan@npm:2.22.0";
         "node-gyp" = packages."node-gyp@npm:9.3.0";
         "simple-get" = packages."simple-get@npm:3.1.1";
       };
@@ -4899,13 +4899,14 @@ let
       reference = "patch:fsevents@npm%3A2.3.2#optional!builtin<compat/fsevents>::version=2.3.2&hash=df0bf1";
       linkType = "HARD";
       outputName = "fsevents-2.3.2-19706e7e35";
-      outputHash = "";
+      outputHash = "f9fcd7a9f17027137f4c25aafd18a7eb1b5521a673f8e913b93521693409dc67581517a98b0e4b55bfa0ca45beb90d630e0c4532af465cb26d812f96fd98b7e0";
       shouldBeUnplugged = true;
       installCondition = stdenv: (stdenv.isDarwin);
       flatName = "fsevents";
       languageName = "node";
       scope = null;
       descriptorRange = "patch:fsevents@npm%3A^2.3.2#optional!builtin<compat/fsevents>";
+      checksum = "10c0/f9fcd7a9f17027137f4c25aafd18a7eb1b5521a673f8e913b93521693409dc67581517a98b0e4b55bfa0ca45beb90d630e0c4532af465cb26d812f96fd98b7e0";
       dependencies = {
         "node-gyp" = packages."node-gyp@npm:9.3.0";
       };
@@ -7163,18 +7164,18 @@ let
       descriptorRange = "npm:^2.0.0";
       checksum = "10c0/d924b57e7312b3b63ad21fc5b3dc0af5e78d61a1fc7cfb5457edaf26326bf62be5307cc87ffb6862ef1c2b33b0233cdb5d4f01c4c958cc0d660948b65a287a48";
     };
-    "nan@npm:2.17.0" = {
+    "nan@npm:2.22.0" = {
       name = "nan";
-      reference = "npm:2.17.0";
+      reference = "npm:2.22.0";
       linkType = "HARD";
-      outputName = "nan-2.17.0-bf36a21d6f";
-      outputHash = "4a231a62dba025f4c4fa814c1e6ffeb450c5cd0852b780f19fe4ea22b86ba0f1f394406dfd628c67fb7f0987e982fa230da1fbd3632258f927b8defd7046c1ad";
+      outputName = "nan-2.22.0-3750ad85d9";
+      outputHash = "d5d31aefdb218deba308d44867c5f432b4d3aabeb57c70a2b236d62652e9fee7044e5d5afd380d9fef022fe7ebb2f2d6c85ca3cbcac5031aaca3592c844526bb";
       shouldBeUnplugged = true;
       flatName = "nan";
       languageName = "node";
       scope = null;
-      descriptorRange = "npm:^2.15.0";
-      checksum = "10c0/4a231a62dba025f4c4fa814c1e6ffeb450c5cd0852b780f19fe4ea22b86ba0f1f394406dfd628c67fb7f0987e982fa230da1fbd3632258f927b8defd7046c1ad";
+      descriptorRange = "npm:^2.17.0";
+      checksum = "10c0/d5d31aefdb218deba308d44867c5f432b4d3aabeb57c70a2b236d62652e9fee7044e5d5afd380d9fef022fe7ebb2f2d6c85ca3cbcac5031aaca3592c844526bb";
       dependencies = {
         "node-gyp" = packages."node-gyp@npm:9.3.0";
       };
@@ -9556,7 +9557,7 @@ let
         "testb" = "./index.js";
       };
       dependencies = {
-        "canvas" = packages."canvas@npm:2.10.1";
+        "canvas" = packages."canvas@npm:2.11.2";
         "fsevents" = packages."fsevents@patch:fsevents@npm%3A2.3.2#optional!builtin<compat/fsevents>::version=2.3.2&hash=df0bf1";
         "open" = packages."open@patch:open@npm%3A8.4.0#.yarn/patches/open-npm-8.4.0-df63cfe537::version=8.4.0&hash=68ae10&locator=root-workspace-0b6124%40workspace%3A.";
         "react-scheduler" = packages."react-scheduler@npm:0.1.0";
