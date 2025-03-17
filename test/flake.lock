@@ -96,15 +96,14 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 0,
-        "narHash": "sha256-epVROPRFcdYEx9pvtCVNuaFqkWIdz9agjW7x0VKVxnc=",
-        "path": "/nix/store/bzw914mkiclr593pabhwq8rma39qrq1x-source",
+        "path": "../.",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/bzw914mkiclr593pabhwq8rma39qrq1x-source",
+        "path": "../.",
         "type": "path"
-      }
+      },
+      "parent": []
     }
   },
   "root": "root",
