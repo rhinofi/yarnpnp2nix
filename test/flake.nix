@@ -63,7 +63,7 @@
         allYarnPackages = builtins.attrValues yarnPackages;
 
         packages = {
-          inherit pkgs yarnPackages;
+          inherit yarnPackages;
           yarn-plugin = yarnpnp2nix.packages."${pkgs.stdenv.system}".yarn-plugin;
           react = yarnPackages."react@npm:18.2.0";
           esbuild = yarnPackages."esbuild@npm:0.15.10";
@@ -72,11 +72,24 @@
           teste = yarnPackages."teste@workspace:packages/teste";
           sharp = yarnPackages."sharp@npm:0.31.1";
           canvas = yarnPackages."canvas@npm:2.11.2";
-          open = yarnPackages."open@patch:open@npm%3A8.4.0#.yarn/patches/open-npm-8.4.0-df63cfe537::version=8.4.0&hash=caabd2&locator=root-workspace-0b6124%40workspace%3A.";
+          open = yarnPackages."open@patch:open@npm%3A8.4.0#.yarn/patches/open-npm-8.4.0-df63cfe537::version=8.4.0&hash=68ae10&locator=root-workspace-0b6124%40workspace%3A.";
           test-tgz = yarnPackages."test-tgz-redux-saga-core@file:../../localPackageTests/test-tgz-redux-saga-core.tgz#../../localPackageTests/test-tgz-redux-saga-core.tgz::hash=b2ff7c&locator=testb%40workspace%3Apackages%2Ftestb";
         };
+        yarn-packages = {
+          inherit (packages)
+            react
+            esbuild
+            testa
+            testb
+            teste
+            sharp
+            canvas
+            open
+            test-tgz
+          ;
+        };
       in {
-        inherit packages;
+        inherit packages yarn-packages;
         images = {
           testa = pkgs.dockerTools.streamLayeredImage {
             name = "testa";
