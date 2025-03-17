@@ -3,30 +3,42 @@
 with lib;
 
 let
-  nixPlugin = defaultPkgs.callPackage ../yarnPlugin.nix {};
+  nixPlugin = defaultPkgs.callPackage ../yarnPlugin.nix { };
   yarnBin = "${defaultPkgs.yarnBerry}/bin/yarn";
 
   setupYarnBinScript = ''
     export YARN_PLUGINS=${nixPlugin}
   '';
 
-  resolvePkg = pkg: if hasAttr "canonicalPackage" pkg then (
-    pkg.canonicalPackage //
-    (if hasAttr "dependencies" pkg then { inherit (pkg) dependencies; } else {}) //
-    (if hasAttr "devDependencies" pkg then { inherit (pkg) devDependencies; } else {})
-   ) else pkg;
+  resolvePkg =
+    pkg:
+    if hasAttr "canonicalPackage" pkg then
+      (
+        pkg.canonicalPackage
+        // (if hasAttr "dependencies" pkg then { inherit (pkg) dependencies; } else { })
+        // (if hasAttr "devDependencies" pkg then { inherit (pkg) devDependencies; } else { })
+      )
+    else
+      pkg;
 
   mkYarnPackagesFromManifest =
     {
       pkgs ? defaultPkgs,
       yarnManifest,
-      packageOverrides ? {},
+      packageOverrides ? { },
     }:
     let
-      mergedManifest = applyPackageOverrides { inherit yarnManifest; inherit packageOverrides; };
-      allPackageData = buildPackageDataFromYarnManifest { inherit pkgs; yarnManifest = mergedManifest; };
+      mergedManifest = applyPackageOverrides {
+        inherit yarnManifest;
+        inherit packageOverrides;
+      };
+      allPackageData = buildPackageDataFromYarnManifest {
+        inherit pkgs;
+        yarnManifest = mergedManifest;
+      };
     in
-    mapAttrs (key: value:
+    mapAttrs (
+      key: value:
       mkYarnPackageFromManifest_internal {
         package = key;
         inherit pkgs;
@@ -35,7 +47,8 @@ let
       }
     ) yarnManifest;
 
-  rewritePackageRef = pkg: allPackages:
+  rewritePackageRef =
+    pkg: allPackages:
     let
       ref = "${pkg.name}@${pkg.reference}";
     in
@@ -47,24 +60,44 @@ let
       packageOverrides,
     }:
     let
-      merged = mapAttrs (key: packageManifest:
+      merged = mapAttrs (
+        key: packageManifest:
         let
-          mergedPackage = if hasAttr key packageOverrides
-            then
+          mergedPackage =
+            if hasAttr key packageOverrides then
               let
                 overridesAsAttrsOrFunc = packageOverrides."${key}";
-                overridesAsAttrs = if builtins.isFunction overridesAsAttrsOrFunc
-                  then overridesAsAttrsOrFunc packageManifest
-                  else overridesAsAttrsOrFunc
-                ;
+                overridesAsAttrs =
+                  if builtins.isFunction overridesAsAttrsOrFunc then
+                    overridesAsAttrsOrFunc packageManifest
+                  else
+                    overridesAsAttrsOrFunc;
               in
-                recursiveUpdate packageManifest overridesAsAttrs
-            else packageManifest;
+              recursiveUpdate packageManifest overridesAsAttrs
+            else
+              packageManifest;
         in
-        mergedPackage //
-        (if hasAttr "canonicalPackage" mergedPackage then { canonicalPackage = rewritePackageRef mergedPackage.canonicalPackage merged; } else {}) //
-        (if hasAttr "dependencies" mergedPackage then { dependencies = mapAttrs (__: pkg: rewritePackageRef pkg merged) mergedPackage.dependencies; } else {}) //
-        (if hasAttr "devDependencies" mergedPackage then { devDependencies = mapAttrs (__: pkg: rewritePackageRef pkg merged) mergedPackage.devDependencies; } else {})
+        mergedPackage
+        // (
+          if hasAttr "canonicalPackage" mergedPackage then
+            { canonicalPackage = rewritePackageRef mergedPackage.canonicalPackage merged; }
+          else
+            { }
+        )
+        // (
+          if hasAttr "dependencies" mergedPackage then
+            { dependencies = mapAttrs (__: pkg: rewritePackageRef pkg merged) mergedPackage.dependencies; }
+          else
+            { }
+        )
+        // (
+          if hasAttr "devDependencies" mergedPackage then
+            {
+              devDependencies = mapAttrs (__: pkg: rewritePackageRef pkg merged) mergedPackage.devDependencies;
+            }
+          else
+            { }
+        )
       ) yarnManifest;
     in
     merged;
@@ -104,7 +137,9 @@ let
         ${yarnBin} nix create-lockfile $tmpDir/packageRegistryData.json
       '';
     in
-    { inherit createPackageRegistryData createLockFileScript; };
+    {
+      inherit createPackageRegistryData createLockFileScript;
+    };
 
   mkYarnPackage_internal =
     {
@@ -116,25 +151,47 @@ let
       allPackageData,
       nodejsPackage,
       build ? "",
-      buildInputs ? [],
-      nativeBuildInputs ? [],
+      buildInputs ? [ ],
+      nativeBuildInputs ? [ ],
       preInstallScript ? "",
       postInstallScript ? "",
       __noChroot ? null,
     }:
     let
       nodeBin = "${nodejsPackage}/bin/node";
-      finalDerivationOverrides = packageManifest.finalDerivationOverrides or {};
-      shouldBeUnplugged = if builtins.hasAttr "shouldBeUnplugged" packageManifest then packageManifest.shouldBeUnplugged else false;
+      finalDerivationOverrides = packageManifest.finalDerivationOverrides or { };
+      shouldBeUnplugged =
+        if builtins.hasAttr "shouldBeUnplugged" packageManifest then
+          packageManifest.shouldBeUnplugged
+        else
+          false;
       locatorString = "${name}@${reference}";
       reference = packageManifest.reference;
-      bin = if builtins.hasAttr "bin" packageManifest && packageManifest.bin != null then packageManifest.bin else null;
+      bin =
+        if builtins.hasAttr "bin" packageManifest && packageManifest.bin != null then
+          packageManifest.bin
+        else
+          null;
       useMjsLoader = packageManifest.useMjsLoader or true;
 
-      _outputHash = if builtins.hasAttr "outputHash" packageManifest && packageManifest.outputHash != null then packageManifest.outputHash else null;
-      _platformOutputHash = if builtins.hasAttr "outputHashByPlatform" packageManifest && packageManifest.outputHashByPlatform != null then (
-        if builtins.hasAttr pkgs.stdenv.system packageManifest.outputHashByPlatform then packageManifest.outputHashByPlatform."${pkgs.stdenv.system}" else ""
-      ) else null;
+      _outputHash =
+        if builtins.hasAttr "outputHash" packageManifest && packageManifest.outputHash != null then
+          packageManifest.outputHash
+        else
+          null;
+      _platformOutputHash =
+        if
+          builtins.hasAttr "outputHashByPlatform" packageManifest
+          && packageManifest.outputHashByPlatform != null
+        then
+          (
+            if builtins.hasAttr pkgs.stdenv.system packageManifest.outputHashByPlatform then
+              packageManifest.outputHashByPlatform."${pkgs.stdenv.system}"
+            else
+              ""
+          )
+        else
+          null;
       outputHash = if _platformOutputHash != null then _platformOutputHash else _outputHash;
 
       isSourceTgz = src != null && (last (splitString "." src)) == "tgz";
@@ -144,17 +201,22 @@ let
       willBuild = !willFetch;
       willOutputBeZip = src == null && shouldBeUnplugged == false;
 
-      locatorJSON = builtins.toJSON (builtins.toJSON {
-        name = packageManifest.flatName;
-        scope = packageManifest.scope;
-        reference = packageManifest.reference;
-      });
+      locatorJSON = builtins.toJSON (
+        builtins.toJSON {
+          name = packageManifest.flatName;
+          scope = packageManifest.scope;
+          reference = packageManifest.reference;
+        }
+      );
 
-      locatorToFetchJSON = builtins.toJSON (builtins.toJSON {
-        name = packageManifest.flatName;
-        scope = packageManifest.scope;
-        reference = if isSourcePatch then (head (splitString "#" reference)) + "#${src}" else packageManifest.reference;
-      });
+      locatorToFetchJSON = builtins.toJSON (
+        builtins.toJSON {
+          name = packageManifest.flatName;
+          scope = packageManifest.scope;
+          reference =
+            if isSourcePatch then (head (splitString "#" reference)) + "#${src}" else packageManifest.reference;
+        }
+      );
 
       packageRegistry = buildPackageRegistry {
         inherit pkgs;
@@ -169,7 +231,7 @@ let
         })
         createLockFileScript
         createPackageRegistryData
-      ;
+        ;
 
       createShellRuntimeEnvironment =
         {
@@ -198,23 +260,29 @@ let
             cp $tmpDir/yarn.lock $out
             cp $tmpDir/packageRegistryData.json $out
 
-            ${concatStringsSep "\n" (mapAttrsToList (binKey: { pkg, binScript }: ''
-            cat << EOF > $out/bin/${binKey}
-            #!${pkgs.bashInteractive}/bin/bash
+            ${concatStringsSep "\n" (
+              mapAttrsToList (
+                binKey:
+                { pkg, binScript }:
+                ''
+                  cat << EOF > $out/bin/${binKey}
+                  #!${pkgs.bashInteractive}/bin/bash
 
-            pnpDir="\$(mktemp -d)"
-            (cd $out && YARN_PLUGINS=${nixPlugin} ${yarnBin} nix generate-pnp-file \$pnpDir $out/packageRegistryData.json "${locatorString}")
-            binPackageLocation="\$(${nodeBin} -r \$pnpDir/.pnp.cjs -e 'console.log(require("pnpapi").getPackageInformation({ name: process.argv[1], reference: process.argv[2] })?.packageLocation)' "${pkg.name}" "${pkg.reference}")"
+                  pnpDir="\$(mktemp -d)"
+                  (cd $out && YARN_PLUGINS=${nixPlugin} ${yarnBin} nix generate-pnp-file \$pnpDir $out/packageRegistryData.json "${locatorString}")
+                  binPackageLocation="\$(${nodeBin} -r \$pnpDir/.pnp.cjs -e 'console.log(require("pnpapi").getPackageInformation({ name: process.argv[1], reference: process.argv[2] })?.packageLocation)' "${pkg.name}" "${pkg.reference}")"
 
-            export PATH="${nodejsPackage}/bin:\''$PATH"
+                  export PATH="${nodejsPackage}/bin:\''$PATH"
 
-            nodeOptions="--require \$pnpDir/.pnp.cjs --loader ${./.pnp.loader.mjs}"
-            export NODE_OPTIONS="\''$NODE_OPTIONS \''$nodeOptions"
+                  nodeOptions="--require \$pnpDir/.pnp.cjs --loader ${./.pnp.loader.mjs}"
+                  export NODE_OPTIONS="\''$NODE_OPTIONS \''$nodeOptions"
 
-            exec ${nodeBin} \$binPackageLocation./${binScript} "\$@"
-            EOF
-            chmod +x $out/bin/${binKey}
-            '') dependencyBins)}
+                  exec ${nodeBin} \$binPackageLocation./${binScript} "\$@"
+                  EOF
+                  chmod +x $out/bin/${binKey}
+                ''
+              ) dependencyBins
+            )}
           '';
         };
 
@@ -225,42 +293,47 @@ let
         excludeDevDependencies = true;
       };
 
-      createLockFileScriptForRuntime = (mkCreateLockFileScript_internal {
-        packageRegistry = packageRegistryRuntimeOnly;
-        inherit locatorString;
-      }).createLockFileScript;
+      createLockFileScriptForRuntime =
+        (mkCreateLockFileScript_internal {
+          packageRegistry = packageRegistryRuntimeOnly;
+          inherit locatorString;
+        }).createLockFileScript;
 
-      makeFetchOnlyDerivation = outputHash: pkgs.stdenv.mkDerivation {
-        name = outputName + (if willOutputBeZip then ".zip" else "");
-        phases = ["fetchPhase"];
-        outputHashMode = "flat";
-        outputHashAlgo = "sha512";
-        outputHash = outputHash;
+      makeFetchOnlyDerivation =
+        outputHash:
+        pkgs.stdenv.mkDerivation {
+          name = outputName + (if willOutputBeZip then ".zip" else "");
+          phases = [ "fetchPhase" ];
+          outputHashMode = "flat";
+          outputHashAlgo = "sha512";
+          outputHash = outputHash;
 
-        buildInputs = with pkgs; [
-          defaultPkgs.yarnBerry
-          unzip
-          git
-          cacert
-          nodejs
-        ];
+          buildInputs = with pkgs; [
+            defaultPkgs.yarnBerry
+            unzip
+            git
+            cacert
+            nodejs
+          ];
 
-        fetchPhase = ''
-          set -euo pipefail
-          tmpDir=$PWD
-          ${setupYarnBinScript}
-          touch yarn.lock
-          echo locatorToFetchJSON: ${locatorToFetchJSON}
+          fetchPhase = ''
+            set -euo pipefail
+            tmpDir=$PWD
+            ${setupYarnBinScript}
+            touch yarn.lock
+            echo locatorToFetchJSON: ${locatorToFetchJSON}
 
-          export HOME="$tmpDir/fake-home"
-          mkdir -p "$HOME"
-          ${if isSourceTgz
-            then "${yarnBin} nix convert-to-zip ${locatorToFetchJSON} ${src} $tmpDir/output.zip"
-            else "${yarnBin} nix fetch-by-locator ${locatorToFetchJSON} $tmpDir"
-          }
-          mv $tmpDir/output.zip $out
-        '';
-      };
+            export HOME="$tmpDir/fake-home"
+            mkdir -p "$HOME"
+            ${
+              if isSourceTgz then
+                "${yarnBin} nix convert-to-zip ${locatorToFetchJSON} ${src} $tmpDir/output.zip"
+              else
+                "${yarnBin} nix fetch-by-locator ${locatorToFetchJSON} $tmpDir"
+            }
+            mv $tmpDir/output.zip $out
+          '';
+        };
       set_packageLocation_create_packageRegistryData_lockFile_and_pnp = packageLocation: ''
         packageLocation="${packageLocation}"
         mkdir -p $packageLocation
@@ -271,139 +344,162 @@ let
       unpluggedDerivation = pkgs.stdenv.mkDerivation {
         name = outputName + (if willOutputBeZip then ".zip" else "");
         phases =
-          (lib.optionals willBuild [ "buildPhase" "packPhase" ])
-          ++
-          [( if shouldBeUnplugged then "unplugPhase" else "movePhase")]
-        ;
+          (lib.optionals willBuild [
+            "buildPhase"
+            "packPhase"
+          ])
+          ++ [ (if shouldBeUnplugged then "unplugPhase" else "movePhase") ];
 
         inherit __noChroot;
 
-        buildInputs = with pkgs; [
-          defaultPkgs.yarnBerry
-          nodejsPackage
-          unzip
-        ]
-        ++ (if stdenv.isDarwin then [
-          xcbuild
-        ] else [])
-        ++ buildInputs;
+        buildInputs =
+          with pkgs;
+          [
+            defaultPkgs.yarnBerry
+            nodejsPackage
+            unzip
+          ]
+          ++ (
+            if stdenv.isDarwin then
+              [
+                xcbuild
+              ]
+            else
+              [ ]
+          )
+          ++ buildInputs;
         inherit nativeBuildInputs;
         buildPhase =
-          if willBuild && build != "" then ''
-            tmpDir=$PWD
-            ${setupYarnBinScript}
+          if willBuild && build != "" then
+            ''
+              tmpDir=$PWD
+              ${setupYarnBinScript}
 
-            ${set_packageLocation_create_packageRegistryData_lockFile_and_pnp "$out/tmp/${name}"}
+              ${set_packageLocation_create_packageRegistryData_lockFile_and_pnp "$out/tmp/${name}"}
 
-            cp -rT ${src} $packageLocation
-            chmod -R +w $packageLocation
+              cp -rT ${src} $packageLocation
+              chmod -R +w $packageLocation
 
-            mkdir -p $tmpDir/wrappedbins
-            ${yarnBin} nix make-path-wrappers $tmpDir/wrappedbins $out $tmpDir/packageRegistryData.json "${locatorString}"
+              mkdir -p $tmpDir/wrappedbins
+              ${yarnBin} nix make-path-wrappers $tmpDir/wrappedbins $out $tmpDir/packageRegistryData.json "${locatorString}"
 
-            cd $packageLocation
-            nodeOptions="--require $out/.pnp.cjs --loader $out/.pnp.loader.mjs"
-            oldNodeOptions="$NODE_OPTIONS"
-            oldPath="$PATH"
-            export NODE_OPTIONS="$NODE_OPTIONS $nodeOptions"
-            export PATH="$PATH:$tmpDir/wrappedbins"
+              cd $packageLocation
+              nodeOptions="--require $out/.pnp.cjs --loader $out/.pnp.loader.mjs"
+              oldNodeOptions="$NODE_OPTIONS"
+              oldPath="$PATH"
+              export NODE_OPTIONS="$NODE_OPTIONS $nodeOptions"
+              export PATH="$PATH:$tmpDir/wrappedbins"
 
-            ${build}
+              ${build}
 
-            export NODE_OPTIONS="$oldNodeOptions"
-            export PATH="$oldPath"
-            cd $tmpDir
-          '' else " ";
+              export NODE_OPTIONS="$oldNodeOptions"
+              export PATH="$oldPath"
+              cd $tmpDir
+            ''
+          else
+            " ";
 
         packPhase =
-          if willBuild then ''
-            tmpDir=$PWD
-            ${setupYarnBinScript}
+          if willBuild then
+            ''
+              tmpDir=$PWD
+              ${setupYarnBinScript}
 
-            ${
-              if build != ""
-              then ''
-                export YARNNIX_PACK_DIRECTORY="$packageLocation"
-              ''
-              else ''
-                touch yarn.lock
-                packageLocation=$out/node_modules/${name}
-                ${createPackageRegistryData}
-                export YARNNIX_PACK_DIRECTORY="${src}"
-              ''
-            }
+              ${
+                if build != "" then
+                  ''
+                    export YARNNIX_PACK_DIRECTORY="$packageLocation"
+                  ''
+                else
+                  ''
+                    touch yarn.lock
+                    packageLocation=$out/node_modules/${name}
+                    ${createPackageRegistryData}
+                    export YARNNIX_PACK_DIRECTORY="${src}"
+                  ''
+              }
 
-            export YARNNIX_PACKAGE_REGISTRY_DATA_PATH="$tmpDir/packageRegistryData.json"
+              export YARNNIX_PACKAGE_REGISTRY_DATA_PATH="$tmpDir/packageRegistryData.json"
 
-            ${yarnBin} pack -o $tmpDir/package.tgz
-            ${yarnBin} nix convert-to-zip ${locatorJSON} $tmpDir/package.tgz $tmpDir/output.zip
+              ${yarnBin} pack -o $tmpDir/package.tgz
+              ${yarnBin} nix convert-to-zip ${locatorJSON} $tmpDir/package.tgz $tmpDir/output.zip
 
-            ${if build != "" then "rm -rf $out" else ""}
-          '' else " ";
+              ${if build != "" then "rm -rf $out" else ""}
+            ''
+          else
+            " ";
 
         unplugPhase =
           # for debugging:
           # cp ${./pnptemp.cjs} $out/.pnp.cjs
           # sed -i "s!__PACKAGE_PATH_HERE__!$packageLocation/!" $out/.pnp.cjs
-          if shouldBeUnplugged then ''
-            tmpDir=$PWD
-            mkdir -p $out
+          if shouldBeUnplugged then
+            ''
+              tmpDir=$PWD
+              mkdir -p $out
 
-            ${if willFetch
-              then ''
-                pkg_src=${makeFetchOnlyDerivation outputHash}
-                ${setupYarnBinScript}
-                touch yarn.lock
-                ''
-              else ''
-                pkg_src=$tmpDir/output.zip
-              ''
-            }
+              ${
+                if willFetch then
+                  ''
+                    pkg_src=${makeFetchOnlyDerivation outputHash}
+                    ${setupYarnBinScript}
+                    touch yarn.lock
+                  ''
+                else
+                  ''
+                    pkg_src=$tmpDir/output.zip
+                  ''
+              }
 
-            unzip -qq -d $out $pkg_src
+              unzip -qq -d $out $pkg_src
 
-            ${set_packageLocation_create_packageRegistryData_lockFile_and_pnp "$out/node_modules/${name}"}
+              ${set_packageLocation_create_packageRegistryData_lockFile_and_pnp "$out/node_modules/${name}"}
 
-            # create dummy home directory in case any build scripts need it
-            export HOME=$tmpDir/home
-            mkdir -p $HOME
+              # create dummy home directory in case any build scripts need it
+              export HOME=$tmpDir/home
+              mkdir -p $HOME
 
-            ${preInstallScript}
-            ${yarnBin} nix run-build-scripts ${locatorJSON} $out $packageLocation
+              ${preInstallScript}
+              ${yarnBin} nix run-build-scripts ${locatorJSON} $out $packageLocation
 
-            cd $packageLocation
-            ${postInstallScript}
+              cd $packageLocation
+              ${postInstallScript}
 
-            # create a .ready file so the output matches what yarn unplugs itself
-            # (useful if we want to be able to generate hash for unplugged output automatically)
-            touch .ready
+              # create a .ready file so the output matches what yarn unplugs itself
+              # (useful if we want to be able to generate hash for unplugged output automatically)
+              touch .ready
 
-            # if a node_modules folder was created INSIDE an unplugged package, it was probably used for caching
-            # purposes, so we can just remove it. In the offchance that this breaks something, the user
-            # can just specify an outputHash manually in packageOverrides
-            rm -rf node_modules || true
+              # if a node_modules folder was created INSIDE an unplugged package, it was probably used for caching
+              # purposes, so we can just remove it. In the offchance that this breaks something, the user
+              # can just specify an outputHash manually in packageOverrides
+              rm -rf node_modules || true
 
-            # remove .pnp.cjs here as it will break Nix (see bug below), it's okay because we recreate it later
-            # in finalDerivation
-            rm $out/.pnp.cjs
+              # remove .pnp.cjs here as it will break Nix (see bug below), it's okay because we recreate it later
+              # in finalDerivation
+              rm $out/.pnp.cjs
 
-            # set executable bit with chmod for all bin scripts
-            ${concatStringsSep "\n" (mapAttrsToList (binKey: binScript: ''
-            chmod +x $out/node_modules/${name}/${binScript}
-            patchShebangs $out/node_modules/${name}/${binScript}
-            '') (if bin != null then bin else {}))}
-          '' else " ";
+              # set executable bit with chmod for all bin scripts
+              ${concatStringsSep "\n" (
+                mapAttrsToList (binKey: binScript: ''
+                  chmod +x $out/node_modules/${name}/${binScript}
+                  patchShebangs $out/node_modules/${name}/${binScript}
+                '') (if bin != null then bin else { })
+              )}
+            ''
+          else
+            " ";
 
         movePhase =
-          if !shouldBeUnplugged then ''
-            # won't be unplugged, so move zip file to output
-            mv $tmpDir/output.zip $out
-          '' else " ";
+          if !shouldBeUnplugged then
+            ''
+              # won't be unplugged, so move zip file to output
+              mv $tmpDir/output.zip $out
+            ''
+          else
+            " ";
       };
-      packageDerivation = if shouldBeUnplugged
-        then unpluggedDerivation
-        else makeFetchOnlyDerivation outputHash
-      ;
+      packageDerivation =
+        if shouldBeUnplugged then unpluggedDerivation else makeFetchOnlyDerivation outputHash;
       # have a separate derivation that includes the .pnp.cjs and wrapped bins
       # as Nix is unable to shasum the derivation $out if it contains files that contain /nix/store paths
       # to other derivations that are fixed output derivations.
@@ -411,15 +507,13 @@ let
       # https://github.com/NixOS/nix/issues/6660
       # https://github.com/NixOS/nix/issues/7148 (maybe)
       # without this workaround we get error: unexpected end-of-file errors
-      finalDerivation = pkgs.stdenv.mkDerivation
-        # Apply overrides from packageOverrides
-        (recursiveUpdate finalDerivationAttrs finalDerivationOverrides)
-      ;
+      finalDerivation =
+        pkgs.stdenv.mkDerivation
+          # Apply overrides from packageOverrides
+          (recursiveUpdate finalDerivationAttrs finalDerivationOverrides);
       finalDerivationAttrs = {
         name = outputName;
-        phases =
-          [ "generateRuntimePhase" ] ++
-          (if bin != null then [ "wrapBinPhase" ] else []);
+        phases = [ "generateRuntimePhase" ] ++ (if bin != null then [ "wrapBinPhase" ] else [ ]);
 
         buildInputs = with pkgs; [
           defaultPkgs.yarnBerry
@@ -440,24 +534,33 @@ let
         '';
 
         wrapBinPhase =
-          if bin != null then ''
-            mkdir -p $out/bin
+          if bin != null then
+            ''
+              mkdir -p $out/bin
 
-            ${concatStringsSep "\n" (mapAttrsToList (binKey: binScript: ''
-            cat << EOF > $out/bin/${binKey}
-            #!${pkgs.bashInteractive}/bin/bash
+              ${concatStringsSep "\n" (
+                mapAttrsToList (binKey: binScript: ''
+                  cat << EOF > $out/bin/${binKey}
+                  #!${pkgs.bashInteractive}/bin/bash
 
-            export PATH="${nodejsPackage}/bin:\''$PATH"
+                  export PATH="${nodejsPackage}/bin:\''$PATH"
 
-            nodeOptions="--require $out/.pnp.cjs${lib.optionalString useMjsLoader " --loader $out/.pnp.loader.mjs" }"
-            export NODE_OPTIONS="\''$NODE_OPTIONS \''$nodeOptions"
+                  nodeOptions="--require $out/.pnp.cjs${lib.optionalString useMjsLoader " --loader $out/.pnp.loader.mjs"}"
+                  export NODE_OPTIONS="\''$NODE_OPTIONS \''$nodeOptions"
 
-            ${if shouldBeUnplugged then ''exec ${packageDerivation}/node_modules/${name}/${binScript} "\$@"''
-            else ''exec node ${packageDerivation}/node_modules/${name}/${binScript} "\$@"''}
-            EOF
-            chmod +x $out/bin/${binKey}
-            '') bin)}
-          '' else " ";
+                  ${
+                    if shouldBeUnplugged then
+                      ''exec ${packageDerivation}/node_modules/${name}/${binScript} "\$@"''
+                    else
+                      ''exec node ${packageDerivation}/node_modules/${name}/${binScript} "\$@"''
+                  }
+                  EOF
+                  chmod +x $out/bin/${binKey}
+                '') bin
+              )}
+            ''
+          else
+            " ";
 
         shellHook = ''
           tmpDir=$TMPDIR
@@ -477,21 +580,39 @@ let
         '';
       };
 
-      dependencyBins = listToAttrs (concatMap (pkg:
-        let
-          pkgRef = "${pkg.name}@${pkg.reference}";
-          packageDrv = allPackageData."${pkgRef}".drv.package;
-        in
-        mapAttrsToList (binKey: binScript: { name = binKey; value = { inherit pkg; inherit binScript; }; }) ((resolvePkg pkg).bin or {})
-      ) (mapAttrsToList (__: dep: dep) (packageManifest.dependencies or {})));
+      dependencyBins = listToAttrs (
+        concatMap (
+          pkg:
+          let
+            pkgRef = "${pkg.name}@${pkg.reference}";
+            packageDrv = allPackageData."${pkgRef}".drv.package;
+          in
+          mapAttrsToList (binKey: binScript: {
+            name = binKey;
+            value = {
+              inherit pkg;
+              inherit binScript;
+            };
+          }) ((resolvePkg pkg).bin or { })
+        ) (mapAttrsToList (__: dep: dep) (packageManifest.dependencies or { }))
+      );
 
-      devDependencyBins = listToAttrs (concatMap (pkg:
-        let
-          pkgRef = "${pkg.name}@${pkg.reference}";
-          packageDrv = allPackageData."${pkgRef}".drv.package;
-        in
-        mapAttrsToList (binKey: binScript: { name = binKey; value = { inherit pkg; inherit binScript; }; }) ((resolvePkg pkg).bin or {})
-      ) (mapAttrsToList (__: dep: dep) (packageManifest.devDependencies or {})));
+      devDependencyBins = listToAttrs (
+        concatMap (
+          pkg:
+          let
+            pkgRef = "${pkg.name}@${pkg.reference}";
+            packageDrv = allPackageData."${pkgRef}".drv.package;
+          in
+          mapAttrsToList (binKey: binScript: {
+            name = binKey;
+            value = {
+              inherit pkg;
+              inherit binScript;
+            };
+          }) ((resolvePkg pkg).bin or { })
+        ) (mapAttrsToList (__: dep: dep) (packageManifest.devDependencies or { }))
+      );
 
       shellRuntimeEnvironment = createShellRuntimeEnvironment {
         name = outputName + "-shell-environment";
@@ -505,10 +626,15 @@ let
         dependencyBins = devDependencyBins // dependencyBins;
       };
     in
-    finalDerivation // {
+    finalDerivation
+    // {
       package = packageDerivation;
       manifest = packageManifest;
-      transitiveRuntimePackages = filter (pkg: pkg != null) (mapAttrsToList (key: pkg: if pkg != null && !isString pkg.drvPath then pkg.drvPath.binDrvPath else null) packageRegistryRuntimeOnly);
+      transitiveRuntimePackages = filter (pkg: pkg != null) (
+        mapAttrsToList (
+          key: pkg: if pkg != null && !isString pkg.drvPath then pkg.drvPath.binDrvPath else null
+        ) packageRegistryRuntimeOnly
+      );
       inherit shellRuntimeEnvironment;
       inherit shellRuntimeDevEnvironment;
       # for debugging with nix eval
@@ -541,16 +667,19 @@ let
     }:
     (makeOverridable mkYarnPackage_internal {
       inherit pkgs;
-      nodejsPackage = if hasAttr "nodejsPackage" packageManifest then packageManifest.nodejsPackage else pkgs.nodejs;
+      nodejsPackage =
+        if hasAttr "nodejsPackage" packageManifest then packageManifest.nodejsPackage else pkgs.nodejs;
       inherit (packageManifest) name outputName;
       inherit packageManifest;
       inherit allPackageData;
       src = if hasAttr "src" packageManifest then packageManifest.src else null;
       build = if hasAttr "build" packageManifest then packageManifest.build else "";
-      buildInputs = if hasAttr "buildInputs" packageManifest then packageManifest.buildInputs else [];
-      preInstallScript = if hasAttr "preInstallScript" packageManifest then packageManifest.preInstallScript else "";
-      postInstallScript = if hasAttr "postInstallScript" packageManifest then packageManifest.postInstallScript else "";
-      nativeBuildInputs = packageManifest.nativeBuildInputs or [];
+      buildInputs = if hasAttr "buildInputs" packageManifest then packageManifest.buildInputs else [ ];
+      preInstallScript =
+        if hasAttr "preInstallScript" packageManifest then packageManifest.preInstallScript else "";
+      postInstallScript =
+        if hasAttr "postInstallScript" packageManifest then packageManifest.postInstallScript else "";
+      nativeBuildInputs = packageManifest.nativeBuildInputs or [ ];
       __noChroot = if hasAttr "__noChroot" packageManifest then packageManifest.__noChroot else null;
     });
 
@@ -560,51 +689,77 @@ let
       yarnManifest,
     }:
     let
-      getPackageDataForPackage = pkg:
+      getPackageDataForPackage =
+        pkg:
         let
           resolvedPkg = resolvePkg pkg;
         in
-        if hasAttr "installCondition" resolvedPkg && resolvedPkg.installCondition != null && (resolvedPkg.installCondition pkgs.stdenv) == false then null
+        if
+          hasAttr "installCondition" resolvedPkg
+          && resolvedPkg.installCondition != null
+          && (resolvedPkg.installCondition pkgs.stdenv) == false
+        then
+          null
         else
-        let
-          drv = mkYarnPackageFromPackageManifest_internal {
-            inherit pkgs;
-            inherit yarnManifest;
-            packageManifest = resolvedPkg;
-            inherit allPackageData;
-          };
-          drvForVirtual = mkYarnPackageFromPackageManifest_internal {
-            inherit pkgs;
-            inherit yarnManifest;
-            packageManifest = resolvedPkg // {
-              dependencies = pkg.dependencies or {};
-              devDependencies = pkg.devDependencies or {};
+          let
+            drv = mkYarnPackageFromPackageManifest_internal {
+              inherit pkgs;
+              inherit yarnManifest;
+              packageManifest = resolvedPkg;
+              inherit allPackageData;
             };
-            inherit allPackageData;
+            drvForVirtual = mkYarnPackageFromPackageManifest_internal {
+              inherit pkgs;
+              inherit yarnManifest;
+              packageManifest = resolvedPkg // {
+                dependencies = pkg.dependencies or { };
+                devDependencies = pkg.devDependencies or { };
+              };
+              inherit allPackageData;
+            };
+          in
+          {
+            inherit pkg;
+            inherit (pkg) name reference;
+            canonicalReference = resolvedPkg.reference;
+            inherit (resolvedPkg) linkType;
+            filterDependencies = resolvedPkg.filterDependencies or (name: true);
+            manifest = filterAttrs (
+              key: b:
+              !(builtins.elem key [
+                "src"
+                "installCondition"
+                "dependencies"
+                "devDependencies"
+                "filterDependencies"
+                "name"
+                "reference"
+              ])
+            ) resolvedPkg;
+            inherit drv;
+            inherit drvForVirtual;
+            packageDependencies =
+              (
+                if (hasAttr "dependencies" pkg && pkg.dependencies != null) then
+                  mapAttrs (name: depPkg: [
+                    depPkg.name
+                    depPkg.reference
+                  ]) pkg.dependencies
+                else
+                  { }
+              )
+              // (
+                if (hasAttr "devDependencies" pkg && pkg.devDependencies != null) then
+                  mapAttrs (name: depPkg: [
+                    depPkg.name
+                    depPkg.reference
+                  ]) pkg.devDependencies
+                else
+                  { }
+              );
           };
-        in
-        {
-          inherit pkg;
-          inherit (pkg) name reference;
-          canonicalReference = resolvedPkg.reference;
-          inherit (resolvedPkg) linkType;
-          filterDependencies = resolvedPkg.filterDependencies or (name: true);
-          manifest = filterAttrs (key: b: !(builtins.elem key [
-            "src" "installCondition" "dependencies" "devDependencies" "filterDependencies" "name" "reference"
-          ])) resolvedPkg;
-          inherit drv;
-          inherit drvForVirtual;
-          packageDependencies =
-            (if (hasAttr "dependencies" pkg && pkg.dependencies != null) then mapAttrs (name: depPkg:
-              [ depPkg.name depPkg.reference ]
-            ) pkg.dependencies else {}) //
-            (if (hasAttr "devDependencies" pkg && pkg.devDependencies != null) then mapAttrs (name: depPkg:
-              [ depPkg.name depPkg.reference ]
-            ) pkg.devDependencies else {});
-        };
 
-      allPackageData =
-        mapAttrs (__: pkg: getPackageDataForPackage pkg) yarnManifest;
+      allPackageData = mapAttrs (__: pkg: getPackageDataForPackage pkg) yarnManifest;
     in
     allPackageData;
 
@@ -617,83 +772,152 @@ let
     }:
     let
       topLevelRef = "${topLevel.name}@${topLevel.reference}";
-      getPackageDataForPackage = pkgRef:
+      getPackageDataForPackage =
+        pkgRef:
         let
           data = allPackageData.${pkgRef};
           filterDependencies = if excludeDevDependencies then data.filterDependencies else (name: true);
         in
-        if data == null then null
+        if data == null then
+          null
         else
-        {
-          inherit (data) name reference canonicalReference linkType manifest;
-          drvPath = data.drv.package // { binDrvPath = data.drv; };
-          packageDependencies = if !excludeDevDependencies then data.packageDependencies else (
-            (if (hasAttr "dependencies" data.pkg && data.pkg.dependencies != null) then mapAttrs (name: depPkg:
-              [ depPkg.name depPkg.reference ]
-            ) (filterAttrs (name: v: filterDependencies name) data.pkg.dependencies) else {})
-          );
-        };
+          {
+            inherit (data)
+              name
+              reference
+              canonicalReference
+              linkType
+              manifest
+              ;
+            drvPath = data.drv.package // {
+              binDrvPath = data.drv;
+            };
+            packageDependencies =
+              if !excludeDevDependencies then
+                data.packageDependencies
+              else
+                (
+                  (
+                    if (hasAttr "dependencies" data.pkg && data.pkg.dependencies != null) then
+                      mapAttrs (name: depPkg: [
+                        depPkg.name
+                        depPkg.reference
+                      ]) (filterAttrs (name: v: filterDependencies name) data.pkg.dependencies)
+                    else
+                      { }
+                  )
+                );
+          };
       topLevelPackageData =
-        if hasAttr "installCondition" topLevel && topLevel.installCondition != null && (topLevel.installCondition pkgs.stdenv) == false then null
+        if
+          hasAttr "installCondition" topLevel
+          && topLevel.installCondition != null
+          && (topLevel.installCondition pkgs.stdenv) == false
+        then
+          null
         else
-        let
-          filterDependencies = if excludeDevDependencies then (topLevel.filterDependencies or (name: true)) else (name: true);
-        in
-        {
-          inherit (topLevel) name reference linkType;
-          canonicalReference = topLevel.reference;
-          manifest = filterAttrs (key: b: !(builtins.elem key [
-            "src" "installCondition" "dependencies" "devDependencies" "filterDependencies"
-          ])) topLevel;
-          drvPath = "/dev/null"; # if package is toplevel package then the location is determined in the buildPhase as it will be $out
-          packageDependencies =
-            (if (hasAttr "dependencies" topLevel && topLevel.dependencies != null) then mapAttrs (name: depPkg:
-              [ depPkg.name depPkg.reference ]
-            ) (filterAttrs (name: v: filterDependencies name) topLevel.dependencies) else {}) //
-            (if (!excludeDevDependencies && hasAttr "devDependencies" topLevel && topLevel.devDependencies != null) then mapAttrs (name: depPkg:
-              [ depPkg.name depPkg.reference ]
-            ) (filterAttrs (name: v: filterDependencies name) topLevel.devDependencies) else {});
-        };
+          let
+            filterDependencies =
+              if excludeDevDependencies then (topLevel.filterDependencies or (name: true)) else (name: true);
+          in
+          {
+            inherit (topLevel) name reference linkType;
+            canonicalReference = topLevel.reference;
+            manifest = filterAttrs (
+              key: b:
+              !(builtins.elem key [
+                "src"
+                "installCondition"
+                "dependencies"
+                "devDependencies"
+                "filterDependencies"
+              ])
+            ) topLevel;
+            drvPath = "/dev/null"; # if package is toplevel package then the location is determined in the buildPhase as it will be $out
+            packageDependencies =
+              (
+                if (hasAttr "dependencies" topLevel && topLevel.dependencies != null) then
+                  mapAttrs (name: depPkg: [
+                    depPkg.name
+                    depPkg.reference
+                  ]) (filterAttrs (name: v: filterDependencies name) topLevel.dependencies)
+                else
+                  { }
+              )
+              // (
+                if
+                  (!excludeDevDependencies && hasAttr "devDependencies" topLevel && topLevel.devDependencies != null)
+                then
+                  mapAttrs (name: depPkg: [
+                    depPkg.name
+                    depPkg.reference
+                  ]) (filterAttrs (name: v: filterDependencies name) topLevel.devDependencies)
+                else
+                  { }
+              );
+          };
       # thanks to https://github.com/NixOS/nix/issues/552#issuecomment-971212372
       # for documentation and a good example on how builtins.genericClosure works
       allTransitiveDependencies = builtins.genericClosure {
-        startSet = [ { key = topLevelRef; pkg = topLevel; } ];
-        operator = { key, pkg }:
+        startSet = [
+          {
+            key = topLevelRef;
+            pkg = topLevel;
+          }
+        ];
+        operator =
+          { key, pkg }:
           let
-            filterDependencies = if excludeDevDependencies then ((resolvePkg pkg).filterDependencies or (name: true)) else (name: true);
+            filterDependencies =
+              if excludeDevDependencies then
+                ((resolvePkg pkg).filterDependencies or (name: true))
+              else
+                (name: true);
           in
-          (if hasAttr "dependencies" pkg && pkg.dependencies != null then (
-            map
-              (depName:
+          (
+            if hasAttr "dependencies" pkg && pkg.dependencies != null then
+              (map (
+                depName:
                 let
                   dep = pkg.dependencies.${depName};
                   depPkgRef = "${dep.name}@${dep.reference}";
                 in
-                { key = depPkgRef; pkg = dep; }
-              )
-              (filter filterDependencies (attrNames pkg.dependencies))
-          ) else []) ++
-          (if !excludeDevDependencies && hasAttr "devDependencies" pkg && pkg.devDependencies != null then (
-            map
-              (depName:
+                {
+                  key = depPkgRef;
+                  pkg = dep;
+                }
+              ) (filter filterDependencies (attrNames pkg.dependencies)))
+            else
+              [ ]
+          )
+          ++ (
+            if !excludeDevDependencies && hasAttr "devDependencies" pkg && pkg.devDependencies != null then
+              (map (
+                depName:
                 let
                   dep = pkg.devDependencies.${depName};
                   depPkgRef = "${dep.name}@${dep.reference}";
                 in
-                { key = depPkgRef; pkg = dep; }
-              )
-              (filter filterDependencies (attrNames pkg.devDependencies))
-          ) else []);
+                {
+                  key = depPkgRef;
+                  pkg = dep;
+                }
+              ) (filter filterDependencies (attrNames pkg.devDependencies)))
+            else
+              [ ]
+          );
       };
       packageRegistryData = listToAttrs (
-        map ({ key, pkg }:
-        let
-          package = if key == topLevelRef then topLevelPackageData else getPackageDataForPackage key;
-        in
-        {
-          name = key;
-          value = package;
-        }) allTransitiveDependencies
+        map (
+          { key, pkg }:
+          let
+            package = if key == topLevelRef then topLevelPackageData else getPackageDataForPackage key;
+          in
+          {
+            name = key;
+            value = package;
+          }
+        ) allTransitiveDependencies
       );
     in
     packageRegistryData;

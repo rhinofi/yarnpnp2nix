@@ -1,4 +1,10 @@
-{ stdenv, rsync, yarn, fetchzip, nodejs }:
+{
+  stdenv,
+  rsync,
+  yarn,
+  fetchzip,
+  nodejs,
+}:
 
 stdenv.mkDerivation {
   name = "yarn-berry";
@@ -7,7 +13,11 @@ stdenv.mkDerivation {
     sha256 = "sha256:1xp2zxhq5c466jsirsv7zjfkfip58kkdaw7v8466b5f5i14kw26b";
   };
 
-  phases = [ "getSource" "patchPhase" "build" ];
+  phases = [
+    "getSource"
+    "patchPhase"
+    "build"
+  ];
 
   patches = [
     ./yarnPatches/pack-specific-project.patch

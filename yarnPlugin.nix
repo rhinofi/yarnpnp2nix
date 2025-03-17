@@ -1,8 +1,17 @@
-{ stdenv, lib, yarnBerry, nodejs, writeShellApplication }:
+{
+  stdenv,
+  lib,
+  yarnBerry,
+  nodejs,
+  writeShellApplication,
+}:
 let
   build = writeShellApplication {
     name = "build-yarn-plugin";
-    runtimeInputs = [ yarnBerry nodejs ];
+    runtimeInputs = [
+      yarnBerry
+      nodejs
+    ];
     text = builtins.readFile ./plugin/build.sh;
   };
 in
