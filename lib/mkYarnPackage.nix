@@ -10,16 +10,30 @@ let
     export YARN_PLUGINS=${nixPlugin}
   '';
 
+  nullableAttrOr =
+    default: name: attrs:
+    let
+      value = attrs.${name} or null;
+    in
+    if value == null then default else value;
+  hasAttrNotNull =
+    name: attrs:
+    let
+      value = attrs.${name} or null;
+    in
+    value != null;
   resolvePkg =
     pkg:
-    if hasAttr "canonicalPackage" pkg then
+    if pkg ? "canonicalPackage" then
       (
         pkg.canonicalPackage
-        // (if hasAttr "dependencies" pkg then { inherit (pkg) dependencies; } else { })
-        // (if hasAttr "devDependencies" pkg then { inherit (pkg) devDependencies; } else { })
+        // (lib.optionalAttrs (pkg ? dependencies) { inherit (pkg) dependencies; })
+        // (lib.optionalAttrs (pkg ? devDependencies) { inherit (pkg) devDependencies; })
       )
     else
       pkg;
+
+  makePkgRef = pkg: "${pkg.name}@${pkg.reference}";
 
   mkYarnPackagesFromManifest =
     {
@@ -47,12 +61,7 @@ let
       }
     ) yarnManifest;
 
-  rewritePackageRef =
-    pkg: allPackages:
-    let
-      ref = "${pkg.name}@${pkg.reference}";
-    in
-    allPackages.${ref};
+  rewritePackageRef = pkg: allPackages: allPackages.${makePkgRef pkg};
 
   applyPackageOverrides =
     {
@@ -64,7 +73,7 @@ let
         key: packageManifest:
         let
           mergedPackage =
-            if hasAttr key packageOverrides then
+            if packageOverrides ? ${key} then
               let
                 overridesAsAttrsOrFunc = packageOverrides."${key}";
                 overridesAsAttrs =
@@ -78,26 +87,15 @@ let
               packageManifest;
         in
         mergedPackage
-        // (
-          if hasAttr "canonicalPackage" mergedPackage then
-            { canonicalPackage = rewritePackageRef mergedPackage.canonicalPackage merged; }
-          else
-            { }
-        )
-        // (
-          if hasAttr "dependencies" mergedPackage then
-            { dependencies = mapAttrs (__: pkg: rewritePackageRef pkg merged) mergedPackage.dependencies; }
-          else
-            { }
-        )
-        // (
-          if hasAttr "devDependencies" mergedPackage then
-            {
-              devDependencies = mapAttrs (__: pkg: rewritePackageRef pkg merged) mergedPackage.devDependencies;
-            }
-          else
-            { }
-        )
+        // (lib.optionalAttrs (mergedPackage ? canonicalPackage) {
+          canonicalPackage = rewritePackageRef mergedPackage.canonicalPackage merged;
+        })
+        // (lib.optionalAttrs (mergedPackage ? dependencies) {
+          dependencies = mapAttrs (__: pkg: rewritePackageRef pkg merged) mergedPackage.dependencies;
+        })
+        // (lib.optionalAttrs (mergedPackage ? devDependencies) {
+          devDependencies = mapAttrs (__: pkg: rewritePackageRef pkg merged) mergedPackage.devDependencies;
+        })
       ) yarnManifest;
     in
     merged;
@@ -160,38 +158,16 @@ let
     let
       nodeBin = "${nodejsPackage}/bin/node";
       finalDerivationOverrides = packageManifest.finalDerivationOverrides or { };
-      shouldBeUnplugged =
-        if builtins.hasAttr "shouldBeUnplugged" packageManifest then
-          packageManifest.shouldBeUnplugged
-        else
-          false;
+      shouldBeUnplugged = packageManifest.shouldBeUnplugged or false;
       locatorString = "${name}@${reference}";
       reference = packageManifest.reference;
-      bin =
-        if builtins.hasAttr "bin" packageManifest && packageManifest.bin != null then
-          packageManifest.bin
-        else
-          null;
+      bin = packageManifest.bin or null;
       useMjsLoader = packageManifest.useMjsLoader or true;
 
-      _outputHash =
-        if builtins.hasAttr "outputHash" packageManifest && packageManifest.outputHash != null then
-          packageManifest.outputHash
-        else
-          null;
-      _platformOutputHash =
-        if
-          builtins.hasAttr "outputHashByPlatform" packageManifest
-          && packageManifest.outputHashByPlatform != null
-        then
-          (
-            if builtins.hasAttr pkgs.stdenv.system packageManifest.outputHashByPlatform then
-              packageManifest.outputHashByPlatform."${pkgs.stdenv.system}"
-            else
-              ""
-          )
-        else
-          null;
+      _platformOutputHash = lib.mapNullable (
+        outputHashByPlatform: outputHashByPlatform."${pkgs.stdenv.system}" or ""
+      ) (packageManifest.outputHashByPlatform or null);
+      _outputHash = packageManifest.outputHash or null;
       outputHash = if _platformOutputHash != null then _platformOutputHash else _outputHash;
 
       isSourceTgz = src != null && (last (splitString "." src)) == "tgz";
@@ -243,7 +219,7 @@ let
           inherit name;
           phases = [ "generateRuntimePhase" ];
 
-          buildInputs = with pkgs; [
+          buildInputs = [
             defaultPkgs.yarnBerry
             nodejsPackage
           ];
@@ -513,9 +489,9 @@ let
           (recursiveUpdate finalDerivationAttrs finalDerivationOverrides);
       finalDerivationAttrs = {
         name = outputName;
-        phases = [ "generateRuntimePhase" ] ++ (if bin != null then [ "wrapBinPhase" ] else [ ]);
+        phases = [ "generateRuntimePhase" ] ++ (lib.optional (bin != null) "wrapBinPhase");
 
-        buildInputs = with pkgs; [
+        buildInputs = [
           defaultPkgs.yarnBerry
           nodejsPackage
         ];
@@ -583,10 +559,6 @@ let
       dependencyBins = listToAttrs (
         concatMap (
           pkg:
-          let
-            pkgRef = "${pkg.name}@${pkg.reference}";
-            packageDrv = allPackageData."${pkgRef}".drv.package;
-          in
           mapAttrsToList (binKey: binScript: {
             name = binKey;
             value = {
@@ -600,10 +572,6 @@ let
       devDependencyBins = listToAttrs (
         concatMap (
           pkg:
-          let
-            pkgRef = "${pkg.name}@${pkg.reference}";
-            packageDrv = allPackageData."${pkgRef}".drv.package;
-          in
           mapAttrsToList (binKey: binScript: {
             name = binKey;
             value = {
@@ -662,26 +630,51 @@ let
     {
       packageManifest,
       pkgs,
-      yarnManifest,
       allPackageData,
+      # Unused but expected
+      yarnManifest,
     }:
     (makeOverridable mkYarnPackage_internal {
       inherit pkgs;
-      nodejsPackage =
-        if hasAttr "nodejsPackage" packageManifest then packageManifest.nodejsPackage else pkgs.nodejs;
+      nodejsPackage = packageManifest.nodejsPackage or pkgs.nodejs;
       inherit (packageManifest) name outputName;
       inherit packageManifest;
       inherit allPackageData;
-      src = if hasAttr "src" packageManifest then packageManifest.src else null;
-      build = if hasAttr "build" packageManifest then packageManifest.build else "";
-      buildInputs = if hasAttr "buildInputs" packageManifest then packageManifest.buildInputs else [ ];
-      preInstallScript =
-        if hasAttr "preInstallScript" packageManifest then packageManifest.preInstallScript else "";
-      postInstallScript =
-        if hasAttr "postInstallScript" packageManifest then packageManifest.postInstallScript else "";
+      src = packageManifest.src or null;
+      build = packageManifest.build or "";
+      buildInputs = packageManifest.buildInputs or [ ];
+      preInstallScript = packageManifest.preInstallScript or "";
+      postInstallScript = packageManifest.postInstallScript or "";
       nativeBuildInputs = packageManifest.nativeBuildInputs or [ ];
-      __noChroot = if hasAttr "__noChroot" packageManifest then packageManifest.__noChroot else null;
+      __noChroot = packageManifest.__noChroot or null;
     });
+
+  mapDepsAttrValuesToTuples = mapAttrs (
+    name: depPkg: [
+      depPkg.name
+      depPkg.reference
+    ]
+  );
+
+  getAllDependencies =
+    {
+      excludeDevDependencies ? false,
+      filterDependencies ? null,
+    }:
+    pkg:
+    let
+      deps = nullableAttrOr { } "dependencies" pkg;
+      devDeps = nullableAttrOr { } "devDependencies" pkg;
+      all = deps // (if excludeDevDependencies then { } else devDeps);
+      filteredDeps =
+        # TODO: why do we only filter when excludeDevDependencies is true?
+        # this is original logic be we migth want to revise.
+        if filterDependencies == null || !excludeDevDependencies then
+          all
+        else
+          filterAttrs (name: v: filterDependencies name) all;
+    in
+    filteredDeps;
 
   buildPackageDataFromYarnManifest =
     {
@@ -695,8 +688,7 @@ let
           resolvedPkg = resolvePkg pkg;
         in
         if
-          hasAttr "installCondition" resolvedPkg
-          && resolvedPkg.installCondition != null
+          (hasAttrNotNull "installCondition" resolvedPkg)
           && (resolvedPkg.installCondition pkgs.stdenv) == false
         then
           null
@@ -723,40 +715,19 @@ let
             inherit (pkg) name reference;
             canonicalReference = resolvedPkg.reference;
             inherit (resolvedPkg) linkType;
-            filterDependencies = resolvedPkg.filterDependencies or (name: true);
-            manifest = filterAttrs (
-              key: b:
-              !(builtins.elem key [
-                "src"
-                "installCondition"
-                "dependencies"
-                "devDependencies"
-                "filterDependencies"
-                "name"
-                "reference"
-              ])
-            ) resolvedPkg;
+            filterDependencies = resolvedPkg.filterDependencies or null;
+            manifest = lib.removeAttrs resolvedPkg [
+              "src"
+              "installCondition"
+              "dependencies"
+              "devDependencies"
+              "filterDependencies"
+              "name"
+              "reference"
+            ];
             inherit drv;
             inherit drvForVirtual;
-            packageDependencies =
-              (
-                if (hasAttr "dependencies" pkg && pkg.dependencies != null) then
-                  mapAttrs (name: depPkg: [
-                    depPkg.name
-                    depPkg.reference
-                  ]) pkg.dependencies
-                else
-                  { }
-              )
-              // (
-                if (hasAttr "devDependencies" pkg && pkg.devDependencies != null) then
-                  mapAttrs (name: depPkg: [
-                    depPkg.name
-                    depPkg.reference
-                  ]) pkg.devDependencies
-                else
-                  { }
-              );
+            packageDependencies = mapDepsAttrValuesToTuples (getAllDependencies { } pkg);
           };
 
       allPackageData = mapAttrs (__: pkg: getPackageDataForPackage pkg) yarnManifest;
@@ -771,90 +742,57 @@ let
       excludeDevDependencies ? false,
     }:
     let
-      topLevelRef = "${topLevel.name}@${topLevel.reference}";
+      topLevelRef = makePkgRef topLevel;
       getPackageDataForPackage =
         pkgRef:
         let
           data = allPackageData.${pkgRef};
-          filterDependencies = if excludeDevDependencies then data.filterDependencies else (name: true);
         in
-        if data == null then
-          null
-        else
-          {
-            inherit (data)
-              name
-              reference
-              canonicalReference
-              linkType
-              manifest
-              ;
-            drvPath = data.drv.package // {
-              binDrvPath = data.drv;
-            };
-            packageDependencies =
-              if !excludeDevDependencies then
-                data.packageDependencies
-              else
-                (
-                  (
-                    if (hasAttr "dependencies" data.pkg && data.pkg.dependencies != null) then
-                      mapAttrs (name: depPkg: [
-                        depPkg.name
-                        depPkg.reference
-                      ]) (filterAttrs (name: v: filterDependencies name) data.pkg.dependencies)
-                    else
-                      { }
-                  )
-                );
+        lib.mapNullable (data: {
+          inherit (data)
+            name
+            reference
+            canonicalReference
+            linkType
+            manifest
+            ;
+          drvPath = data.drv.package // {
+            binDrvPath = data.drv;
           };
+          packageDependencies =
+            if !excludeDevDependencies then
+              data.packageDependencies
+            else
+              mapDepsAttrValuesToTuples (
+                getAllDependencies {
+                  inherit excludeDevDependencies;
+                  filterDependencies = data.filterDependencies or null;
+                } data.pkg
+              );
+        }) data;
       topLevelPackageData =
         if
-          hasAttr "installCondition" topLevel
-          && topLevel.installCondition != null
-          && (topLevel.installCondition pkgs.stdenv) == false
+          (hasAttrNotNull "installCondition" topLevel) && (topLevel.installCondition pkgs.stdenv) == false
         then
           null
         else
-          let
-            filterDependencies =
-              if excludeDevDependencies then (topLevel.filterDependencies or (name: true)) else (name: true);
-          in
           {
             inherit (topLevel) name reference linkType;
             canonicalReference = topLevel.reference;
-            manifest = filterAttrs (
-              key: b:
-              !(builtins.elem key [
-                "src"
-                "installCondition"
-                "dependencies"
-                "devDependencies"
-                "filterDependencies"
-              ])
-            ) topLevel;
+            manifest = lib.removeAttrs topLevel [
+              "src"
+              "installCondition"
+              "dependencies"
+              "devDependencies"
+              "filterDependencies"
+            ];
             drvPath = "/dev/null"; # if package is toplevel package then the location is determined in the buildPhase as it will be $out
-            packageDependencies =
-              (
-                if (hasAttr "dependencies" topLevel && topLevel.dependencies != null) then
-                  mapAttrs (name: depPkg: [
-                    depPkg.name
-                    depPkg.reference
-                  ]) (filterAttrs (name: v: filterDependencies name) topLevel.dependencies)
-                else
-                  { }
-              )
-              // (
-                if
-                  (!excludeDevDependencies && hasAttr "devDependencies" topLevel && topLevel.devDependencies != null)
-                then
-                  mapAttrs (name: depPkg: [
-                    depPkg.name
-                    depPkg.reference
-                  ]) (filterAttrs (name: v: filterDependencies name) topLevel.devDependencies)
-                else
-                  { }
-              );
+            packageDependencies = mapDepsAttrValuesToTuples (
+              getAllDependencies {
+                inherit excludeDevDependencies;
+                filterDependencies = topLevel.filterDependencies or null;
+              } topLevel
+            );
           };
       # thanks to https://github.com/NixOS/nix/issues/552#issuecomment-971212372
       # for documentation and a good example on how builtins.genericClosure works
@@ -866,50 +804,28 @@ let
           }
         ];
         operator =
-          { key, pkg }:
+          { pkg, ... }:
           let
-            filterDependencies =
-              if excludeDevDependencies then
-                ((resolvePkg pkg).filterDependencies or (name: true))
-              else
-                (name: true);
+            deps = getAllDependencies {
+              inherit excludeDevDependencies;
+              filterDependencies = (resolvePkg pkg).filterDependencies or null;
+            } pkg;
+            depNames = attrNames deps;
+            mapDepName =
+              depName:
+              let
+                pkg = deps.${depName};
+                key = makePkgRef pkg;
+              in
+              {
+                inherit pkg key;
+              };
           in
-          (
-            if hasAttr "dependencies" pkg && pkg.dependencies != null then
-              (map (
-                depName:
-                let
-                  dep = pkg.dependencies.${depName};
-                  depPkgRef = "${dep.name}@${dep.reference}";
-                in
-                {
-                  key = depPkgRef;
-                  pkg = dep;
-                }
-              ) (filter filterDependencies (attrNames pkg.dependencies)))
-            else
-              [ ]
-          )
-          ++ (
-            if !excludeDevDependencies && hasAttr "devDependencies" pkg && pkg.devDependencies != null then
-              (map (
-                depName:
-                let
-                  dep = pkg.devDependencies.${depName};
-                  depPkgRef = "${dep.name}@${dep.reference}";
-                in
-                {
-                  key = depPkgRef;
-                  pkg = dep;
-                }
-              ) (filter filterDependencies (attrNames pkg.devDependencies)))
-            else
-              [ ]
-          );
+          map mapDepName depNames;
       };
       packageRegistryData = listToAttrs (
         map (
-          { key, pkg }:
+          { key, ... }:
           let
             package = if key == topLevelRef then topLevelPackageData else getPackageDataForPackage key;
           in
