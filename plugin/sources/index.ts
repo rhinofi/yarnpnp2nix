@@ -61,6 +61,7 @@ import {
   hashUtils,
   Installer,
   Linker,
+  LocatorHash,
   Manifest,
   miscUtils,
   Project,
@@ -81,7 +82,7 @@ import {
 } from '@yarnpkg/fslib'
 import { ZipOpenFS } from '@yarnpkg/libzip'
 import { fileUtils } from '@yarnpkg/plugin-file'
-import { getPnpPath, pnpUtils } from '@yarnpkg/plugin-pnp'
+import { getPnpPath, PnpInstaller, pnpUtils } from '@yarnpkg/plugin-pnp'
 import { Option } from 'clipanion'
 import t from 'typanion'
 
@@ -601,6 +602,20 @@ class RunBuildScriptsCommand extends BaseCommand {
   }
 }
 
+type PnpCustomData = Awaited<
+  ReturnType<PnpInstaller['finalizeInstall']>
+>['customData']
+
+const getCustomData = (insaller: Installer): PnpCustomData => {
+  const anyInstaller: any = insaller
+
+  if (!('customData' in anyInstaller)) {
+    throw new Error('no customData in installer')
+  }
+
+  return anyInstaller.customData as any
+}
+
 export default {
   hooks: {
     afterAllInstalled: async (project: Project, opts) => {
@@ -693,12 +708,11 @@ export default {
           ? true
           // @ts-expect-error
           : (installer?.shouldBeUnplugged != null
-            // @ts-expect-error
-            ? installer.customData.store.get(pkg.locatorHash) != null
+            ? getCustomData(installer).store.get(pkg.locatorHash) != null
               // @ts-expect-error
               ? installer.shouldBeUnplugged(
                 pkg,
-                installer.customData.store.get(pkg.locatorHash),
+                getCustomData(installer).store.get(pkg.locatorHash),
                 project.getDependencyMeta(
                   structUtils.isVirtualLocator(pkg)
                     ? structUtils.devirtualizeLocator(pkg)
