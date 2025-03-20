@@ -1,4 +1,4 @@
-import { execa, execaSync } from 'execa';
+import { execa, execaSync } from 'execa'
 
 let getExistingManifestNix = require('../../lib/getExistingManifest.nix.txt')
 
@@ -12,20 +12,24 @@ let _nixCurrentSystem: string
 
 function getByValue(map, searchValue) {
   for (let [key, value] of map.entries()) {
-    if (value === searchValue)
-      return key;
+    if (value === searchValue) {
+      return key
+    }
   }
 }
 
 export function nixCurrentSystem() {
   if (!!_nixCurrentSystem) return _nixCurrentSystem
-  const res = JSON.parse(execaSync('nix', [
-    'eval',
-    '--impure',
-    '--json',
-    '--expr',
-    'builtins.currentSystem',
-  ]).stdout)
+  const res = JSON.parse(
+    execaSync('nix', [
+      'eval',
+      '--impure',
+      '--json',
+      '--expr',
+      'builtins.currentSystem',
+    ])
+      .stdout,
+  )
   _nixCurrentSystem = res
   return res
 }
@@ -37,9 +41,9 @@ export async function getExistingYarnManifest(manifestPath: string) {
       '--json',
       '--impure',
       '--expr',
-      getExistingManifestNix +
-        '\n' +
-        `
+      getExistingManifestNix
+      + '\n'
+      + `
         getPackages (import ${manifestPath})
       `,
     ]
@@ -50,14 +54,36 @@ export async function getExistingYarnManifest(manifestPath: string) {
   }
 }
 
-import { Configuration, Project, Cache, StreamReport, Manifest, tgzUtils, hashUtils, structUtils, miscUtils, scriptUtils, Workspace, Linker, Installer } from "@yarnpkg/core";
-import { BaseCommand } from '@yarnpkg/cli';
-import { xfs, CwdFS, PortablePath, VirtualFS, ppath, npath, Filename } from '@yarnpkg/fslib';
-import { ZipOpenFS } from '@yarnpkg/libzip';
-import { getPnpPath, pnpUtils } from '@yarnpkg/plugin-pnp';
-import { fileUtils } from '@yarnpkg/plugin-file';
-import { Option } from 'clipanion';
-import t from 'typanion';
+import { BaseCommand } from '@yarnpkg/cli'
+import {
+  Cache,
+  Configuration,
+  hashUtils,
+  Installer,
+  Linker,
+  Manifest,
+  miscUtils,
+  Project,
+  scriptUtils,
+  StreamReport,
+  structUtils,
+  tgzUtils,
+  Workspace,
+} from '@yarnpkg/core'
+import {
+  CwdFS,
+  Filename,
+  npath,
+  PortablePath,
+  ppath,
+  VirtualFS,
+  xfs,
+} from '@yarnpkg/fslib'
+import { ZipOpenFS } from '@yarnpkg/libzip'
+import { fileUtils } from '@yarnpkg/plugin-file'
+import { getPnpPath, pnpUtils } from '@yarnpkg/plugin-pnp'
+import { Option } from 'clipanion'
+import t from 'typanion'
 
 const { toPortablePath } = npath
 
@@ -69,19 +95,25 @@ const debug = (...args) => {
 
 // Copied from: https://github.com/yarnpkg/berry/blob/5cebf76352881fab6ed039762a7eb08143d04c0b/packages/yarnpkg-core/sources/Cache.ts#L412-L415
 function getHashComponent(checksum: string) {
-  const split = checksum.indexOf(`/`);
-  return split !== -1 ? checksum.slice(split + 1) : checksum;
+  const split = checksum.indexOf(`/`)
+  return split !== -1 ? checksum.slice(split + 1) : checksum
 }
 
 class FetchCommand extends BaseCommand {
   static paths = [['nix', 'fetch-by-locator']]
 
-  locator = Option.String({validator: t.isString()})
-  outDirectory = Option.String({validator: t.isString()})
+  locator = Option.String({ validator: t.isString() })
+  outDirectory = Option.String({ validator: t.isString() })
 
   async execute() {
-    const configuration = await Configuration.find(ppath.cwd(), this.context.plugins);
-    const {project, workspace} = await Project.find(configuration, ppath.cwd());
+    const configuration = await Configuration.find(
+      ppath.cwd(),
+      this.context.plugins,
+    )
+    const { project, workspace } = await Project.find(
+      configuration,
+      ppath.cwd(),
+    )
 
     const fetcher = configuration.makeFetcher()
 
@@ -103,42 +135,54 @@ class FetchCommand extends BaseCommand {
       }
 
       const fetchOptions = {
-        checksums: new Map(), project, cache: new Cache(
+        checksums: new Map(),
+        project,
+        cache: new Cache(
           toPortablePath(this.outDirectory),
-          { check: false, configuration, immutable: false }
+          { check: false, configuration, immutable: false },
         ),
         fetcher,
-        report
+        report,
       }
       const fetched = await fetcher.fetch(locator, fetchOptions)
 
       fs.renameSync(
         // @ts-expect-error
         fetched.packageFs.target,
-        path.join(this.outDirectory, 'output.zip')
+        path.join(this.outDirectory, 'output.zip'),
       )
-    });
+    })
   }
 }
 
 class CreateLockFileCommand extends BaseCommand {
   static paths = [['nix', 'create-lockfile']]
 
-  packageRegistryDataPath = Option.String({validator: t.isString()})
+  packageRegistryDataPath = Option.String({ validator: t.isString() })
 
   async execute() {
-    const configuration = await Configuration.find(ppath.cwd(), this.context.plugins);
+    const configuration = await Configuration.find(
+      ppath.cwd(),
+      this.context.plugins,
+    )
 
     const project = new Project(ppath.cwd(), { configuration })
     // @ts-expect-error
     await project.setupResolutions()
 
-    const packageRegistryData = JSON.parse(fs.readFileSync(this.packageRegistryDataPath, 'utf8'))
+    const packageRegistryData = JSON.parse(
+      fs.readFileSync(this.packageRegistryDataPath, 'utf8'),
+    )
 
-    const packageRegistryPackages: any[] = Object.values(packageRegistryData).filter((pkg: any) => !!pkg?.manifest)
+    const packageRegistryPackages: any[] = Object
+      .values(packageRegistryData)
+      .filter((pkg: any) => !!pkg?.manifest)
 
     for (const _package of packageRegistryPackages) {
-      const pkg = Object.assign({}, _package.manifest, { name: _package.name, reference: _package.reference })
+      const pkg = Object.assign({}, _package.manifest, {
+        name: _package.name,
+        reference: _package.reference,
+      })
       //  {
       //   identHash: '9ca470fa61f45e067b8912c4342a3400ef0a72ba40cc23c2c0b328fe2213be1f145c35685252f614b708022def6c86380b66b07686cf36dd332caae8d849136f',
       //   scope: null,
@@ -179,14 +223,19 @@ class CreateLockFileCommand extends BaseCommand {
       project.originalPackages.set(
         pkg.locatorHash,
         // @ts-expect-error
-        origPackage
+        origPackage,
       )
 
       // storedResolutions is a map of descriptorHash -> locatorHash
       project.storedResolutions.set(pkg.descriptorHash, pkg.locatorHash)
 
       // storedChecksums is a map of locatorHash -> checksum
-      if (pkg.checksum != null) project.storedChecksums.set(pkg.locatorHash, pkg.checksum)
+      if (pkg.checksum != null) {
+        project.storedChecksums.set(
+          pkg.locatorHash,
+          pkg.checksum,
+        )
+      }
 
       project.storedDescriptors.set(pkg.descriptorHash, descriptor)
     }
@@ -199,11 +248,18 @@ class CreateLockFileCommand extends BaseCommand {
 
       for (const dependencyName of Object.keys(pkgDependencies)) {
         const [depPkgName, depPkgReference] = pkgDependencies[dependencyName]
-        const depPkg = packageRegistryPackages.find(pkg => pkg?.name === depPkgName && pkg?.reference === depPkgReference)
+        const depPkg = packageRegistryPackages.find(pkg =>
+          pkg?.name === depPkgName && pkg?.reference === depPkgReference
+        )
         if (depPkg?.manifest?.descriptorHash != null) {
-          const depPkgDescriptor = project.storedDescriptors.get(depPkg.manifest.descriptorHash)
+          const depPkgDescriptor = project.storedDescriptors.get(
+            depPkg.manifest.descriptorHash,
+          )
           if (depPkgDescriptor != null) {
-            pkg.dependencies.set(depPkg.manifest.descriptorHash, depPkgDescriptor)
+            pkg.dependencies.set(
+              depPkg.manifest.descriptorHash,
+              depPkgDescriptor,
+            )
           }
         }
       }
@@ -218,13 +274,19 @@ class CreateLockFileCommand extends BaseCommand {
 class ConvertToZipCommand extends BaseCommand {
   static paths = [['nix', 'convert-to-zip']]
 
-  locator = Option.String({validator: t.isString()})
-  tgzPath = Option.String({validator: t.isString()})
-  outPath = Option.String({validator: t.isString()})
+  locator = Option.String({ validator: t.isString() })
+  tgzPath = Option.String({ validator: t.isString() })
+  outPath = Option.String({ validator: t.isString() })
 
   async execute() {
-    const configuration = await Configuration.find(ppath.cwd(), this.context.plugins);
-    const {project, workspace} = await Project.find(configuration, ppath.cwd());
+    const configuration = await Configuration.find(
+      ppath.cwd(),
+      this.context.plugins,
+    )
+    const { project, workspace } = await Project.find(
+      configuration,
+      ppath.cwd(),
+    )
 
     const locator = {
       ...(JSON.parse(this.locator)),
@@ -245,27 +307,41 @@ class ConvertToZipCommand extends BaseCommand {
 class GeneratePnpFile extends BaseCommand {
   static paths = [['nix', 'generate-pnp-file']]
 
-  outDirectory = Option.String({validator: t.isString()})
-  packageRegistryDataPath = Option.String({validator: t.isString()})
-  topLevelPackageLocator = Option.String({validator: t.isString()})
+  outDirectory = Option.String({ validator: t.isString() })
+  packageRegistryDataPath = Option.String({ validator: t.isString() })
+  topLevelPackageLocator = Option.String({ validator: t.isString() })
 
   async execute() {
-    const configuration = await Configuration.find(ppath.cwd(), this.context.plugins);
-    const {project, workspace} = await Project.find(configuration, ppath.cwd());
+    const configuration = await Configuration.find(
+      ppath.cwd(),
+      this.context.plugins,
+    )
+    const { project, workspace } = await Project.find(
+      configuration,
+      ppath.cwd(),
+    )
 
-    const pnpPath = ppath.join(toPortablePath(this.outDirectory), Filename.pnpCjs)
+    const pnpPath = ppath.join(
+      toPortablePath(this.outDirectory),
+      Filename.pnpCjs,
+    )
 
-    const pnpFallbackMode = project.configuration.get(`pnpFallbackMode`);
+    const pnpFallbackMode = project.configuration.get(`pnpFallbackMode`)
 
-    const dependencyTreeRoots = [] //project.workspaces.map(({anchoredLocator}) => ({name: structUtils.stringifyIdent(anchoredLocator), reference: anchoredLocator.reference}));
-    const enableTopLevelFallback = pnpFallbackMode !== `none`;
-    const fallbackPool = new Map();
-    const ignorePattern = miscUtils.buildIgnorePattern([`.yarn/sdks/**`, ...project.configuration.get(`pnpIgnorePatterns`)]);
-    const shebang = project.configuration.get(`pnpShebang`);
+    const dependencyTreeRoots = [] // project.workspaces.map(({anchoredLocator}) => ({name: structUtils.stringifyIdent(anchoredLocator), reference: anchoredLocator.reference}));
+    const enableTopLevelFallback = pnpFallbackMode !== `none`
+    const fallbackPool = new Map()
+    const ignorePattern = miscUtils.buildIgnorePattern([
+      `.yarn/sdks/**`,
+      ...project.configuration.get(`pnpIgnorePatterns`),
+    ])
+    const shebang = project.configuration.get(`pnpShebang`)
 
     const packageRegistry = new Map()
 
-    const packageRegistryData = JSON.parse(fs.readFileSync(this.packageRegistryDataPath, 'utf8'))
+    const packageRegistryData = JSON.parse(
+      fs.readFileSync(this.packageRegistryDataPath, 'utf8'),
+    )
 
     let topLevelPackage = null
 
@@ -275,33 +351,45 @@ class GeneratePnpFile extends BaseCommand {
       const pkg = packageRegistryData[pkgIdent]
       if (!pkg) continue
 
-      const ident = structUtils.makeIdent(pkg.manifest.scope, pkg.manifest.flatName)
+      const ident = structUtils.makeIdent(
+        pkg.manifest.scope,
+        pkg.manifest.flatName,
+      )
       const locator = structUtils.makeLocator(ident, pkg.reference)
 
-      const isVirtual = structUtils.isVirtualLocator(pkg);
+      const isVirtual = structUtils.isVirtualLocator(pkg)
 
       const packageDependencies = new Map()
       const packagePeers = new Set()
 
       for (const descriptor of pkg.manifest?.packagePeers ?? []) {
-        packageDependencies.set(descriptor, null);
-        packagePeers.add(descriptor);
+        packageDependencies.set(descriptor, null)
+        packagePeers.add(descriptor)
       }
 
       if (pkg.packageDependencies != null) {
         for (const dep of Object.keys(pkg.packageDependencies)) {
-          packageDependencies.set(dep, pkg.packageDependencies[dep]);
+          packageDependencies.set(dep, pkg.packageDependencies[dep])
         }
       }
 
-      const packageLocationAbs = pkg.packageLocation ?? (pkg.drvPath + '/node_modules/' + pkg.name)
-      const relativePackageLocation = path.relative(outDirectoryReal, packageLocationAbs)
-      let packageLocation = (relativePackageLocation.startsWith('../') ? relativePackageLocation : ('./' + relativePackageLocation)) + '/'
+      const packageLocationAbs = pkg.packageLocation
+        ?? (pkg.drvPath + '/node_modules/' + pkg.name)
+      const relativePackageLocation = path.relative(
+        outDirectoryReal,
+        packageLocationAbs,
+      )
+      let packageLocation = (relativePackageLocation
+          .startsWith('../')
+        ? relativePackageLocation
+        : ('./' + relativePackageLocation)) + '/'
 
       if (isVirtual) {
         packageLocation = './' + VirtualFS.makeVirtualPath(
           toPortablePath('./.yarn/__virtual__'),
-          structUtils.slugifyLocator(locator), relativePackageLocation) + '/'
+          structUtils.slugifyLocator(locator),
+          relativePackageLocation,
+        ) + '/'
       }
 
       const packageData = {
@@ -312,7 +400,10 @@ class GeneratePnpFile extends BaseCommand {
         // discardFromLookup: fetchResult.discardFromLookup || false,
       }
 
-      miscUtils.getMapWithDefault(packageRegistry, pkg.name).set(pkg.reference, packageData);
+      miscUtils.getMapWithDefault(packageRegistry, pkg.name).set(
+        pkg.reference,
+        packageData,
+      )
 
       if (locator.reference.startsWith('workspace:')) {
         dependencyTreeRoots.push({
@@ -327,40 +418,49 @@ class GeneratePnpFile extends BaseCommand {
     }
 
     if (topLevelPackage != null) {
-      miscUtils.getMapWithDefault(packageRegistry, null).set(null, topLevelPackage);
+      miscUtils.getMapWithDefault(packageRegistry, null).set(
+        null,
+        topLevelPackage,
+      )
     } else {
-      throw new Error('Could not determine topLevelPackage, this is NEEDED for the .pnp.cjs to be correctly generated')
+      throw new Error(
+        'Could not determine topLevelPackage, this is NEEDED for the .pnp.cjs to be correctly generated',
+      )
     }
 
     const pnpSettings = {
       dependencyTreeRoots,
       enableTopLevelFallback,
-      fallbackExclusionList: pnpFallbackMode === `dependencies-only` ? dependencyTreeRoots : [],
+      fallbackExclusionList: pnpFallbackMode === `dependencies-only`
+        ? dependencyTreeRoots
+        : [],
       fallbackPool,
       ignorePattern,
       packageRegistry,
       shebang,
     }
 
-    const loaderFile = generateInlinedScript(pnpSettings);
+    const loaderFile = generateInlinedScript(pnpSettings)
 
     await xfs.changeFilePromise(pnpPath, loaderFile, {
       automaticNewlines: true,
       mode: 0o755,
-    });
+    })
   }
 }
 
 class MakePathWrappers extends BaseCommand {
   static paths = [['nix', 'make-path-wrappers']]
 
-  binWrappersOutDirectory = Option.String({validator: t.isString()})
-  pnpOutDirectory = Option.String({validator: t.isString()})
-  packageRegistryDataPath = Option.String({validator: t.isString()})
-  topLevelPackageLocator = Option.String({validator: t.isString()})
+  binWrappersOutDirectory = Option.String({ validator: t.isString() })
+  pnpOutDirectory = Option.String({ validator: t.isString() })
+  packageRegistryDataPath = Option.String({ validator: t.isString() })
+  topLevelPackageLocator = Option.String({ validator: t.isString() })
 
   async execute() {
-    const packageRegistryData = JSON.parse(fs.readFileSync(this.packageRegistryDataPath, 'utf8'))
+    const packageRegistryData = JSON.parse(
+      fs.readFileSync(this.packageRegistryDataPath, 'utf8'),
+    )
 
     const outDirectoryReal = fs.realpathSync(this.pnpOutDirectory)
 
@@ -368,30 +468,49 @@ class MakePathWrappers extends BaseCommand {
       const pkg = packageRegistryData[pkgIdent]
       if (!pkg) continue
 
-      const ident = structUtils.makeIdent(pkg.manifest.scope, pkg.manifest.flatName)
+      const ident = structUtils.makeIdent(
+        pkg.manifest.scope,
+        pkg.manifest.flatName,
+      )
       const locator = structUtils.makeLocator(ident, pkg.reference)
 
-      const isVirtual = structUtils.isVirtualLocator(pkg);
+      const isVirtual = structUtils.isVirtualLocator(pkg)
 
-      const packageLocationAbs = pkg.packageLocation ?? (pkg.drvPath + '/node_modules/' + pkg.name)
-      const relativePackageLocation = path.relative(outDirectoryReal, packageLocationAbs)
+      const packageLocationAbs = pkg.packageLocation
+        ?? (pkg.drvPath + '/node_modules/' + pkg.name)
+      const relativePackageLocation = path.relative(
+        outDirectoryReal,
+        packageLocationAbs,
+      )
       let packageLocation = packageLocationAbs
 
-      const isTopLevelPackage = `${pkg.name}@${pkg.reference}` === this.topLevelPackageLocator
+      const isTopLevelPackage = `${pkg.name}@${pkg.reference}` === this
+        .topLevelPackageLocator
       if (isTopLevelPackage) continue
 
       if (isVirtual) {
-        packageLocation = path.join(outDirectoryReal, VirtualFS.makeVirtualPath(
-          toPortablePath('./.yarn/__virtual__'),
-          structUtils.slugifyLocator(locator), relativePackageLocation)
+        packageLocation = path.join(
+          outDirectoryReal,
+          VirtualFS.makeVirtualPath(
+            toPortablePath('./.yarn/__virtual__'),
+            structUtils.slugifyLocator(locator),
+            relativePackageLocation,
+          ),
         )
       }
 
       for (const bin of Object.keys(pkg?.manifest?.bin ?? {})) {
-        const resolvedBinPath = path.join(packageLocation, pkg.manifest.bin[bin])
-        await xfs.writeFilePromise(path.join(this.binWrappersOutDirectory, bin), `node ${resolvedBinPath} "$@"`, {
-          mode: 0o755,
-        })
+        const resolvedBinPath = path.join(
+          packageLocation,
+          pkg.manifest.bin[bin],
+        )
+        await xfs.writeFilePromise(
+          path.join(this.binWrappersOutDirectory, bin),
+          `node ${resolvedBinPath} "$@"`,
+          {
+            mode: 0o755,
+          },
+        )
       }
     }
   }
@@ -400,13 +519,19 @@ class MakePathWrappers extends BaseCommand {
 class RunBuildScriptsCommand extends BaseCommand {
   static paths = [['nix', 'run-build-scripts']]
 
-  locator = Option.String({validator: t.isString()})
-  pnpRootDirectory = Option.String({validator: t.isString()})
-  packageDirectory = Option.String({validator: t.isString()})
+  locator = Option.String({ validator: t.isString() })
+  pnpRootDirectory = Option.String({ validator: t.isString() })
+  packageDirectory = Option.String({ validator: t.isString() })
 
   async execute() {
-    const configuration = await Configuration.find(ppath.cwd(), this.context.plugins);
-    const {project, workspace} = await Project.find(configuration, ppath.cwd());
+    const configuration = await Configuration.find(
+      ppath.cwd(),
+      this.context.plugins,
+    )
+    const { project, workspace } = await Project.find(
+      configuration,
+      ppath.cwd(),
+    )
 
     const _locator = JSON.parse(this.locator)
     const ident = structUtils.makeIdent(_locator.scope, _locator.name)
@@ -418,22 +543,37 @@ class RunBuildScriptsCommand extends BaseCommand {
 
     // need to find a way to make this work without restoring install state...
     // await project.restoreInstallState({
-      //   restoreResolutions: true,
-      // });
+    //   restoreResolutions: true,
+    // });
     project.storedPackages = project.originalPackages
     // next thing to fix is "couldn't find XXX in the currently installed PnP map"
 
-    const manifest = await ZipOpenFS.openPromise(async (zipOpenFs) => {
-      const linkers = project.configuration.getLinkers();
-      const linkerOptions = {project, report: new StreamReport({stdout: new PassThrough(), configuration})};
+    const manifest = await ZipOpenFS.openPromise(async zipOpenFs => {
+      const linkers = project.configuration.getLinkers()
+      const linkerOptions = {
+        project,
+        report: new StreamReport({ stdout: new PassThrough(), configuration }),
+      }
 
-      const linker = linkers.find(linker => linker.supportsPackage(pkg, linkerOptions));
-      if (!linker)
-        throw new Error(`The package ${structUtils.prettyLocator(project.configuration, pkg)} isn't supported by any of the available linkers`);
+      const linker = linkers.find(linker =>
+        linker.supportsPackage(pkg, linkerOptions)
+      )
+      if (!linker) {
+        throw new Error(
+          `The package ${
+            structUtils.prettyLocator(project.configuration, pkg)
+          } isn't supported by any of the available linkers`,
+        )
+      }
 
-      const packageLocation = await linker.findPackageLocation(pkg, linkerOptions);
-      const packageFs = new CwdFS(packageLocation, {baseFs: zipOpenFs});
-      const manifest = await Manifest.find(PortablePath.dot, {baseFs: packageFs});
+      const packageLocation = await linker.findPackageLocation(
+        pkg,
+        linkerOptions,
+      )
+      const packageFs = new CwdFS(packageLocation, { baseFs: zipOpenFs })
+      const manifest = await Manifest.find(PortablePath.dot, {
+        baseFs: packageFs,
+      })
 
       return manifest
     })
@@ -441,13 +581,18 @@ class RunBuildScriptsCommand extends BaseCommand {
     for (const scriptName of [`preinstall`, `install`, `postinstall`]) {
       if (!manifest.scripts.has(scriptName)) continue
 
-      const exitCode = await scriptUtils.executePackageScript(pkg, scriptName, [], {
-        cwd: toPortablePath(this.packageDirectory),
-        project,
-        stdin: process.stdin,
-        stdout: process.stdout,
-        stderr: process.stderr
-      });
+      const exitCode = await scriptUtils.executePackageScript(
+        pkg,
+        scriptName,
+        [],
+        {
+          cwd: toPortablePath(this.packageDirectory),
+          project,
+          stdin: process.stdin,
+          stdout: process.stdout,
+          stderr: process.stderr,
+        },
+      )
 
       if (exitCode > 0) {
         return exitCode
@@ -459,30 +604,36 @@ class RunBuildScriptsCommand extends BaseCommand {
 export default {
   hooks: {
     afterAllInstalled: async (project: Project, opts) => {
-      const linkers = project.configuration.getLinkers();
-      const linkerOptions = {project, report: null};
+      const linkers = project.configuration.getLinkers()
+      const linkerOptions = { project, report: null }
 
       // const existingManifest = await getExistingYarnManifest(path.join(project.cwd, 'yarn-manifest.nix'))
 
       const installers = new Map(linkers.map(linker => {
-        const installer = linker.makeInstaller(linkerOptions);
+        const installer = linker.makeInstaller(linkerOptions)
 
-        const customDataKey = linker.getCustomDataKey();
-        const customData = project.linkersCustomData.get(customDataKey);
-        if (typeof customData !== `undefined`)
-          installer.attachCustomData(customData);
+        const customDataKey = linker.getCustomDataKey()
+        const customData = project.linkersCustomData.get(customDataKey)
+        if (typeof customData !== `undefined`) {
+          installer.attachCustomData(customData)
+        }
 
-        return [linker, installer];
-      }));
+        return [linker, installer]
+      }))
 
-      const cache = await Cache.find(project.configuration);
+      const cache = await Cache.find(project.configuration)
 
+      const fetcher = project.configuration.makeFetcher()
+      const fetchOptions = {
+        checksums: new Map(),
+        project,
+        cache: null,
+        fetcher,
+        report: null,
+      }
 
-      const fetcher = project.configuration.makeFetcher();
-      const fetchOptions = { checksums: new Map(), project, cache: null, fetcher, report: null }
-
-      const resolver = project.configuration.makeResolver();
-      const resolveOptions = {project, report: opts.report, resolver}
+      const resolver = project.configuration.makeResolver()
+      const resolveOptions = { project, report: opts.report, resolver }
 
       const packageManifest: any = {}
 
@@ -495,10 +646,14 @@ export default {
         // }
 
         const canonicalPackage = isVirtual
-          ? project.storedPackages.get(structUtils.devirtualizeLocator(pkg).locatorHash)
+          ? project.storedPackages.get(
+            structUtils.devirtualizeLocator(pkg).locatorHash,
+          )
           : pkg
 
-        const linker = linkers.find(linker => linker.supportsPackage(canonicalPackage, linkerOptions));
+        const linker = linkers.find(linker =>
+          linker.supportsPackage(canonicalPackage, linkerOptions)
+        )
         const installer = installers.get(linker)
 
         let localPath = fetcher.getLocalPath(canonicalPackage, fetchOptions)
@@ -513,7 +668,10 @@ export default {
                 localPath = path.join(project.cwd, pkgPath.slice(2))
               }
             } else {
-              const parentLocalPath = fetcher.getLocalPath(parentLocator, fetchOptions)
+              const parentLocalPath = fetcher.getLocalPath(
+                parentLocator,
+                fetchOptions,
+              )
               const resolvedPath = path.resolve(parentLocalPath, pkgPath)
               if (resolvedPath != null) {
                 localPath = resolvedPath
@@ -522,9 +680,13 @@ export default {
           }
         }
 
-        const localPathRelative = localPath != null ? './' + path.relative(project.cwd, localPath) : null
+        const localPathRelative = localPath != null
+          ? './' + path.relative(project.cwd, localPath)
+          : null
 
-        const src = pkg.reference.startsWith('workspace:') ? `./${pkg.reference.substring('workspace:'.length)}` : (localPathRelative != null ? localPathRelative : null)
+        const src = pkg.reference.startsWith('workspace:')
+          ? `./${pkg.reference.substring('workspace:'.length)}`
+          : (localPathRelative != null ? localPathRelative : null)
         const bin = pkg.bin != null ? Object.fromEntries(pkg.bin) : null
 
         const shouldBeUnplugged = src != null
@@ -533,10 +695,17 @@ export default {
           : (installer?.shouldBeUnplugged != null
             // @ts-expect-error
             ? installer.customData.store.get(pkg.locatorHash) != null
-            // @ts-expect-error
-              ? installer.shouldBeUnplugged(pkg, installer.customData.store.get(pkg.locatorHash), project.getDependencyMeta(structUtils.isVirtualLocator(pkg)
-                ? structUtils.devirtualizeLocator(pkg)
-                : pkg, pkg.version))
+              // @ts-expect-error
+              ? installer.shouldBeUnplugged(
+                pkg,
+                installer.customData.store.get(pkg.locatorHash),
+                project.getDependencyMeta(
+                  structUtils.isVirtualLocator(pkg)
+                    ? structUtils.devirtualizeLocator(pkg)
+                    : pkg,
+                  pkg.version,
+                ),
+              )
               : false
             : true)
 
@@ -547,7 +716,9 @@ export default {
         let installCondition = null
 
         if (pkg.conditions != null) {
-          const conditions = pkg.conditions.split('&').map(part => part.trim().split('='))
+          const conditions = pkg.conditions.split('&').map(part =>
+            part.trim().split('=')
+          )
           let nixConditions = []
 
           for (const condition of conditions) {
@@ -563,10 +734,10 @@ export default {
               }
             } else if (key === 'cpu') {
               const cpuMapping: any = {
-                'ia32': 'stdenv.isi686',
-                'x64': 'stdenv.isx86_64',
-                'arm': 'stdenv.isAarch32',
-                'arm64': 'stdenv.isAarch64',
+                ia32: 'stdenv.isi686',
+                x64: 'stdenv.isx86_64',
+                arm: 'stdenv.isAarch32',
+                arm64: 'stdenv.isAarch64',
               }
               if (cpuMapping[v] != null) {
                 nixConditions.push(cpuMapping[v])
@@ -582,28 +753,50 @@ export default {
           }
 
           if (nixConditions.length > 0) {
-            installCondition = `stdenv: ${nixConditions.map(cond => `(${cond})`).join(' && ')}`
+            installCondition = `stdenv: ${
+              nixConditions.map(cond => `(${cond})`).join(' && ')
+            }`
           }
         }
 
         let pkgDependencies = pkg.dependencies
         let pkgDevDependencies = new Map()
 
-        const shouldLookupDevDependencies = canonicalPackage.reference.startsWith('workspace:')
+        const shouldLookupDevDependencies = canonicalPackage
+          .reference
+          .startsWith('workspace:')
 
         // lookup devDependencies from manifests for workspace: packages
         if (shouldLookupDevDependencies) {
-          const manifest = await ZipOpenFS.openPromise(async (zipOpenFs) => {
-            const linkers = project.configuration.getLinkers();
-            const linkerOptions = {project, report: new StreamReport({stdout: new PassThrough(), configuration: project.configuration})};
+          const manifest = await ZipOpenFS.openPromise(async zipOpenFs => {
+            const linkers = project.configuration.getLinkers()
+            const linkerOptions = {
+              project,
+              report: new StreamReport({
+                stdout: new PassThrough(),
+                configuration: project.configuration,
+              }),
+            }
 
-            const linker = linkers.find(linker => linker.supportsPackage(canonicalPackage, linkerOptions));
-            if (!linker)
-              throw new Error(`The package ${structUtils.prettyLocator(project.configuration, pkg)} isn't supported by any of the available linkers`);
+            const linker = linkers.find(linker =>
+              linker.supportsPackage(canonicalPackage, linkerOptions)
+            )
+            if (!linker) {
+              throw new Error(
+                `The package ${
+                  structUtils.prettyLocator(project.configuration, pkg)
+                } isn't supported by any of the available linkers`,
+              )
+            }
 
-            const packageLocation = await linker.findPackageLocation(canonicalPackage, linkerOptions);
-            const packageFs = new CwdFS(packageLocation, {baseFs: zipOpenFs});
-            const manifest = await Manifest.find(PortablePath.dot, {baseFs: packageFs});
+            const packageLocation = await linker
+              .findPackageLocation(canonicalPackage, linkerOptions)
+            const packageFs = new CwdFS(packageLocation, { baseFs: zipOpenFs })
+            const manifest = await Manifest
+              .find(
+                PortablePath.dot,
+                { baseFs: packageFs },
+              )
 
             return manifest
           })
@@ -612,37 +805,53 @@ export default {
             pkgDependencies = new Map()
             pkgDevDependencies = new Map()
 
-            if (manifest.devDependencies) {
-              Array.from(manifest.devDependencies).map(([key, value]) => pkgDevDependencies.set(key, pkg.dependencies.get(key)))
+            if (
+              manifest.devDependencies
+            ) {
+              Array.from(manifest.devDependencies).map(([key, value]) =>
+                pkgDevDependencies.set(key, pkg.dependencies.get(key))
+              )
               Array.from(pkg.dependencies).map(([key, value]) =>
-                !pkgDevDependencies.has(key) ? pkgDependencies.set(key, value) : null
+                !pkgDevDependencies.has(key)
+                  ? pkgDependencies.set(key, value)
+                  : null
               )
             }
           }
         }
 
-        const processDendencies = deps => Promise.all(Array.from(deps).map(async ([key, value]) => {
-          if (!value) {
-            debug(`failed to resolve pkg ${key}`, value)
-            return null
-          }
-          const resolutionHash = project.storedResolutions.get(value.descriptorHash)
-          let resolvedPkg = resolutionHash != null ? project.storedPackages.get(resolutionHash) :
-            null
-          if (!resolvedPkg) {
-            debug(`failed to resolve pkg ${key}`, value)
-            return null
-          }
-          // reference virtual packages instead so that peerDependencies are respected
-          // if (structUtils.isVirtualLocator(resolvedPkg)) {
-          //   resolvedPkg = structUtils.devirtualizeLocator(resolvedPkg)
-          // }
-          return {
-            key,
-            name: structUtils.stringifyIdent(value),
-            packageManifestId: structUtils.stringifyIdent(resolvedPkg) + '@' + resolvedPkg.reference,
-          }
-        })).then(xs => xs.filter(pkg => !!pkg))
+        const processDendencies = deps =>
+          Promise
+            .all(
+              Array.from(deps).map(async ([key, value]) => {
+                if (!value) {
+                  debug(`failed to resolve pkg ${key}`, value)
+                  return null
+                }
+                const resolutionHash = project.storedResolutions.get(
+                  value.descriptorHash,
+                )
+                let resolvedPkg = resolutionHash != null
+                  ? project.storedPackages.get(resolutionHash)
+                  : null
+                if (!resolvedPkg) {
+                  debug(`failed to resolve pkg ${key}`, value)
+                  return null
+                }
+                // reference virtual packages instead so that peerDependencies are respected
+                // if (structUtils.isVirtualLocator(resolvedPkg)) {
+                //   resolvedPkg = structUtils.devirtualizeLocator(resolvedPkg)
+                // }
+                return {
+                  key,
+                  name: structUtils.stringifyIdent(value),
+                  packageManifestId: structUtils.stringifyIdent(resolvedPkg)
+                    + '@'
+                    + resolvedPkg.reference,
+                }
+              }),
+            )
+            .then(xs => xs.filter(pkg => !!pkg))
 
         const dependencies = await processDendencies(pkgDependencies)
         const devDependencies = await processDendencies(pkgDevDependencies)
@@ -650,10 +859,11 @@ export default {
         const packagePeers = []
 
         for (const descriptor of pkg.peerDependencies.values()) {
-          packagePeers.push(structUtils.stringifyIdent(descriptor));
+          packagePeers.push(structUtils.stringifyIdent(descriptor))
         }
 
-        const manifestPackageId = structUtils.stringifyIdent(pkg) + '@' + pkg.reference
+        const manifestPackageId = structUtils.stringifyIdent(pkg) + '@' + pkg
+          .reference
 
         // const packageInExistingManifest = existingManifest?.[manifestPackageId]
 
@@ -668,11 +878,12 @@ export default {
             return
           } else if (willOutputBeZip) {
             // simple, use the hash of the zip file
-            outputHash = getHashComponent(project.storedChecksums.get(pkg.locatorHash) ?? '')
+            outputHash = getHashComponent(
+              project.storedChecksums.get(pkg.locatorHash) ?? '',
+            )
             outputHashByPlatform = null
             return
           } else if (shouldBeUnplugged) {
-
             // const shouldHashBePlatformSpecific = true // TODO only if package or dependencies have platform conditions maybe?
             // if (shouldHashBePlatformSpecific) {
             //   if (outputHashByPlatform[nixCurrentSystem()] && !isSourcePatch) {
@@ -698,7 +909,9 @@ export default {
             //     }
             //   }
             // }
-            outputHash = getHashComponent(project.storedChecksums.get(pkg.locatorHash) ?? '')
+            outputHash = getHashComponent(
+              project.storedChecksums.get(pkg.locatorHash) ?? '',
+            )
             if (!outputHash) {
               debug('got package unplugged package with no hash', pkg)
               try {
@@ -717,7 +930,10 @@ export default {
           }
         })()
 
-        const descriptorHash = getByValue(project.storedResolutions, pkg.locatorHash)
+        const descriptorHash = getByValue(
+          project.storedResolutions,
+          pkg.locatorHash,
+        )
         const descriptor = project.storedDescriptors.get(descriptorHash)
         const yarnChecksum = project.storedChecksums.get(pkg.locatorHash)
 
@@ -730,8 +946,12 @@ export default {
           outputName: [
             structUtils.stringifyIdent(pkg),
             pkg.version,
-            pkg.locatorHash.substring(0, 10)
-          ].filter(part => !!part).join('-').replace(/@/g, '').replace(/[\/]/g, '-'),
+            pkg.locatorHash.substring(0, 10),
+          ]
+            .filter(part => !!part)
+            .join('-')
+            .replace(/@/g, '')
+            .replace(/[\/]/g, '-'),
           outputHash,
           outputHashByPlatform,
           src,
@@ -754,8 +974,12 @@ export default {
 
       let manifestNix: string[] = []
 
-      manifestNix.push('# This file is generated by running "yarn install" inside your project.')
-      manifestNix.push('# It is essentially a version of yarn.lock that Nix can better understand')
+      manifestNix.push(
+        '# This file is generated by running "yarn install" inside your project.',
+      )
+      manifestNix.push(
+        '# It is essentially a version of yarn.lock that Nix can better understand',
+      )
       manifestNix.push('# Manual changes WILL be lost - proceed with caution!')
       manifestNix.push('let')
       manifestNix.push('  packages = {')
@@ -764,14 +988,19 @@ export default {
         if (dependencies.length > 0) {
           manifestNix.push(`      ${key} = {`)
           for (const dep of dependencies) {
-            manifestNix.push(`        ${JSON.stringify(dep.name)} = packages.${JSON.stringify(dep.packageManifestId)};`)
+            manifestNix.push(
+              `        ${JSON.stringify(dep.name)} = packages.${
+                JSON.stringify(dep.packageManifestId)
+              };`,
+            )
           }
           manifestNix.push(`      };`)
         }
       }
 
-      const alphabeticalKeys =
-        Object.keys(packageManifest).sort((a, b) => a.localeCompare(b))
+      const alphabeticalKeys = Object.keys(packageManifest).sort((a, b) =>
+        a.localeCompare(b)
+      )
 
       for (const key of alphabeticalKeys) {
         const pkg = packageManifest[key]
@@ -779,39 +1008,81 @@ export default {
         manifestNix.push(`      name = ${JSON.stringify(pkg.name)};`)
         manifestNix.push(`      reference = ${JSON.stringify(pkg.reference)};`)
         if (pkg.isVirtual && pkg.canonicalPackage != null) {
-          manifestNix.push(`      canonicalPackage = packages.${JSON.stringify(`${structUtils.stringifyIdent(pkg.canonicalPackage)}@${pkg.canonicalPackage.reference}`)};`)
+          manifestNix.push(
+            `      canonicalPackage = packages.${
+              JSON.stringify(`${
+                structUtils.stringifyIdent(
+                  pkg.canonicalPackage,
+                )
+              }@${pkg.canonicalPackage.reference}`)
+            };`,
+          )
         }
         if (!pkg.isVirtual) {
           manifestNix.push(`      linkType = ${JSON.stringify(pkg.linkType)};`)
-          manifestNix.push(`      outputName = ${JSON.stringify(pkg.outputName)};`)
-          if (pkg.outputHash != null)
-            manifestNix.push(`      outputHash = ${JSON.stringify(pkg.outputHash)};`)
-          if (pkg.outputHashByPlatform && Object.keys(pkg.outputHashByPlatform).length > 0) {
+          manifestNix.push(
+            `      outputName = ${JSON.stringify(pkg.outputName)};`,
+          )
+          if (pkg.outputHash != null) {
+            manifestNix.push(
+              `      outputHash = ${JSON.stringify(pkg.outputHash)};`,
+            )
+          }
+          if (
+            pkg.outputHashByPlatform
+            && Object.keys(pkg.outputHashByPlatform).length > 0
+          ) {
             manifestNix.push(`      outputHashByPlatform = {`)
-            for (const outputHashByPlatform of Object.keys(pkg.outputHashByPlatform)) {
-              manifestNix.push(`        ${JSON.stringify(outputHashByPlatform)} = ${JSON.stringify(pkg.outputHashByPlatform[outputHashByPlatform])};`)
+            for (
+              const outputHashByPlatform of Object.keys(
+                pkg.outputHashByPlatform,
+              )
+            ) {
+              manifestNix.push(
+                `        ${JSON.stringify(outputHashByPlatform)} = ${
+                  JSON.stringify(pkg.outputHashByPlatform[outputHashByPlatform])
+                };`,
+              )
             }
             manifestNix.push(`      };`)
           }
-          if (pkg.src)
+          if (pkg.src) {
             manifestNix.push(`      src = ${pkg.src};`)
-          if (pkg.shouldBeUnplugged)
-            manifestNix.push(`      shouldBeUnplugged = ${pkg.shouldBeUnplugged};`)
-          if (pkg.installCondition)
-            manifestNix.push(`      installCondition = ${pkg.installCondition};`)
+          }
+          if (pkg.shouldBeUnplugged) {
+            manifestNix.push(
+              `      shouldBeUnplugged = ${pkg.shouldBeUnplugged};`,
+            )
+          }
+          if (pkg.installCondition) {
+            manifestNix.push(
+              `      installCondition = ${pkg.installCondition};`,
+            )
+          }
 
           // other things necessary for recreating lock file that we don't necessarily use
           manifestNix.push(`      flatName = ${JSON.stringify(pkg.flatName)};`)
-          manifestNix.push(`      languageName = ${JSON.stringify(pkg.languageName)};`)
+          manifestNix.push(
+            `      languageName = ${JSON.stringify(pkg.languageName)};`,
+          )
           manifestNix.push(`      scope = ${JSON.stringify(pkg.scope)};`)
-          manifestNix.push(`      descriptorRange = ${JSON.stringify(pkg.descriptor.range)};`)
-          if (pkg.checksum)
-            manifestNix.push(`      checksum = ${JSON.stringify(pkg.checksum)};`)
+          manifestNix.push(
+            `      descriptorRange = ${JSON.stringify(pkg.descriptor.range)};`,
+          )
+          if (pkg.checksum) {
+            manifestNix.push(
+              `      checksum = ${JSON.stringify(pkg.checksum)};`,
+            )
+          }
 
           if (pkg.bin && Object.keys(pkg.bin).length > 0) {
             manifestNix.push(`      bin = {`)
             for (const bin of Object.keys(pkg.bin)) {
-              manifestNix.push(`        ${JSON.stringify(bin)} = ${JSON.stringify(pkg.bin[bin])};`)
+              manifestNix.push(
+                `        ${JSON.stringify(bin)} = ${
+                  JSON.stringify(pkg.bin[bin])
+                };`,
+              )
             }
             manifestNix.push(`      };`)
           }
@@ -836,18 +1107,28 @@ export default {
       manifestNix.push('packages')
       manifestNix.push('')
 
-      fs.writeFileSync(path.join(project.cwd, 'yarn-manifest.nix'), manifestNix.join('\n'), 'utf8')
+      fs.writeFileSync(
+        path.join(project.cwd, 'yarn-manifest.nix'),
+        manifestNix.join('\n'),
+        'utf8',
+      )
     },
     populateYarnPaths: async (project: Project) => {
-      const packageRegistryDataPath = process.env.YARNNIX_PACKAGE_REGISTRY_DATA_PATH
+      const packageRegistryDataPath =
+        process.env.YARNNIX_PACKAGE_REGISTRY_DATA_PATH
       if (!!packageRegistryDataPath) {
-        const packageRegistryData = JSON.parse(fs.readFileSync(packageRegistryDataPath, 'utf8'))
-        const packageRegistryPackages: any[] = Object.values(packageRegistryData).filter((pkg: any) => !!pkg?.manifest)
+        const packageRegistryData = JSON.parse(
+          fs.readFileSync(packageRegistryDataPath, 'utf8'),
+        )
+        const packageRegistryPackages: any[] = Object
+          .values(packageRegistryData)
+          .filter((pkg: any) => !!pkg?.manifest)
 
         for (const pkg of packageRegistryPackages) {
           if (pkg.canonicalReference.startsWith('workspace:')) {
             if (pkg.drvPath !== process.env.out) {
-              const workspaceCwd = pkg.packageLocation ?? path.join(pkg.drvPath, 'node_modules', pkg.name)
+              const workspaceCwd = pkg.packageLocation
+                ?? path.join(pkg.drvPath, 'node_modules', pkg.name)
               const workspace = new Workspace(workspaceCwd, { project })
               await workspace.setup()
               // @ts-expect-error
