@@ -75,7 +75,7 @@
           settings.formatter = {
             nixfmt = {
               excludes = [
-                "yarn-manifest.nix"
+                "**/yarn-manifest.nix"
               ];
               includes = lib.mkForce [
                 "*.nix"
@@ -87,14 +87,31 @@
               ];
             };
           };
-          settings.global.on-unmatched = "info";
-          settings.global.excludes = [
-            ".yarn/*"
-          ];
+          settings.global = {
+            on-unmatched = "info";
+            excludes = [
+              "**/.git*"
+              "**/.pnp.*"
+              "*.js"
+              "*.json"
+              "*.md"
+              "*.sh"
+              "*.txt"
+              "*.yml"
+              "*/.yarn/*"
+              ".envrc"
+              "LICENSE"
+              "package.json"
+              "test/workspace/*"
+              "yarn-manifest.nix"
+            ];
+          };
         };
+        treefmt-package = treefmt-eval.config.build.wrapper;
       in
       {
         packages = rec {
+          treefmt = treefmt-package;
           default = pkgs.yarn-plugin-yarnpnp2nix;
           yarn-plugin = pkgs.yarn-plugin-yarnpnp2nix;
           yarnBerry = pkgs.yarnBerry;
@@ -139,7 +156,7 @@
               nodejs
               yarnBerry
               pkgs-latest.nixfmt-rfc-style
-              treefmt-eval.config.build.wrapper
+              treefmt-package
             ];
           };
           tests-patch = pkgs.mkShell {
