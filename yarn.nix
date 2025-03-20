@@ -8,9 +8,9 @@
 
 stdenv.mkDerivation {
   name = "yarn-berry";
-  src = builtins.fetchTarball {
-    url = "https://github.com/yarnpkg/berry/archive/refs/tags/@yarnpkg/cli/4.5.3.tar.gz";
-    sha256 = "sha256:1xp2zxhq5c466jsirsv7zjfkfip58kkdaw7v8466b5f5i14kw26b";
+  src = fetchzip {
+    url = "https://github.com/yarnpkg/berry/archive/182046546379f3b4e111c374946b32d92be5d933.tar.gz";
+    sha256 = "sha256:0q0yzswxzqcjh2d1d1gk8755vak77013527y1zpi1lysv31ds388";
   };
 
   phases = [
@@ -21,7 +21,6 @@ stdenv.mkDerivation {
 
   patches = [
     ./yarnPatches/pack-specific-project.patch
-    ./yarnPatches/node-22-experimental-require-module-support.patch
   ];
 
   buildInputs = [
