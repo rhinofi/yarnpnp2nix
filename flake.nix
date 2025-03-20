@@ -137,7 +137,7 @@
                 };
               in
               pkgs.runCommand "test-patch" { } ''
-                result=$(${lib.getExe workspace."three@workspace:packages/three"})
+                result=$(${workspace."three@workspace:packages/three"}/bin/three)
                 echo result: $result
 
                 if [[ $result == true ]]; then
