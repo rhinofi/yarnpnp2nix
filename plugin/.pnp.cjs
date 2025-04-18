@@ -17,6 +17,7 @@ const RAW_RUNTIME_STATE =
   ],\
   "enableTopLevelFallback": true,\
   "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
+  "pnpZipBackend": "libzip",\
   "fallbackExclusionList": [\
     ["yarn-plugin-yarnpnp2nix", ["workspace:."]]\
   ],\
@@ -39,7 +40,8 @@ const RAW_RUNTIME_STATE =
           ["clipanion", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0-rc.3"],\
           ["execa", "npm:7.2.0"],\
           ["typanion", "npm:3.14.0"],\
-          ["typescript", "patch:typescript@npm%3A5.1.6#optional!builtin<compat/typescript>::version=5.1.6&hash=5da071"]\
+          ["typescript", "patch:typescript@npm%3A5.1.6#optional!builtin<compat/typescript>::version=5.1.6&hash=5da071"],\
+          ["yarn-plugin-yarnpnp2nix", "workspace:."]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -67,8 +69,8 @@ const RAW_RUNTIME_STATE =
       ["npm:4.14.2", {\
         "packageLocation": "./.yarn/cache/@algolia-cache-in-memory-npm-4.14.2-b2851f6d42-dbfc6df7b8.zip/node_modules/@algolia/cache-in-memory/",\
         "packageDependencies": [\
-          ["@algolia/cache-in-memory", "npm:4.14.2"],\
-          ["@algolia/cache-common", "npm:4.14.2"]\
+          ["@algolia/cache-common", "npm:4.14.2"],\
+          ["@algolia/cache-in-memory", "npm:4.14.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -113,8 +115,8 @@ const RAW_RUNTIME_STATE =
       ["npm:4.14.2", {\
         "packageLocation": "./.yarn/cache/@algolia-client-personalization-npm-4.14.2-c1d119b502-3f52a8a58d.zip/node_modules/@algolia/client-personalization/",\
         "packageDependencies": [\
-          ["@algolia/client-personalization", "npm:4.14.2"],\
           ["@algolia/client-common", "npm:4.14.2"],\
+          ["@algolia/client-personalization", "npm:4.14.2"],\
           ["@algolia/requester-common", "npm:4.14.2"],\
           ["@algolia/transporter", "npm:4.14.2"]\
         ],\
@@ -125,8 +127,8 @@ const RAW_RUNTIME_STATE =
       ["npm:4.14.2", {\
         "packageLocation": "./.yarn/cache/@algolia-client-search-npm-4.14.2-f4a9cad087-2c81d4c200.zip/node_modules/@algolia/client-search/",\
         "packageDependencies": [\
-          ["@algolia/client-search", "npm:4.14.2"],\
           ["@algolia/client-common", "npm:4.14.2"],\
+          ["@algolia/client-search", "npm:4.14.2"],\
           ["@algolia/requester-common", "npm:4.14.2"],\
           ["@algolia/transporter", "npm:4.14.2"]\
         ],\
@@ -146,8 +148,8 @@ const RAW_RUNTIME_STATE =
       ["npm:4.14.2", {\
         "packageLocation": "./.yarn/cache/@algolia-logger-console-npm-4.14.2-b33418d7de-27d32a2829.zip/node_modules/@algolia/logger-console/",\
         "packageDependencies": [\
-          ["@algolia/logger-console", "npm:4.14.2"],\
-          ["@algolia/logger-common", "npm:4.14.2"]\
+          ["@algolia/logger-common", "npm:4.14.2"],\
+          ["@algolia/logger-console", "npm:4.14.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -175,8 +177,8 @@ const RAW_RUNTIME_STATE =
       ["npm:4.14.2", {\
         "packageLocation": "./.yarn/cache/@algolia-requester-node-http-npm-4.14.2-c97bb16407-7cf47e8483.zip/node_modules/@algolia/requester-node-http/",\
         "packageDependencies": [\
-          ["@algolia/requester-node-http", "npm:4.14.2"],\
-          ["@algolia/requester-common", "npm:4.14.2"]\
+          ["@algolia/requester-common", "npm:4.14.2"],\
+          ["@algolia/requester-node-http", "npm:4.14.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -185,10 +187,10 @@ const RAW_RUNTIME_STATE =
       ["npm:4.14.2", {\
         "packageLocation": "./.yarn/cache/@algolia-transporter-npm-4.14.2-95bfbf32f6-7720210ef3.zip/node_modules/@algolia/transporter/",\
         "packageDependencies": [\
-          ["@algolia/transporter", "npm:4.14.2"],\
           ["@algolia/cache-common", "npm:4.14.2"],\
           ["@algolia/logger-common", "npm:4.14.2"],\
-          ["@algolia/requester-common", "npm:4.14.2"]\
+          ["@algolia/requester-common", "npm:4.14.2"],\
+          ["@algolia/transporter", "npm:4.14.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -227,8 +229,8 @@ const RAW_RUNTIME_STATE =
       ["npm:1.2.8", {\
         "packageLocation": "./.yarn/cache/@nodelib-fs.walk-npm-1.2.8-b4a89da548-db9de047c3.zip/node_modules/@nodelib/fs.walk/",\
         "packageDependencies": [\
-          ["@nodelib/fs.walk", "npm:1.2.8"],\
           ["@nodelib/fs.scandir", "npm:2.1.5"],\
+          ["@nodelib/fs.walk", "npm:1.2.8"],\
           ["fastq", "npm:1.13.0"]\
         ],\
         "linkType": "HARD"\
@@ -323,8 +325,8 @@ const RAW_RUNTIME_STATE =
       ["npm:1.0.0", {\
         "packageLocation": "./.yarn/cache/@types-responselike-npm-1.0.0-85dd08af42-474ac2402e.zip/node_modules/@types/responselike/",\
         "packageDependencies": [\
-          ["@types/responselike", "npm:1.0.0"],\
-          ["@types/node", "npm:18.11.6"]\
+          ["@types/node", "npm:18.11.6"],\
+          ["@types/responselike", "npm:1.0.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -394,8 +396,8 @@ const RAW_RUNTIME_STATE =
       ["virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:4.5.3", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-cli-virtual-5fe4ea72f9/0/cache/@yarnpkg-cli-npm-4.5.3-58b19a9c49-9f6e6eba63.zip/node_modules/@yarnpkg/cli/",\
         "packageDependencies": [\
-          ["@yarnpkg/cli", "virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:4.5.3"],\
           ["@types/yarnpkg__core", null],\
+          ["@yarnpkg/cli", "virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:4.5.3"],\
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.1.1"],\
           ["@yarnpkg/libzip", "virtual:9a4fedf5cfa52d65d4531d1193ebb3740286722fac9cb6b579c5c716520478d5994f256b21e32705033554e0a0fcbeaf703fbcff19bba1d97fe7a3b456f4a066#npm:3.1.0"],\
@@ -439,8 +441,8 @@ const RAW_RUNTIME_STATE =
       ["virtual:cbcfad9f36ef6957da6ab50dae484ded737384dab6d8a426bc92f3f8dfc10989022e50ffb94374eabe2dfcfd2e4e681a172b4a7d891c8345fd76930aebe79cc9#npm:4.5.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-cli-virtual-86d7de1687/0/cache/@yarnpkg-cli-npm-4.5.0-421eef95c0-96190bb74b.zip/node_modules/@yarnpkg/cli/",\
         "packageDependencies": [\
-          ["@yarnpkg/cli", "virtual:cbcfad9f36ef6957da6ab50dae484ded737384dab6d8a426bc92f3f8dfc10989022e50ffb94374eabe2dfcfd2e4e681a172b4a7d891c8345fd76930aebe79cc9#npm:4.5.0"],\
           ["@types/yarnpkg__core", null],\
+          ["@yarnpkg/cli", "virtual:cbcfad9f36ef6957da6ab50dae484ded737384dab6d8a426bc92f3f8dfc10989022e50ffb94374eabe2dfcfd2e4e681a172b4a7d891c8345fd76930aebe79cc9#npm:4.5.0"],\
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.1.0"],\
           ["@yarnpkg/libzip", "virtual:bdd6aaebe8e3baf84aab5cefe0c24934d20a1535421bc6e3d23fb9c4d35d18a5d23a97aa0c2f51332ab9ab00d598f35c4350f855ae0ba75227f46621a5166a2b#npm:3.1.0"],\
@@ -486,10 +488,10 @@ const RAW_RUNTIME_STATE =
       ["npm:4.1.3", {\
         "packageLocation": "./.yarn/cache/@yarnpkg-core-npm-4.1.3-bdd6aaebe8-8eb95b5400.zip/node_modules/@yarnpkg/core/",\
         "packageDependencies": [\
-          ["@yarnpkg/core", "npm:4.1.3"],\
           ["@arcanis/slice-ansi", "npm:1.1.1"],\
           ["@types/semver", "npm:7.3.12"],\
           ["@types/treeify", "npm:1.0.0"],\
+          ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.1.0"],\
           ["@yarnpkg/libzip", "virtual:bdd6aaebe8e3baf84aab5cefe0c24934d20a1535421bc6e3d23fb9c4d35d18a5d23a97aa0c2f51332ab9ab00d598f35c4350f855ae0ba75227f46621a5166a2b#npm:3.1.0"],\
           ["@yarnpkg/parsers", "npm:3.0.2"],\
@@ -519,10 +521,10 @@ const RAW_RUNTIME_STATE =
       ["npm:4.1.4", {\
         "packageLocation": "./.yarn/cache/@yarnpkg-core-npm-4.1.4-0619ce7baf-f7f6543cef.zip/node_modules/@yarnpkg/core/",\
         "packageDependencies": [\
-          ["@yarnpkg/core", "npm:4.1.4"],\
           ["@arcanis/slice-ansi", "npm:1.1.1"],\
           ["@types/semver", "npm:7.3.12"],\
           ["@types/treeify", "npm:1.0.0"],\
+          ["@yarnpkg/core", "npm:4.1.4"],\
           ["@yarnpkg/fslib", "npm:3.1.0"],\
           ["@yarnpkg/libzip", "virtual:bdd6aaebe8e3baf84aab5cefe0c24934d20a1535421bc6e3d23fb9c4d35d18a5d23a97aa0c2f51332ab9ab00d598f35c4350f855ae0ba75227f46621a5166a2b#npm:3.1.0"],\
           ["@yarnpkg/parsers", "npm:3.0.2"],\
@@ -552,10 +554,10 @@ const RAW_RUNTIME_STATE =
       ["npm:4.1.6", {\
         "packageLocation": "./.yarn/cache/@yarnpkg-core-npm-4.1.6-9a4fedf5cf-09d8dac4cf.zip/node_modules/@yarnpkg/core/",\
         "packageDependencies": [\
-          ["@yarnpkg/core", "npm:4.1.6"],\
           ["@arcanis/slice-ansi", "npm:1.1.1"],\
           ["@types/semver", "npm:7.3.12"],\
           ["@types/treeify", "npm:1.0.0"],\
+          ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.1.1"],\
           ["@yarnpkg/libzip", "virtual:9a4fedf5cfa52d65d4531d1193ebb3740286722fac9cb6b579c5c716520478d5994f256b21e32705033554e0a0fcbeaf703fbcff19bba1d97fe7a3b456f4a066#npm:3.1.0"],\
           ["@yarnpkg/parsers", "npm:3.0.2"],\
@@ -601,9 +603,9 @@ const RAW_RUNTIME_STATE =
       ["virtual:32e9c75b9ab73d66b9fccd76876a1768bea4fdafb0067f896f512bf53393dac462abf4836746f84a5a9150abcc53f703749fc8773d6bf037b2fb7e0c72fc1298#npm:2.0.4", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-extensions-virtual-c01137d7ff/0/cache/@yarnpkg-extensions-npm-2.0.4-531bf9def0-cfaaec5d07.zip/node_modules/@yarnpkg/extensions/",\
         "packageDependencies": [\
-          ["@yarnpkg/extensions", "virtual:32e9c75b9ab73d66b9fccd76876a1768bea4fdafb0067f896f512bf53393dac462abf4836746f84a5a9150abcc53f703749fc8773d6bf037b2fb7e0c72fc1298#npm:2.0.4"],\
           ["@types/yarnpkg__core", null],\
-          ["@yarnpkg/core", "npm:4.1.6"]\
+          ["@yarnpkg/core", "npm:4.1.6"],\
+          ["@yarnpkg/extensions", "virtual:32e9c75b9ab73d66b9fccd76876a1768bea4fdafb0067f896f512bf53393dac462abf4836746f84a5a9150abcc53f703749fc8773d6bf037b2fb7e0c72fc1298#npm:2.0.4"]\
         ],\
         "packagePeers": [\
           "@types/yarnpkg__core",\
@@ -614,9 +616,9 @@ const RAW_RUNTIME_STATE =
       ["virtual:bde7a4b6c5eb6544baf9e296d044a7b596471641097e243f581a065c6afee85d58ae5dc886fecf4871ac763910af0befa90c31229a0af60ae92c3eb9a0d375d3#npm:2.0.3", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-extensions-virtual-d127f4fda8/0/cache/@yarnpkg-extensions-npm-2.0.3-bce475345d-60dd5545c7.zip/node_modules/@yarnpkg/extensions/",\
         "packageDependencies": [\
-          ["@yarnpkg/extensions", "virtual:bde7a4b6c5eb6544baf9e296d044a7b596471641097e243f581a065c6afee85d58ae5dc886fecf4871ac763910af0befa90c31229a0af60ae92c3eb9a0d375d3#npm:2.0.3"],\
           ["@types/yarnpkg__core", null],\
-          ["@yarnpkg/core", "npm:4.1.3"]\
+          ["@yarnpkg/core", "npm:4.1.3"],\
+          ["@yarnpkg/extensions", "virtual:bde7a4b6c5eb6544baf9e296d044a7b596471641097e243f581a065c6afee85d58ae5dc886fecf4871ac763910af0befa90c31229a0af60ae92c3eb9a0d375d3#npm:2.0.3"]\
         ],\
         "packagePeers": [\
           "@types/yarnpkg__core",\
@@ -669,9 +671,9 @@ const RAW_RUNTIME_STATE =
       ["virtual:4ee33f007405aa45766f20eb8f32e55f0cc96b0d039df142810e1b01eaec2b1b32c57dc77f6e676397f8347b398a53b9462c707ca87d82d03204715a3e734ecf#npm:3.0.1", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-libui-virtual-c7fbce03b4/0/cache/@yarnpkg-libui-npm-3.0.1-a2d881452f-b8b949e317.zip/node_modules/@yarnpkg/libui/",\
         "packageDependencies": [\
-          ["@yarnpkg/libui", "virtual:4ee33f007405aa45766f20eb8f32e55f0cc96b0d039df142810e1b01eaec2b1b32c57dc77f6e676397f8347b398a53b9462c707ca87d82d03204715a3e734ecf#npm:3.0.1"],\
           ["@types/ink", null],\
           ["@types/react", null],\
+          ["@yarnpkg/libui", "virtual:4ee33f007405aa45766f20eb8f32e55f0cc96b0d039df142810e1b01eaec2b1b32c57dc77f6e676397f8347b398a53b9462c707ca87d82d03204715a3e734ecf#npm:3.0.1"],\
           ["ink", "virtual:4ee33f007405aa45766f20eb8f32e55f0cc96b0d039df142810e1b01eaec2b1b32c57dc77f6e676397f8347b398a53b9462c707ca87d82d03204715a3e734ecf#npm:3.2.0"],\
           ["react", "npm:17.0.2"],\
           ["tslib", "npm:2.4.0"]\
@@ -687,9 +689,9 @@ const RAW_RUNTIME_STATE =
       ["virtual:6ce7c51033b06feaf1e0282c63d301fb50cbfd4236be38be55b8d0f74833c479682b829bf95baad95acaec378dc975abbb0ab99bdb3fedf05f42ce2a4a2ecaa2#npm:3.0.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-libui-virtual-b8f0993fe2/0/cache/@yarnpkg-libui-npm-3.0.0-d558e51d1a-b3e8d3fd11.zip/node_modules/@yarnpkg/libui/",\
         "packageDependencies": [\
-          ["@yarnpkg/libui", "virtual:6ce7c51033b06feaf1e0282c63d301fb50cbfd4236be38be55b8d0f74833c479682b829bf95baad95acaec378dc975abbb0ab99bdb3fedf05f42ce2a4a2ecaa2#npm:3.0.0"],\
           ["@types/ink", null],\
           ["@types/react", null],\
+          ["@yarnpkg/libui", "virtual:6ce7c51033b06feaf1e0282c63d301fb50cbfd4236be38be55b8d0f74833c479682b829bf95baad95acaec378dc975abbb0ab99bdb3fedf05f42ce2a4a2ecaa2#npm:3.0.0"],\
           ["ink", "virtual:6ce7c51033b06feaf1e0282c63d301fb50cbfd4236be38be55b8d0f74833c479682b829bf95baad95acaec378dc975abbb0ab99bdb3fedf05f42ce2a4a2ecaa2#npm:3.2.0"],\
           ["react", "npm:16.14.0"],\
           ["tslib", "npm:2.4.0"]\
@@ -721,10 +723,10 @@ const RAW_RUNTIME_STATE =
       ["virtual:59b6d5543a84759dc53304da197de1dacc0ad1b0548bd52499278c6c9425ba7fed3e97f50b22324549c1d1a348b98050888bf0e5a9b44d202fd9359d3c5aa2c1#npm:3.0.1", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-libzip-virtual-d00cb320f8/0/cache/@yarnpkg-libzip-npm-3.0.1-4450730cd1-c2179e1152.zip/node_modules/@yarnpkg/libzip/",\
         "packageDependencies": [\
-          ["@yarnpkg/libzip", "virtual:59b6d5543a84759dc53304da197de1dacc0ad1b0548bd52499278c6c9425ba7fed3e97f50b22324549c1d1a348b98050888bf0e5a9b44d202fd9359d3c5aa2c1#npm:3.0.1"],\
           ["@types/emscripten", "npm:1.39.6"],\
           ["@types/yarnpkg__fslib", null],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/libzip", "virtual:59b6d5543a84759dc53304da197de1dacc0ad1b0548bd52499278c6c9425ba7fed3e97f50b22324549c1d1a348b98050888bf0e5a9b44d202fd9359d3c5aa2c1#npm:3.0.1"],\
           ["tslib", "npm:2.4.0"]\
         ],\
         "packagePeers": [\
@@ -736,10 +738,10 @@ const RAW_RUNTIME_STATE =
       ["virtual:9a4fedf5cfa52d65d4531d1193ebb3740286722fac9cb6b579c5c716520478d5994f256b21e32705033554e0a0fcbeaf703fbcff19bba1d97fe7a3b456f4a066#npm:3.1.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-libzip-virtual-bd8a773c0b/0/cache/@yarnpkg-libzip-npm-3.1.0-73edb40bfc-11e12724d9.zip/node_modules/@yarnpkg/libzip/",\
         "packageDependencies": [\
-          ["@yarnpkg/libzip", "virtual:9a4fedf5cfa52d65d4531d1193ebb3740286722fac9cb6b579c5c716520478d5994f256b21e32705033554e0a0fcbeaf703fbcff19bba1d97fe7a3b456f4a066#npm:3.1.0"],\
           ["@types/emscripten", "npm:1.39.6"],\
           ["@types/yarnpkg__fslib", null],\
           ["@yarnpkg/fslib", "npm:3.1.1"],\
+          ["@yarnpkg/libzip", "virtual:9a4fedf5cfa52d65d4531d1193ebb3740286722fac9cb6b579c5c716520478d5994f256b21e32705033554e0a0fcbeaf703fbcff19bba1d97fe7a3b456f4a066#npm:3.1.0"],\
           ["tslib", "npm:2.4.0"]\
         ],\
         "packagePeers": [\
@@ -751,10 +753,10 @@ const RAW_RUNTIME_STATE =
       ["virtual:bdd6aaebe8e3baf84aab5cefe0c24934d20a1535421bc6e3d23fb9c4d35d18a5d23a97aa0c2f51332ab9ab00d598f35c4350f855ae0ba75227f46621a5166a2b#npm:3.1.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-libzip-virtual-0f8083ef7a/0/cache/@yarnpkg-libzip-npm-3.1.0-73edb40bfc-11e12724d9.zip/node_modules/@yarnpkg/libzip/",\
         "packageDependencies": [\
-          ["@yarnpkg/libzip", "virtual:bdd6aaebe8e3baf84aab5cefe0c24934d20a1535421bc6e3d23fb9c4d35d18a5d23a97aa0c2f51332ab9ab00d598f35c4350f855ae0ba75227f46621a5166a2b#npm:3.1.0"],\
           ["@types/emscripten", "npm:1.39.6"],\
           ["@types/yarnpkg__fslib", null],\
           ["@yarnpkg/fslib", "npm:3.1.0"],\
+          ["@yarnpkg/libzip", "virtual:bdd6aaebe8e3baf84aab5cefe0c24934d20a1535421bc6e3d23fb9c4d35d18a5d23a97aa0c2f51332ab9ab00d598f35c4350f855ae0ba75227f46621a5166a2b#npm:3.1.0"],\
           ["tslib", "npm:2.4.0"]\
         ],\
         "packagePeers": [\
@@ -768,9 +770,9 @@ const RAW_RUNTIME_STATE =
       ["npm:4.0.3", {\
         "packageLocation": "./.yarn/cache/@yarnpkg-nm-npm-4.0.3-e00d6c77e9-51962f798e.zip/node_modules/@yarnpkg/nm/",\
         "packageDependencies": [\
-          ["@yarnpkg/nm", "npm:4.0.3"],\
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.1.0"],\
+          ["@yarnpkg/nm", "npm:4.0.3"],\
           ["@yarnpkg/pnp", "npm:4.0.6"]\
         ],\
         "linkType": "HARD"\
@@ -778,9 +780,9 @@ const RAW_RUNTIME_STATE =
       ["npm:4.0.4", {\
         "packageLocation": "./.yarn/cache/@yarnpkg-nm-npm-4.0.4-7991c9ec6f-f025e79785.zip/node_modules/@yarnpkg/nm/",\
         "packageDependencies": [\
-          ["@yarnpkg/nm", "npm:4.0.4"],\
           ["@yarnpkg/core", "npm:4.1.4"],\
           ["@yarnpkg/fslib", "npm:3.1.0"],\
+          ["@yarnpkg/nm", "npm:4.0.4"],\
           ["@yarnpkg/pnp", "npm:4.0.6"]\
         ],\
         "linkType": "HARD"\
@@ -815,11 +817,11 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.10", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-compat-virtual-32e9c75b9a/0/cache/@yarnpkg-plugin-compat-npm-4.0.10-18783d4cee-5dd1454b89.zip/node_modules/@yarnpkg/plugin-compat/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-compat", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.10"],\
           ["@types/yarnpkg__core", null],\
           ["@types/yarnpkg__plugin-patch", null],\
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/extensions", "virtual:32e9c75b9ab73d66b9fccd76876a1768bea4fdafb0067f896f512bf53393dac462abf4836746f84a5a9150abcc53f703749fc8773d6bf037b2fb7e0c72fc1298#npm:2.0.4"],\
+          ["@yarnpkg/plugin-compat", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.10"],\
           ["@yarnpkg/plugin-patch", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.1"]\
         ],\
         "packagePeers": [\
@@ -833,11 +835,11 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.8", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-compat-virtual-bde7a4b6c5/0/cache/@yarnpkg-plugin-compat-npm-4.0.8-4bec4a92fd-d77750482d.zip/node_modules/@yarnpkg/plugin-compat/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-compat", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.8"],\
           ["@types/yarnpkg__core", null],\
           ["@types/yarnpkg__plugin-patch", null],\
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/extensions", "virtual:bde7a4b6c5eb6544baf9e296d044a7b596471641097e243f581a065c6afee85d58ae5dc886fecf4871ac763910af0befa90c31229a0af60ae92c3eb9a0d375d3#npm:2.0.3"],\
+          ["@yarnpkg/plugin-compat", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.8"],\
           ["@yarnpkg/plugin-patch", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.1"]\
         ],\
         "packagePeers": [\
@@ -860,12 +862,12 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.2", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-constraints-virtual-e45eb7db81/0/cache/@yarnpkg-plugin-constraints-npm-4.0.2-9afd8df372-a9daf8f166.zip/node_modules/@yarnpkg/plugin-constraints/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-constraints", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.2"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:4.5.3"],\
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-constraints", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.2"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["lodash", "npm:4.17.21"],\
           ["tau-prolog", "npm:0.2.81"],\
@@ -882,12 +884,12 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.2", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-constraints-virtual-2442e4920a/0/cache/@yarnpkg-plugin-constraints-npm-4.0.2-9afd8df372-a9daf8f166.zip/node_modules/@yarnpkg/plugin-constraints/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-constraints", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.2"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:cbcfad9f36ef6957da6ab50dae484ded737384dab6d8a426bc92f3f8dfc10989022e50ffb94374eabe2dfcfd2e4e681a172b4a7d891c8345fd76930aebe79cc9#npm:4.5.0"],\
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-constraints", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.2"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["lodash", "npm:4.17.21"],\
           ["tau-prolog", "npm:0.2.81"],\
@@ -913,12 +915,12 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-dlx-virtual-1ad9012e37/0/cache/@yarnpkg-plugin-dlx-npm-4.0.0-a4a0be4efa-84ee386772.zip/node_modules/@yarnpkg/plugin-dlx/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-dlx", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.0"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:4.5.3"],\
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-dlx", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.0"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["tslib", "npm:2.4.0"]\
         ],\
@@ -933,12 +935,12 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-dlx-virtual-0abb9fb202/0/cache/@yarnpkg-plugin-dlx-npm-4.0.0-a4a0be4efa-84ee386772.zip/node_modules/@yarnpkg/plugin-dlx/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-dlx", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:cbcfad9f36ef6957da6ab50dae484ded737384dab6d8a426bc92f3f8dfc10989022e50ffb94374eabe2dfcfd2e4e681a172b4a7d891c8345fd76930aebe79cc9#npm:4.5.0"],\
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-dlx", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["tslib", "npm:2.4.0"]\
         ],\
@@ -962,7 +964,6 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.2.2", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-essentials-virtual-467eeaa8c0/0/cache/@yarnpkg-plugin-essentials-npm-4.2.2-44c0507f73-eb339407dc.zip/node_modules/@yarnpkg/plugin-essentials/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-essentials", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.2.2"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@types/yarnpkg__plugin-git", null],\
@@ -970,6 +971,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.1.0"],\
           ["@yarnpkg/parsers", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-essentials", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.2.2"],\
           ["@yarnpkg/plugin-git", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.1.0"],\
           ["ci-info", "npm:4.0.0"],\
           ["clipanion", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0-rc.3"],\
@@ -993,7 +995,6 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.2.2", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-essentials-virtual-d59ea8ee76/0/cache/@yarnpkg-plugin-essentials-npm-4.2.2-44c0507f73-eb339407dc.zip/node_modules/@yarnpkg/plugin-essentials/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-essentials", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.2.2"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@types/yarnpkg__plugin-git", null],\
@@ -1001,6 +1002,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.1.0"],\
           ["@yarnpkg/parsers", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-essentials", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.2.2"],\
           ["@yarnpkg/plugin-git", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.1.0"],\
           ["ci-info", "npm:4.0.0"],\
           ["clipanion", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0-rc.3"],\
@@ -1033,10 +1035,10 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.0.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-exec-virtual-bc7c6bf12e/0/cache/@yarnpkg-plugin-exec-npm-3.0.0-0e7d32e96b-438b3a612a.zip/node_modules/@yarnpkg/plugin-exec/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-exec", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.0.0"],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-exec", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.0.0"],\
           ["tslib", "npm:2.4.0"]\
         ],\
         "packagePeers": [\
@@ -1048,10 +1050,10 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-exec-virtual-7385e2792d/0/cache/@yarnpkg-plugin-exec-npm-3.0.0-0e7d32e96b-438b3a612a.zip/node_modules/@yarnpkg/plugin-exec/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-exec", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.0"],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-exec", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.0"],\
           ["tslib", "npm:2.4.0"]\
         ],\
         "packagePeers": [\
@@ -1072,11 +1074,11 @@ const RAW_RUNTIME_STATE =
       ["virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:3.0.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-file-virtual-ec2736748f/0/cache/@yarnpkg-plugin-file-npm-3.0.0-afd2835329-229e78e6c5.zip/node_modules/@yarnpkg/plugin-file/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-file", "virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:3.0.0"],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
           ["@yarnpkg/libzip", "virtual:59b6d5543a84759dc53304da197de1dacc0ad1b0548bd52499278c6c9425ba7fed3e97f50b22324549c1d1a348b98050888bf0e5a9b44d202fd9359d3c5aa2c1#npm:3.0.1"],\
+          ["@yarnpkg/plugin-file", "virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:3.0.0"],\
           ["tslib", "npm:2.4.0"]\
         ],\
         "packagePeers": [\
@@ -1088,11 +1090,11 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-file-virtual-59b6d5543a/0/cache/@yarnpkg-plugin-file-npm-3.0.0-afd2835329-229e78e6c5.zip/node_modules/@yarnpkg/plugin-file/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-file", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.0"],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
           ["@yarnpkg/libzip", "virtual:59b6d5543a84759dc53304da197de1dacc0ad1b0548bd52499278c6c9425ba7fed3e97f50b22324549c1d1a348b98050888bf0e5a9b44d202fd9359d3c5aa2c1#npm:3.0.1"],\
+          ["@yarnpkg/plugin-file", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.0"],\
           ["tslib", "npm:2.4.0"]\
         ],\
         "packagePeers": [\
@@ -1113,11 +1115,11 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.1.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-git-virtual-d2c1f5546d/0/cache/@yarnpkg-plugin-git-npm-3.1.0-2472b99759-75f92a4e8a.zip/node_modules/@yarnpkg/plugin-git/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-git", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.1.0"],\
           ["@types/semver", "npm:7.3.12"],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.1.0"],\
+          ["@yarnpkg/plugin-git", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.1.0"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["git-url-parse", "npm:13.1.0"],\
           ["lodash", "npm:4.17.21"],\
@@ -1133,11 +1135,11 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.1.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-git-virtual-b81a02ff4e/0/cache/@yarnpkg-plugin-git-npm-3.1.0-2472b99759-75f92a4e8a.zip/node_modules/@yarnpkg/plugin-git/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-git", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.1.0"],\
           ["@types/semver", "npm:7.3.12"],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.1.0"],\
+          ["@yarnpkg/plugin-git", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.1.0"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["git-url-parse", "npm:13.1.0"],\
           ["lodash", "npm:4.17.21"],\
@@ -1162,12 +1164,12 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.0.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-github-virtual-ff29b6a5db/0/cache/@yarnpkg-plugin-github-npm-3.0.0-2c15cca4ee-b2d65a307c.zip/node_modules/@yarnpkg/plugin-github/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-github", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.0.0"],\
           ["@types/yarnpkg__core", null],\
           ["@types/yarnpkg__plugin-git", null],\
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
           ["@yarnpkg/plugin-git", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.1.0"],\
+          ["@yarnpkg/plugin-github", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.0.0"],\
           ["tslib", "npm:2.4.0"]\
         ],\
         "packagePeers": [\
@@ -1181,12 +1183,12 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-github-virtual-75c5b8cf86/0/cache/@yarnpkg-plugin-github-npm-3.0.0-2c15cca4ee-b2d65a307c.zip/node_modules/@yarnpkg/plugin-github/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-github", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.0"],\
           ["@types/yarnpkg__core", null],\
           ["@types/yarnpkg__plugin-git", null],\
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
           ["@yarnpkg/plugin-git", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.1.0"],\
+          ["@yarnpkg/plugin-github", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.0"],\
           ["tslib", "npm:2.4.0"]\
         ],\
         "packagePeers": [\
@@ -1209,9 +1211,9 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.0.1", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-http-virtual-54e68198d9/0/cache/@yarnpkg-plugin-http-npm-3.0.1-644ca4abff-a80a2e8a25.zip/node_modules/@yarnpkg/plugin-http/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-http", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.0.1"],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/core", "npm:4.1.6"],\
+          ["@yarnpkg/plugin-http", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.0.1"],\
           ["tslib", "npm:2.4.0"]\
         ],\
         "packagePeers": [\
@@ -1223,9 +1225,9 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.1", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-http-virtual-bbfce06e13/0/cache/@yarnpkg-plugin-http-npm-3.0.1-644ca4abff-a80a2e8a25.zip/node_modules/@yarnpkg/plugin-http/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-http", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.1"],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/core", "npm:4.1.3"],\
+          ["@yarnpkg/plugin-http", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.1"],\
           ["tslib", "npm:2.4.0"]\
         ],\
         "packagePeers": [\
@@ -1246,12 +1248,12 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.1", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-init-virtual-00a2552533/0/cache/@yarnpkg-plugin-init-npm-4.0.1-2c280c074f-49217ace27.zip/node_modules/@yarnpkg/plugin-init/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-init", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.1"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:4.5.3"],\
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-init", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.1"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["tslib", "npm:2.4.0"]\
         ],\
@@ -1266,12 +1268,12 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.1", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-init-virtual-8d93b0f761/0/cache/@yarnpkg-plugin-init-npm-4.0.1-2c280c074f-49217ace27.zip/node_modules/@yarnpkg/plugin-init/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-init", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.1"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:cbcfad9f36ef6957da6ab50dae484ded737384dab6d8a426bc92f3f8dfc10989022e50ffb94374eabe2dfcfd2e4e681a172b4a7d891c8345fd76930aebe79cc9#npm:4.5.0"],\
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-init", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.1"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["tslib", "npm:2.4.0"]\
         ],\
@@ -1302,7 +1304,6 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.1", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-interactive-tools-virtual-4ee33f0074/0/cache/@yarnpkg-plugin-interactive-tools-npm-4.0.1-ff0a7dbe3e-1fce84ed33.zip/node_modules/@yarnpkg/plugin-interactive-tools/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-interactive-tools", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.1"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@types/yarnpkg__plugin-essentials", null],\
@@ -1310,6 +1311,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/libui", "virtual:4ee33f007405aa45766f20eb8f32e55f0cc96b0d039df142810e1b01eaec2b1b32c57dc77f6e676397f8347b398a53b9462c707ca87d82d03204715a3e734ecf#npm:3.0.1"],\
           ["@yarnpkg/plugin-essentials", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.2.2"],\
+          ["@yarnpkg/plugin-interactive-tools", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.1"],\
           ["algoliasearch", "npm:4.14.2"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["diff", "npm:5.1.0"],\
@@ -1332,7 +1334,6 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-interactive-tools-virtual-6ce7c51033/0/cache/@yarnpkg-plugin-interactive-tools-npm-4.0.0-20b4dbfcba-07695da339.zip/node_modules/@yarnpkg/plugin-interactive-tools/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-interactive-tools", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@types/yarnpkg__plugin-essentials", null],\
@@ -1340,6 +1341,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/libui", "virtual:6ce7c51033b06feaf1e0282c63d301fb50cbfd4236be38be55b8d0f74833c479682b829bf95baad95acaec378dc975abbb0ab99bdb3fedf05f42ce2a4a2ecaa2#npm:3.0.0"],\
           ["@yarnpkg/plugin-essentials", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.2.2"],\
+          ["@yarnpkg/plugin-interactive-tools", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0"],\
           ["algoliasearch", "npm:4.14.2"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["diff", "npm:5.1.0"],\
@@ -1371,10 +1373,10 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.0.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-link-virtual-996743e0a3/0/cache/@yarnpkg-plugin-link-npm-3.0.0-71c3ac145b-68d43cb517.zip/node_modules/@yarnpkg/plugin-link/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-link", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.0.0"],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-link", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.0.0"],\
           ["tslib", "npm:2.4.0"]\
         ],\
         "packagePeers": [\
@@ -1386,10 +1388,10 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-link-virtual-1ad4f65108/0/cache/@yarnpkg-plugin-link-npm-3.0.0-71c3ac145b-68d43cb517.zip/node_modules/@yarnpkg/plugin-link/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-link", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.0"],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-link", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.0"],\
           ["tslib", "npm:2.4.0"]\
         ],\
         "packagePeers": [\
@@ -1417,7 +1419,6 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.5", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-nm-virtual-93f876594e/0/cache/@yarnpkg-plugin-nm-npm-4.0.5-09ada8d2cf-93eb8d1ab9.zip/node_modules/@yarnpkg/plugin-nm/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-nm", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.5"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:4.5.3"],\
@@ -1426,6 +1427,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/libzip", "virtual:bdd6aaebe8e3baf84aab5cefe0c24934d20a1535421bc6e3d23fb9c4d35d18a5d23a97aa0c2f51332ab9ab00d598f35c4350f855ae0ba75227f46621a5166a2b#npm:3.1.0"],\
           ["@yarnpkg/nm", "npm:4.0.4"],\
           ["@yarnpkg/parsers", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-nm", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.5"],\
           ["@yarnpkg/plugin-pnp", "virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:4.0.5"],\
           ["@yarnpkg/pnp", "npm:4.0.6"],\
           ["@zkochan/cmd-shim", "npm:5.3.1"],\
@@ -1443,7 +1445,6 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.4", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-nm-virtual-3dcb27b506/0/cache/@yarnpkg-plugin-nm-npm-4.0.4-5af02c77a0-8d6f9db1fa.zip/node_modules/@yarnpkg/plugin-nm/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-nm", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.4"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:cbcfad9f36ef6957da6ab50dae484ded737384dab6d8a426bc92f3f8dfc10989022e50ffb94374eabe2dfcfd2e4e681a172b4a7d891c8345fd76930aebe79cc9#npm:4.5.0"],\
@@ -1452,6 +1453,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/libzip", "virtual:bdd6aaebe8e3baf84aab5cefe0c24934d20a1535421bc6e3d23fb9c4d35d18a5d23a97aa0c2f51332ab9ab00d598f35c4350f855ae0ba75227f46621a5166a2b#npm:3.1.0"],\
           ["@yarnpkg/nm", "npm:4.0.3"],\
           ["@yarnpkg/parsers", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-nm", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.4"],\
           ["@yarnpkg/plugin-pnp", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.5"],\
           ["@yarnpkg/pnp", "npm:4.0.6"],\
           ["@zkochan/cmd-shim", "npm:5.3.1"],\
@@ -1478,11 +1480,11 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.0.1", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-npm-virtual-66d13afae8/0/cache/@yarnpkg-plugin-npm-npm-3.0.1-7878ad9e75-41f2cdd543.zip/node_modules/@yarnpkg/plugin-npm/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-npm", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.0.1"],\
           ["@types/yarnpkg__core", null],\
           ["@types/yarnpkg__plugin-pack", null],\
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-npm", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.0.1"],\
           ["@yarnpkg/plugin-pack", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.0"],\
           ["enquirer", "npm:2.3.6"],\
           ["lodash", "npm:4.17.21"],\
@@ -1501,11 +1503,11 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.1", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-npm-virtual-12085c8b22/0/cache/@yarnpkg-plugin-npm-npm-3.0.1-7878ad9e75-41f2cdd543.zip/node_modules/@yarnpkg/plugin-npm/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-npm", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.1"],\
           ["@types/yarnpkg__core", null],\
           ["@types/yarnpkg__plugin-pack", null],\
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-npm", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.1"],\
           ["@yarnpkg/plugin-pack", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0"],\
           ["enquirer", "npm:2.3.6"],\
           ["lodash", "npm:4.17.21"],\
@@ -1533,7 +1535,6 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.4", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-npm-cli-virtual-739ac5c6c4/0/cache/@yarnpkg-plugin-npm-cli-npm-4.0.4-3408ba7e58-adb919c181.zip/node_modules/@yarnpkg/plugin-npm-cli/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-npm-cli", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.4"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@types/yarnpkg__plugin-npm", null],\
@@ -1542,6 +1543,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
           ["@yarnpkg/plugin-npm", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.0.1"],\
+          ["@yarnpkg/plugin-npm-cli", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.4"],\
           ["@yarnpkg/plugin-pack", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.0"],\
           ["clipanion", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0-rc.3"],\
           ["enquirer", "npm:2.3.6"],\
@@ -1565,7 +1567,6 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.4", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-npm-cli-virtual-3bfe6a3073/0/cache/@yarnpkg-plugin-npm-cli-npm-4.0.4-3408ba7e58-adb919c181.zip/node_modules/@yarnpkg/plugin-npm-cli/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-npm-cli", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.4"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@types/yarnpkg__plugin-npm", null],\
@@ -1574,6 +1575,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
           ["@yarnpkg/plugin-npm", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.0.1"],\
+          ["@yarnpkg/plugin-npm-cli", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.4"],\
           ["@yarnpkg/plugin-pack", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0"],\
           ["clipanion", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0-rc.3"],\
           ["enquirer", "npm:2.3.6"],\
@@ -1606,12 +1608,12 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-pack-virtual-9ac4e18a83/0/cache/@yarnpkg-plugin-pack-npm-4.0.0-85571da56c-81dcb98fbc.zip/node_modules/@yarnpkg/plugin-pack/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-pack", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.0"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:4.5.3"],\
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-pack", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.0"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["micromatch", "npm:4.0.5"],\
           ["tar-stream", "npm:2.2.0"],\
@@ -1628,12 +1630,12 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-pack-virtual-80446c20c6/0/cache/@yarnpkg-plugin-pack-npm-4.0.0-85571da56c-81dcb98fbc.zip/node_modules/@yarnpkg/plugin-pack/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-pack", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:cbcfad9f36ef6957da6ab50dae484ded737384dab6d8a426bc92f3f8dfc10989022e50ffb94374eabe2dfcfd2e4e681a172b4a7d891c8345fd76930aebe79cc9#npm:4.5.0"],\
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-pack", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["micromatch", "npm:4.0.5"],\
           ["tar-stream", "npm:2.2.0"],\
@@ -1659,13 +1661,13 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.1", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-patch-virtual-0a47ee4e6a/0/cache/@yarnpkg-plugin-patch-npm-4.0.1-ca1d5d6db7-d4cdb84a45.zip/node_modules/@yarnpkg/plugin-patch/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-patch", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.1"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:4.5.3"],\
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
           ["@yarnpkg/libzip", "virtual:59b6d5543a84759dc53304da197de1dacc0ad1b0548bd52499278c6c9425ba7fed3e97f50b22324549c1d1a348b98050888bf0e5a9b44d202fd9359d3c5aa2c1#npm:3.0.1"],\
+          ["@yarnpkg/plugin-patch", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.1"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["tslib", "npm:2.4.0"]\
         ],\
@@ -1680,13 +1682,13 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.1", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-patch-virtual-8925a482a1/0/cache/@yarnpkg-plugin-patch-npm-4.0.1-ca1d5d6db7-d4cdb84a45.zip/node_modules/@yarnpkg/plugin-patch/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-patch", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.1"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:cbcfad9f36ef6957da6ab50dae484ded737384dab6d8a426bc92f3f8dfc10989022e50ffb94374eabe2dfcfd2e4e681a172b4a7d891c8345fd76930aebe79cc9#npm:4.5.0"],\
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
           ["@yarnpkg/libzip", "virtual:59b6d5543a84759dc53304da197de1dacc0ad1b0548bd52499278c6c9425ba7fed3e97f50b22324549c1d1a348b98050888bf0e5a9b44d202fd9359d3c5aa2c1#npm:3.0.1"],\
+          ["@yarnpkg/plugin-patch", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.1"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["tslib", "npm:2.4.0"]\
         ],\
@@ -1717,12 +1719,12 @@ const RAW_RUNTIME_STATE =
       ["virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:4.0.5", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-pnp-virtual-0990535623/0/cache/@yarnpkg-plugin-pnp-npm-4.0.5-3a312b6634-f8fbdfe9cf.zip/node_modules/@yarnpkg/plugin-pnp/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-pnp", "virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:4.0.5"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:4.5.3"],\
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.1.0"],\
+          ["@yarnpkg/plugin-pnp", "virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:4.0.5"],\
           ["@yarnpkg/plugin-stage", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.0"],\
           ["@yarnpkg/pnp", "npm:4.0.6"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
@@ -1740,12 +1742,12 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.5", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-pnp-virtual-474e531cc7/0/cache/@yarnpkg-plugin-pnp-npm-4.0.5-3a312b6634-f8fbdfe9cf.zip/node_modules/@yarnpkg/plugin-pnp/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-pnp", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.5"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:cbcfad9f36ef6957da6ab50dae484ded737384dab6d8a426bc92f3f8dfc10989022e50ffb94374eabe2dfcfd2e4e681a172b4a7d891c8345fd76930aebe79cc9#npm:4.5.0"],\
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.1.0"],\
+          ["@yarnpkg/plugin-pnp", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.5"],\
           ["@yarnpkg/plugin-stage", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0"],\
           ["@yarnpkg/pnp", "npm:4.0.6"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
@@ -1763,12 +1765,12 @@ const RAW_RUNTIME_STATE =
       ["virtual:cdf24f82ec583889d3b37e21b73e394343d73df10a412dbc7dc9d40bdb42198421970ea653713c58f639cf6fb5362a298bb4168ad42cbbacfcd5ec3c14d89e92#npm:4.0.2", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-pnp-virtual-6ba39af984/0/cache/@yarnpkg-plugin-pnp-npm-4.0.2-eaaf3aff36-5052286dd2.zip/node_modules/@yarnpkg/plugin-pnp/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-pnp", "virtual:cdf24f82ec583889d3b37e21b73e394343d73df10a412dbc7dc9d40bdb42198421970ea653713c58f639cf6fb5362a298bb4168ad42cbbacfcd5ec3c14d89e92#npm:4.0.2"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:4.5.3"],\
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-pnp", "virtual:cdf24f82ec583889d3b37e21b73e394343d73df10a412dbc7dc9d40bdb42198421970ea653713c58f639cf6fb5362a298bb4168ad42cbbacfcd5ec3c14d89e92#npm:4.0.2"],\
           ["@yarnpkg/plugin-stage", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.0"],\
           ["@yarnpkg/pnp", "npm:4.0.2"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
@@ -1786,12 +1788,12 @@ const RAW_RUNTIME_STATE =
       ["virtual:eaa0df0c282095d65611cd6527a3a2219dd2200a7110c76c4c4e0abf7d576cabdfaadb945aee311024b20f664a6a7a600292366b5e937c19f5e9d9ebd91bcdbe#npm:4.0.2", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-pnp-virtual-ad801fc7cb/0/cache/@yarnpkg-plugin-pnp-npm-4.0.2-eaaf3aff36-5052286dd2.zip/node_modules/@yarnpkg/plugin-pnp/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-pnp", "virtual:eaa0df0c282095d65611cd6527a3a2219dd2200a7110c76c4c4e0abf7d576cabdfaadb945aee311024b20f664a6a7a600292366b5e937c19f5e9d9ebd91bcdbe#npm:4.0.2"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:cbcfad9f36ef6957da6ab50dae484ded737384dab6d8a426bc92f3f8dfc10989022e50ffb94374eabe2dfcfd2e4e681a172b4a7d891c8345fd76930aebe79cc9#npm:4.5.0"],\
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-pnp", "virtual:eaa0df0c282095d65611cd6527a3a2219dd2200a7110c76c4c4e0abf7d576cabdfaadb945aee311024b20f664a6a7a600292366b5e937c19f5e9d9ebd91bcdbe#npm:4.0.2"],\
           ["@yarnpkg/plugin-stage", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0"],\
           ["@yarnpkg/pnp", "npm:4.0.2"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
@@ -1818,13 +1820,13 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:2.0.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-pnpm-virtual-cdf24f82ec/0/cache/@yarnpkg-plugin-pnpm-npm-2.0.0-73169d7d5f-18fe2ad052.zip/node_modules/@yarnpkg/plugin-pnpm/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-pnpm", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:2.0.0"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:4.5.3"],\
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
           ["@yarnpkg/plugin-pnp", "virtual:cdf24f82ec583889d3b37e21b73e394343d73df10a412dbc7dc9d40bdb42198421970ea653713c58f639cf6fb5362a298bb4168ad42cbbacfcd5ec3c14d89e92#npm:4.0.2"],\
+          ["@yarnpkg/plugin-pnpm", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:2.0.0"],\
           ["@yarnpkg/plugin-stage", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.0"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["p-limit", "npm:2.3.0"],\
@@ -1841,13 +1843,13 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:2.0.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-pnpm-virtual-eaa0df0c28/0/cache/@yarnpkg-plugin-pnpm-npm-2.0.0-73169d7d5f-18fe2ad052.zip/node_modules/@yarnpkg/plugin-pnpm/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-pnpm", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:2.0.0"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:cbcfad9f36ef6957da6ab50dae484ded737384dab6d8a426bc92f3f8dfc10989022e50ffb94374eabe2dfcfd2e4e681a172b4a7d891c8345fd76930aebe79cc9#npm:4.5.0"],\
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
           ["@yarnpkg/plugin-pnp", "virtual:eaa0df0c282095d65611cd6527a3a2219dd2200a7110c76c4c4e0abf7d576cabdfaadb945aee311024b20f664a6a7a600292366b5e937c19f5e9d9ebd91bcdbe#npm:4.0.2"],\
+          ["@yarnpkg/plugin-pnpm", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:2.0.0"],\
           ["@yarnpkg/plugin-stage", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["p-limit", "npm:2.3.0"],\
@@ -1873,12 +1875,12 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-stage-virtual-a387b930dc/0/cache/@yarnpkg-plugin-stage-npm-4.0.0-3537c4698c-cee83dea8c.zip/node_modules/@yarnpkg/plugin-stage/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-stage", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.0"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:4.5.3"],\
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-stage", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.0"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["tslib", "npm:2.4.0"]\
         ],\
@@ -1893,12 +1895,12 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-stage-virtual-3d34b812fd/0/cache/@yarnpkg-plugin-stage-npm-4.0.0-3537c4698c-cee83dea8c.zip/node_modules/@yarnpkg/plugin-stage/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-stage", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@yarnpkg/cli", "virtual:cbcfad9f36ef6957da6ab50dae484ded737384dab6d8a426bc92f3f8dfc10989022e50ffb94374eabe2dfcfd2e4e681a172b4a7d891c8345fd76930aebe79cc9#npm:4.5.0"],\
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/plugin-stage", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["tslib", "npm:2.4.0"]\
         ],\
@@ -1922,7 +1924,6 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.1.1", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-typescript-virtual-7f0c153c63/0/cache/@yarnpkg-plugin-typescript-npm-4.1.1-c748e1d771-f02cc42214.zip/node_modules/@yarnpkg/plugin-typescript/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-typescript", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.1.1"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@types/yarnpkg__plugin-essentials", null],\
@@ -1931,6 +1932,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/fslib", "npm:3.0.2"],\
           ["@yarnpkg/plugin-essentials", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.2.2"],\
           ["@yarnpkg/plugin-pack", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.0"],\
+          ["@yarnpkg/plugin-typescript", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.1.1"],\
           ["algoliasearch", "npm:4.14.2"],\
           ["semver", "npm:7.3.8"],\
           ["tslib", "npm:2.4.0"]\
@@ -1948,7 +1950,6 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.1.1", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-typescript-virtual-7619dc3c8c/0/cache/@yarnpkg-plugin-typescript-npm-4.1.1-c748e1d771-f02cc42214.zip/node_modules/@yarnpkg/plugin-typescript/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-typescript", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.1.1"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@types/yarnpkg__plugin-essentials", null],\
@@ -1957,6 +1958,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/fslib", "npm:3.0.2"],\
           ["@yarnpkg/plugin-essentials", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.2.2"],\
           ["@yarnpkg/plugin-pack", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0"],\
+          ["@yarnpkg/plugin-typescript", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.1.1"],\
           ["algoliasearch", "npm:4.14.2"],\
           ["semver", "npm:7.3.8"],\
           ["tslib", "npm:2.4.0"]\
@@ -1990,7 +1992,6 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.4", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-version-virtual-807a3edcf9/0/cache/@yarnpkg-plugin-version-npm-4.0.4-625ec51893-14b5670b61.zip/node_modules/@yarnpkg/plugin-version/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-version", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.4"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@types/yarnpkg__plugin-git", null],\
@@ -2000,6 +2001,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/libui", "virtual:4ee33f007405aa45766f20eb8f32e55f0cc96b0d039df142810e1b01eaec2b1b32c57dc77f6e676397f8347b398a53b9462c707ca87d82d03204715a3e734ecf#npm:3.0.1"],\
           ["@yarnpkg/parsers", "npm:3.0.2"],\
           ["@yarnpkg/plugin-git", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.1.0"],\
+          ["@yarnpkg/plugin-version", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.0.4"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["ink", "virtual:4ee33f007405aa45766f20eb8f32e55f0cc96b0d039df142810e1b01eaec2b1b32c57dc77f6e676397f8347b398a53b9462c707ca87d82d03204715a3e734ecf#npm:3.2.0"],\
           ["lodash", "npm:4.17.21"],\
@@ -2020,7 +2022,6 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.3", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-version-virtual-8bfc5a150d/0/cache/@yarnpkg-plugin-version-npm-4.0.3-2a0a67ac9e-7068382a0c.zip/node_modules/@yarnpkg/plugin-version/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-version", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.3"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@types/yarnpkg__plugin-git", null],\
@@ -2030,6 +2031,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/libui", "virtual:6ce7c51033b06feaf1e0282c63d301fb50cbfd4236be38be55b8d0f74833c479682b829bf95baad95acaec378dc975abbb0ab99bdb3fedf05f42ce2a4a2ecaa2#npm:3.0.0"],\
           ["@yarnpkg/parsers", "npm:3.0.2"],\
           ["@yarnpkg/plugin-git", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.1.0"],\
+          ["@yarnpkg/plugin-version", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.3"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["ink", "virtual:6ce7c51033b06feaf1e0282c63d301fb50cbfd4236be38be55b8d0f74833c479682b829bf95baad95acaec378dc975abbb0ab99bdb3fedf05f42ce2a4a2ecaa2#npm:3.2.0"],\
           ["lodash", "npm:4.17.21"],\
@@ -2066,7 +2068,6 @@ const RAW_RUNTIME_STATE =
       ["virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.1.1", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-workspace-tools-virtual-cc5b3bb71d/0/cache/@yarnpkg-plugin-workspace-tools-npm-4.1.1-eb5b7a4e8b-a0df7abab0.zip/node_modules/@yarnpkg/plugin-workspace-tools/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-workspace-tools", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.1.1"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@types/yarnpkg__plugin-git", null],\
@@ -2074,6 +2075,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/core", "npm:4.1.6"],\
           ["@yarnpkg/fslib", "npm:3.1.1"],\
           ["@yarnpkg/plugin-git", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:3.1.0"],\
+          ["@yarnpkg/plugin-workspace-tools", "virtual:5fe4ea72f9f3c80fbb4bc1f21c34c51d3e18cb177a78d03641fd283f4eae028325e9f110fef989bdf54392a83b797902d330adfe8472dada4107e166ec6c7d27#npm:4.1.1"],\
           ["clipanion", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0-rc.3"],\
           ["micromatch", "npm:4.0.5"],\
           ["p-limit", "npm:2.3.0"],\
@@ -2093,7 +2095,6 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.1.0", {\
         "packageLocation": "./.yarn/__virtual__/@yarnpkg-plugin-workspace-tools-virtual-04aca1ddcd/0/cache/@yarnpkg-plugin-workspace-tools-npm-4.1.0-43e3b29093-85ae6389fb.zip/node_modules/@yarnpkg/plugin-workspace-tools/",\
         "packageDependencies": [\
-          ["@yarnpkg/plugin-workspace-tools", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.1.0"],\
           ["@types/yarnpkg__cli", null],\
           ["@types/yarnpkg__core", null],\
           ["@types/yarnpkg__plugin-git", null],\
@@ -2101,6 +2102,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/core", "npm:4.1.3"],\
           ["@yarnpkg/fslib", "npm:3.0.2"],\
           ["@yarnpkg/plugin-git", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:3.1.0"],\
+          ["@yarnpkg/plugin-workspace-tools", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.1.0"],\
           ["clipanion", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0-rc.3"],\
           ["micromatch", "npm:4.0.5"],\
           ["p-limit", "npm:2.3.0"],\
@@ -2122,27 +2124,27 @@ const RAW_RUNTIME_STATE =
       ["npm:4.0.2", {\
         "packageLocation": "./.yarn/cache/@yarnpkg-pnp-npm-4.0.2-07e7da0ab6-3b9c10168b.zip/node_modules/@yarnpkg/pnp/",\
         "packageDependencies": [\
-          ["@yarnpkg/pnp", "npm:4.0.2"],\
           ["@types/node", "npm:18.19.31"],\
-          ["@yarnpkg/fslib", "npm:3.0.2"]\
+          ["@yarnpkg/fslib", "npm:3.0.2"],\
+          ["@yarnpkg/pnp", "npm:4.0.2"]\
         ],\
         "linkType": "HARD"\
       }],\
       ["npm:4.0.6", {\
         "packageLocation": "./.yarn/cache/@yarnpkg-pnp-npm-4.0.6-6d0c061c11-14aaa1a673.zip/node_modules/@yarnpkg/pnp/",\
         "packageDependencies": [\
-          ["@yarnpkg/pnp", "npm:4.0.6"],\
           ["@types/node", "npm:18.19.31"],\
-          ["@yarnpkg/fslib", "npm:3.1.0"]\
+          ["@yarnpkg/fslib", "npm:3.1.0"],\
+          ["@yarnpkg/pnp", "npm:4.0.6"]\
         ],\
         "linkType": "HARD"\
       }],\
       ["npm:4.0.7", {\
         "packageLocation": "./.yarn/cache/@yarnpkg-pnp-npm-4.0.7-b6fb79cac8-841ca67543.zip/node_modules/@yarnpkg/pnp/",\
         "packageDependencies": [\
-          ["@yarnpkg/pnp", "npm:4.0.7"],\
           ["@types/node", "npm:18.19.31"],\
-          ["@yarnpkg/fslib", "npm:3.1.1"]\
+          ["@yarnpkg/fslib", "npm:3.1.1"],\
+          ["@yarnpkg/pnp", "npm:4.0.7"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -2151,9 +2153,9 @@ const RAW_RUNTIME_STATE =
       ["npm:4.1.0", {\
         "packageLocation": "./.yarn/cache/@yarnpkg-shell-npm-4.1.0-aef3630ccb-409544717d.zip/node_modules/@yarnpkg/shell/",\
         "packageDependencies": [\
-          ["@yarnpkg/shell", "npm:4.1.0"],\
           ["@yarnpkg/fslib", "npm:3.1.0"],\
           ["@yarnpkg/parsers", "npm:3.0.2"],\
+          ["@yarnpkg/shell", "npm:4.1.0"],\
           ["chalk", "npm:3.0.0"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["cross-spawn", "npm:7.0.3"],\
@@ -2166,9 +2168,9 @@ const RAW_RUNTIME_STATE =
       ["npm:4.1.1", {\
         "packageLocation": "./.yarn/cache/@yarnpkg-shell-npm-4.1.1-e74e0c7fac-1cbf13dcf4.zip/node_modules/@yarnpkg/shell/",\
         "packageDependencies": [\
-          ["@yarnpkg/shell", "npm:4.1.1"],\
           ["@yarnpkg/fslib", "npm:3.1.1"],\
           ["@yarnpkg/parsers", "npm:3.0.2"],\
+          ["@yarnpkg/shell", "npm:4.1.1"],\
           ["chalk", "npm:3.0.0"],\
           ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["cross-spawn", "npm:7.0.3"],\
@@ -2194,7 +2196,6 @@ const RAW_RUNTIME_STATE =
       ["npm:4.14.2", {\
         "packageLocation": "./.yarn/cache/algoliasearch-npm-4.14.2-df3332ab38-deb07a5954.zip/node_modules/algoliasearch/",\
         "packageDependencies": [\
-          ["algoliasearch", "npm:4.14.2"],\
           ["@algolia/cache-browser-local-storage", "npm:4.14.2"],\
           ["@algolia/cache-common", "npm:4.14.2"],\
           ["@algolia/cache-in-memory", "npm:4.14.2"],\
@@ -2208,7 +2209,8 @@ const RAW_RUNTIME_STATE =
           ["@algolia/requester-browser-xhr", "npm:4.14.2"],\
           ["@algolia/requester-common", "npm:4.14.2"],\
           ["@algolia/requester-node-http", "npm:4.14.2"],\
-          ["@algolia/transporter", "npm:4.14.2"]\
+          ["@algolia/transporter", "npm:4.14.2"],\
+          ["algoliasearch", "npm:4.14.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -2314,8 +2316,8 @@ const RAW_RUNTIME_STATE =
       ["npm:5.7.1", {\
         "packageLocation": "./.yarn/cache/buffer-npm-5.7.1-513ef8259e-27cac81cff.zip/node_modules/buffer/",\
         "packageDependencies": [\
-          ["buffer", "npm:5.7.1"],\
           ["base64-js", "npm:1.5.1"],\
+          ["buffer", "npm:5.7.1"],\
           ["ieee754", "npm:1.2.1"]\
         ],\
         "linkType": "HARD"\
@@ -2359,8 +2361,8 @@ const RAW_RUNTIME_STATE =
       ["npm:3.0.0", {\
         "packageLocation": "./.yarn/cache/chalk-npm-3.0.0-e813208025-ee650b0a06.zip/node_modules/chalk/",\
         "packageDependencies": [\
-          ["chalk", "npm:3.0.0"],\
           ["ansi-styles", "npm:4.3.0"],\
+          ["chalk", "npm:3.0.0"],\
           ["supports-color", "npm:7.2.0"]\
         ],\
         "linkType": "HARD"\
@@ -2368,8 +2370,8 @@ const RAW_RUNTIME_STATE =
       ["npm:4.1.2", {\
         "packageLocation": "./.yarn/cache/chalk-npm-4.1.2-ba8b67ab80-4a3fef5cc3.zip/node_modules/chalk/",\
         "packageDependencies": [\
-          ["chalk", "npm:4.1.2"],\
           ["ansi-styles", "npm:4.3.0"],\
+          ["chalk", "npm:4.1.2"],\
           ["supports-color", "npm:7.2.0"]\
         ],\
         "linkType": "HARD"\
@@ -2441,8 +2443,8 @@ const RAW_RUNTIME_STATE =
       ["virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0-rc.3", {\
         "packageLocation": "./.yarn/__virtual__/clipanion-virtual-7037848cac/0/cache/clipanion-npm-4.0.0-rc.3-e62cc70585-5171fd0453.zip/node_modules/clipanion/",\
         "packageDependencies": [\
-          ["clipanion", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0-rc.3"],\
           ["@types/typanion", null],\
+          ["clipanion", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0-rc.3"],\
           ["typanion", "npm:3.14.0"]\
         ],\
         "packagePeers": [\
@@ -2454,8 +2456,8 @@ const RAW_RUNTIME_STATE =
       ["virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3", {\
         "packageLocation": "./.yarn/__virtual__/clipanion-virtual-883269121e/0/cache/clipanion-npm-4.0.0-rc.3-e62cc70585-5171fd0453.zip/node_modules/clipanion/",\
         "packageDependencies": [\
-          ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["@types/typanion", null],\
+          ["clipanion", "virtual:aef3630ccb920f27e72708392ff7fdef790d8b9c4716c04af21d6dfd50716a18ccca731012940d90b405f4d79eb1b017d2b7c8ffa8293485374613021748e40e#npm:4.0.0-rc.3"],\
           ["typanion", "npm:3.12.1"]\
         ],\
         "packagePeers": [\
@@ -2602,8 +2604,8 @@ const RAW_RUNTIME_STATE =
       ["npm:2.3.6", {\
         "packageLocation": "./.yarn/cache/enquirer-npm-2.3.6-7899175762-8e070e052c.zip/node_modules/enquirer/",\
         "packageDependencies": [\
-          ["enquirer", "npm:2.3.6"],\
-          ["ansi-colors", "npm:4.1.3"]\
+          ["ansi-colors", "npm:4.1.3"],\
+          ["enquirer", "npm:2.3.6"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -2639,8 +2641,8 @@ const RAW_RUNTIME_STATE =
       ["npm:7.2.0", {\
         "packageLocation": "./.yarn/cache/execa-npm-7.2.0-7797cafb24-098cd6a1bc.zip/node_modules/execa/",\
         "packageDependencies": [\
-          ["execa", "npm:7.2.0"],\
           ["cross-spawn", "npm:7.0.3"],\
+          ["execa", "npm:7.2.0"],\
           ["get-stream", "npm:6.0.1"],\
           ["human-signals", "npm:4.3.1"],\
           ["is-stream", "npm:3.0.0"],\
@@ -2657,9 +2659,9 @@ const RAW_RUNTIME_STATE =
       ["npm:3.2.12", {\
         "packageLocation": "./.yarn/cache/fast-glob-npm-3.2.12-162763bbae-08604fb8ef.zip/node_modules/fast-glob/",\
         "packageDependencies": [\
-          ["fast-glob", "npm:3.2.12"],\
           ["@nodelib/fs.stat", "npm:2.0.5"],\
           ["@nodelib/fs.walk", "npm:1.2.8"],\
+          ["fast-glob", "npm:3.2.12"],\
           ["glob-parent", "npm:5.1.2"],\
           ["merge2", "npm:1.4.1"],\
           ["micromatch", "npm:4.0.5"]\
@@ -2747,8 +2749,8 @@ const RAW_RUNTIME_STATE =
       ["npm:13.1.0", {\
         "packageLocation": "./.yarn/cache/git-url-parse-npm-13.1.0-724765d793-2ef6126c42.zip/node_modules/git-url-parse/",\
         "packageDependencies": [\
-          ["git-url-parse", "npm:13.1.0"],\
-          ["git-up", "npm:7.0.0"]\
+          ["git-up", "npm:7.0.0"],\
+          ["git-url-parse", "npm:13.1.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -2785,7 +2787,6 @@ const RAW_RUNTIME_STATE =
       ["npm:11.8.5", {\
         "packageLocation": "./.yarn/cache/got-npm-11.8.5-787b5e3116-14d160a21d.zip/node_modules/got/",\
         "packageDependencies": [\
-          ["got", "npm:11.8.5"],\
           ["@sindresorhus/is", "npm:4.6.0"],\
           ["@szmarczak/http-timer", "npm:4.0.6"],\
           ["@types/cacheable-request", "npm:6.0.2"],\
@@ -2793,6 +2794,7 @@ const RAW_RUNTIME_STATE =
           ["cacheable-lookup", "npm:5.0.4"],\
           ["cacheable-request", "npm:7.0.2"],\
           ["decompress-response", "npm:6.0.0"],\
+          ["got", "npm:11.8.5"],\
           ["http2-wrapper", "npm:1.0.3"],\
           ["lowercase-keys", "npm:2.0.0"],\
           ["p-cancelable", "npm:2.1.1"],\
@@ -2886,7 +2888,6 @@ const RAW_RUNTIME_STATE =
       ["virtual:4ee33f007405aa45766f20eb8f32e55f0cc96b0d039df142810e1b01eaec2b1b32c57dc77f6e676397f8347b398a53b9462c707ca87d82d03204715a3e734ecf#npm:3.2.0", {\
         "packageLocation": "./.yarn/__virtual__/ink-virtual-2038977239/0/cache/ink-npm-3.2.0-2f1df5b094-dabfd5b73e.zip/node_modules/ink/",\
         "packageDependencies": [\
-          ["ink", "virtual:4ee33f007405aa45766f20eb8f32e55f0cc96b0d039df142810e1b01eaec2b1b32c57dc77f6e676397f8347b398a53b9462c707ca87d82d03204715a3e734ecf#npm:3.2.0"],\
           ["@types/react", null],\
           ["ansi-escapes", "npm:4.3.2"],\
           ["auto-bind", "npm:4.0.0"],\
@@ -2896,6 +2897,7 @@ const RAW_RUNTIME_STATE =
           ["cli-truncate", "npm:2.1.0"],\
           ["code-excerpt", "npm:3.0.0"],\
           ["indent-string", "npm:4.0.0"],\
+          ["ink", "virtual:4ee33f007405aa45766f20eb8f32e55f0cc96b0d039df142810e1b01eaec2b1b32c57dc77f6e676397f8347b398a53b9462c707ca87d82d03204715a3e734ecf#npm:3.2.0"],\
           ["is-ci", "npm:2.0.0"],\
           ["lodash", "npm:4.17.21"],\
           ["patch-console", "npm:1.0.0"],\
@@ -2922,7 +2924,6 @@ const RAW_RUNTIME_STATE =
       ["virtual:6ce7c51033b06feaf1e0282c63d301fb50cbfd4236be38be55b8d0f74833c479682b829bf95baad95acaec378dc975abbb0ab99bdb3fedf05f42ce2a4a2ecaa2#npm:3.2.0", {\
         "packageLocation": "./.yarn/__virtual__/ink-virtual-c2d9f2af95/0/cache/ink-npm-3.2.0-2f1df5b094-dabfd5b73e.zip/node_modules/ink/",\
         "packageDependencies": [\
-          ["ink", "virtual:6ce7c51033b06feaf1e0282c63d301fb50cbfd4236be38be55b8d0f74833c479682b829bf95baad95acaec378dc975abbb0ab99bdb3fedf05f42ce2a4a2ecaa2#npm:3.2.0"],\
           ["@types/react", null],\
           ["ansi-escapes", "npm:4.3.2"],\
           ["auto-bind", "npm:4.0.0"],\
@@ -2932,6 +2933,7 @@ const RAW_RUNTIME_STATE =
           ["cli-truncate", "npm:2.1.0"],\
           ["code-excerpt", "npm:3.0.0"],\
           ["indent-string", "npm:4.0.0"],\
+          ["ink", "virtual:6ce7c51033b06feaf1e0282c63d301fb50cbfd4236be38be55b8d0f74833c479682b829bf95baad95acaec378dc975abbb0ab99bdb3fedf05f42ce2a4a2ecaa2#npm:3.2.0"],\
           ["is-ci", "npm:2.0.0"],\
           ["lodash", "npm:4.17.21"],\
           ["patch-console", "npm:1.0.0"],\
@@ -2967,11 +2969,11 @@ const RAW_RUNTIME_STATE =
       ["virtual:4ee33f007405aa45766f20eb8f32e55f0cc96b0d039df142810e1b01eaec2b1b32c57dc77f6e676397f8347b398a53b9462c707ca87d82d03204715a3e734ecf#npm:4.0.3", {\
         "packageLocation": "./.yarn/__virtual__/ink-text-input-virtual-4e5ac0e645/0/cache/ink-text-input-npm-4.0.3-388725c088-211fb2df68.zip/node_modules/ink-text-input/",\
         "packageDependencies": [\
-          ["ink-text-input", "virtual:4ee33f007405aa45766f20eb8f32e55f0cc96b0d039df142810e1b01eaec2b1b32c57dc77f6e676397f8347b398a53b9462c707ca87d82d03204715a3e734ecf#npm:4.0.3"],\
           ["@types/ink", null],\
           ["@types/react", null],\
           ["chalk", "npm:4.1.2"],\
           ["ink", "virtual:4ee33f007405aa45766f20eb8f32e55f0cc96b0d039df142810e1b01eaec2b1b32c57dc77f6e676397f8347b398a53b9462c707ca87d82d03204715a3e734ecf#npm:3.2.0"],\
+          ["ink-text-input", "virtual:4ee33f007405aa45766f20eb8f32e55f0cc96b0d039df142810e1b01eaec2b1b32c57dc77f6e676397f8347b398a53b9462c707ca87d82d03204715a3e734ecf#npm:4.0.3"],\
           ["react", "npm:17.0.2"],\
           ["type-fest", "npm:0.15.1"]\
         ],\
@@ -2986,11 +2988,11 @@ const RAW_RUNTIME_STATE =
       ["virtual:6ce7c51033b06feaf1e0282c63d301fb50cbfd4236be38be55b8d0f74833c479682b829bf95baad95acaec378dc975abbb0ab99bdb3fedf05f42ce2a4a2ecaa2#npm:4.0.3", {\
         "packageLocation": "./.yarn/__virtual__/ink-text-input-virtual-1eb85b67ae/0/cache/ink-text-input-npm-4.0.3-388725c088-211fb2df68.zip/node_modules/ink-text-input/",\
         "packageDependencies": [\
-          ["ink-text-input", "virtual:6ce7c51033b06feaf1e0282c63d301fb50cbfd4236be38be55b8d0f74833c479682b829bf95baad95acaec378dc975abbb0ab99bdb3fedf05f42ce2a4a2ecaa2#npm:4.0.3"],\
           ["@types/ink", null],\
           ["@types/react", null],\
           ["chalk", "npm:4.1.2"],\
           ["ink", "virtual:6ce7c51033b06feaf1e0282c63d301fb50cbfd4236be38be55b8d0f74833c479682b829bf95baad95acaec378dc975abbb0ab99bdb3fedf05f42ce2a4a2ecaa2#npm:3.2.0"],\
+          ["ink-text-input", "virtual:6ce7c51033b06feaf1e0282c63d301fb50cbfd4236be38be55b8d0f74833c479682b829bf95baad95acaec378dc975abbb0ab99bdb3fedf05f42ce2a4a2ecaa2#npm:4.0.3"],\
           ["react", "npm:16.14.0"],\
           ["type-fest", "npm:0.15.1"]\
         ],\
@@ -3007,8 +3009,8 @@ const RAW_RUNTIME_STATE =
       ["npm:2.0.0", {\
         "packageLocation": "./.yarn/cache/is-ci-npm-2.0.0-8662a0f445-17de4e2cd8.zip/node_modules/is-ci/",\
         "packageDependencies": [\
-          ["is-ci", "npm:2.0.0"],\
-          ["ci-info", "npm:2.0.0"]\
+          ["ci-info", "npm:2.0.0"],\
+          ["is-ci", "npm:2.0.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3035,8 +3037,8 @@ const RAW_RUNTIME_STATE =
       ["npm:4.0.3", {\
         "packageLocation": "./.yarn/cache/is-glob-npm-4.0.3-cb87bf1bdb-17fb4014e2.zip/node_modules/is-glob/",\
         "packageDependencies": [\
-          ["is-glob", "npm:4.0.3"],\
-          ["is-extglob", "npm:2.1.1"]\
+          ["is-extglob", "npm:2.1.1"],\
+          ["is-glob", "npm:4.0.3"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3100,9 +3102,9 @@ const RAW_RUNTIME_STATE =
       ["npm:3.14.1", {\
         "packageLocation": "./.yarn/cache/js-yaml-npm-3.14.1-b968c6095e-6746baaaea.zip/node_modules/js-yaml/",\
         "packageDependencies": [\
-          ["js-yaml", "npm:3.14.1"],\
           ["argparse", "npm:1.0.10"],\
-          ["esprima", "npm:4.0.1"]\
+          ["esprima", "npm:4.0.1"],\
+          ["js-yaml", "npm:3.14.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3120,8 +3122,8 @@ const RAW_RUNTIME_STATE =
       ["npm:4.5.0", {\
         "packageLocation": "./.yarn/cache/keyv-npm-4.5.0-57560bec53-78d6f88535.zip/node_modules/keyv/",\
         "packageDependencies": [\
-          ["keyv", "npm:4.5.0"],\
-          ["json-buffer", "npm:3.0.1"]\
+          ["json-buffer", "npm:3.0.1"],\
+          ["keyv", "npm:4.5.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3139,8 +3141,8 @@ const RAW_RUNTIME_STATE =
       ["npm:1.4.0", {\
         "packageLocation": "./.yarn/cache/loose-envify-npm-1.4.0-6307b72ccf-655d110220.zip/node_modules/loose-envify/",\
         "packageDependencies": [\
-          ["loose-envify", "npm:1.4.0"],\
-          ["js-tokens", "npm:4.0.0"]\
+          ["js-tokens", "npm:4.0.0"],\
+          ["loose-envify", "npm:1.4.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3186,8 +3188,8 @@ const RAW_RUNTIME_STATE =
       ["npm:4.0.5", {\
         "packageLocation": "./.yarn/cache/micromatch-npm-4.0.5-cfab5d7669-3d6505b20f.zip/node_modules/micromatch/",\
         "packageDependencies": [\
-          ["micromatch", "npm:4.0.5"],\
           ["braces", "npm:3.0.2"],\
+          ["micromatch", "npm:4.0.5"],\
           ["picomatch", "npm:2.3.1"]\
         ],\
         "linkType": "HARD"\
@@ -3239,8 +3241,8 @@ const RAW_RUNTIME_STATE =
       ["npm:2.1.2", {\
         "packageLocation": "./.yarn/cache/minizlib-npm-2.1.2-ea89cd0cfb-64fae024e1.zip/node_modules/minizlib/",\
         "packageDependencies": [\
-          ["minizlib", "npm:2.1.2"],\
           ["minipass", "npm:3.3.5"],\
+          ["minizlib", "npm:2.1.2"],\
           ["yallist", "npm:4.0.0"]\
         ],\
         "linkType": "HARD"\
@@ -3306,16 +3308,16 @@ const RAW_RUNTIME_STATE =
       ["npm:5.1.2", {\
         "packageLocation": "./.yarn/cache/onetime-npm-5.1.2-3ed148fa42-ffcef6fbb2.zip/node_modules/onetime/",\
         "packageDependencies": [\
-          ["onetime", "npm:5.1.2"],\
-          ["mimic-fn", "npm:2.1.0"]\
+          ["mimic-fn", "npm:2.1.0"],\
+          ["onetime", "npm:5.1.2"]\
         ],\
         "linkType": "HARD"\
       }],\
       ["npm:6.0.0", {\
         "packageLocation": "./.yarn/cache/onetime-npm-6.0.0-4f3684e29a-4eef7c6abf.zip/node_modules/onetime/",\
         "packageDependencies": [\
-          ["onetime", "npm:6.0.0"],\
-          ["mimic-fn", "npm:4.0.0"]\
+          ["mimic-fn", "npm:4.0.0"],\
+          ["onetime", "npm:6.0.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3362,8 +3364,8 @@ const RAW_RUNTIME_STATE =
       ["npm:8.1.0", {\
         "packageLocation": "./.yarn/cache/parse-url-npm-8.1.0-0995f15c34-68b95afdf4.zip/node_modules/parse-url/",\
         "packageDependencies": [\
-          ["parse-url", "npm:8.1.0"],\
-          ["parse-path", "npm:7.0.0"]\
+          ["parse-path", "npm:7.0.0"],\
+          ["parse-url", "npm:8.1.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3406,9 +3408,9 @@ const RAW_RUNTIME_STATE =
       ["npm:15.8.1", {\
         "packageLocation": "./.yarn/cache/prop-types-npm-15.8.1-17c71ee7ee-59ece7ca2f.zip/node_modules/prop-types/",\
         "packageDependencies": [\
-          ["prop-types", "npm:15.8.1"],\
           ["loose-envify", "npm:1.4.0"],\
           ["object-assign", "npm:4.1.1"],\
+          ["prop-types", "npm:15.8.1"],\
           ["react-is", "npm:16.13.1"]\
         ],\
         "linkType": "HARD"\
@@ -3427,9 +3429,9 @@ const RAW_RUNTIME_STATE =
       ["npm:3.0.0", {\
         "packageLocation": "./.yarn/cache/pump-npm-3.0.0-0080bf6a7a-bbdeda4f74.zip/node_modules/pump/",\
         "packageDependencies": [\
-          ["pump", "npm:3.0.0"],\
           ["end-of-stream", "npm:1.4.4"],\
-          ["once", "npm:1.4.0"]\
+          ["once", "npm:1.4.0"],\
+          ["pump", "npm:3.0.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3456,9 +3458,9 @@ const RAW_RUNTIME_STATE =
       ["npm:2.19.3", {\
         "packageLocation": "./.yarn/cache/qunit-npm-2.19.3-528971ebe0-cc4c9fc7d5.zip/node_modules/qunit/",\
         "packageDependencies": [\
-          ["qunit", "npm:2.19.3"],\
           ["commander", "npm:7.2.0"],\
           ["node-watch", "npm:0.7.3"],\
+          ["qunit", "npm:2.19.3"],\
           ["tiny-glob", "npm:0.2.9"]\
         ],\
         "linkType": "HARD"\
@@ -3468,19 +3470,19 @@ const RAW_RUNTIME_STATE =
       ["npm:16.14.0", {\
         "packageLocation": "./.yarn/cache/react-npm-16.14.0-932446ec69-df8faae43e.zip/node_modules/react/",\
         "packageDependencies": [\
-          ["react", "npm:16.14.0"],\
           ["loose-envify", "npm:1.4.0"],\
           ["object-assign", "npm:4.1.1"],\
-          ["prop-types", "npm:15.8.1"]\
+          ["prop-types", "npm:15.8.1"],\
+          ["react", "npm:16.14.0"]\
         ],\
         "linkType": "HARD"\
       }],\
       ["npm:17.0.2", {\
         "packageLocation": "./.yarn/cache/react-npm-17.0.2-99ba37d931-07ae8959ac.zip/node_modules/react/",\
         "packageDependencies": [\
-          ["react", "npm:17.0.2"],\
           ["loose-envify", "npm:1.4.0"],\
-          ["object-assign", "npm:4.1.1"]\
+          ["object-assign", "npm:4.1.1"],\
+          ["react", "npm:17.0.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3516,11 +3518,11 @@ const RAW_RUNTIME_STATE =
       ["virtual:20389772390792a44a5f0c17d3105fb46c1ae95b0d3aec26fb1e840b68ef4877936628e98d061c7d5f97842e219667234bca27c9dd9e644ae1baca935eeb6e95#npm:0.26.2", {\
         "packageLocation": "./.yarn/__virtual__/react-reconciler-virtual-7741d7de2b/0/cache/react-reconciler-npm-0.26.2-284c00acc7-3ae2e09804.zip/node_modules/react-reconciler/",\
         "packageDependencies": [\
-          ["react-reconciler", "virtual:20389772390792a44a5f0c17d3105fb46c1ae95b0d3aec26fb1e840b68ef4877936628e98d061c7d5f97842e219667234bca27c9dd9e644ae1baca935eeb6e95#npm:0.26.2"],\
           ["@types/react", null],\
           ["loose-envify", "npm:1.4.0"],\
           ["object-assign", "npm:4.1.1"],\
           ["react", "npm:17.0.2"],\
+          ["react-reconciler", "virtual:20389772390792a44a5f0c17d3105fb46c1ae95b0d3aec26fb1e840b68ef4877936628e98d061c7d5f97842e219667234bca27c9dd9e644ae1baca935eeb6e95#npm:0.26.2"],\
           ["scheduler", "npm:0.20.2"]\
         ],\
         "packagePeers": [\
@@ -3532,11 +3534,11 @@ const RAW_RUNTIME_STATE =
       ["virtual:c2d9f2af95a3144bc299208685503d0f55d24e38bc5febbe60fbedbc5e533a266140389f4bb20261060fec2fc403b53737094816b4afdeab78cc795d2cadb7d6#npm:0.26.2", {\
         "packageLocation": "./.yarn/__virtual__/react-reconciler-virtual-1cb471110e/0/cache/react-reconciler-npm-0.26.2-284c00acc7-3ae2e09804.zip/node_modules/react-reconciler/",\
         "packageDependencies": [\
-          ["react-reconciler", "virtual:c2d9f2af95a3144bc299208685503d0f55d24e38bc5febbe60fbedbc5e533a266140389f4bb20261060fec2fc403b53737094816b4afdeab78cc795d2cadb7d6#npm:0.26.2"],\
           ["@types/react", null],\
           ["loose-envify", "npm:1.4.0"],\
           ["object-assign", "npm:4.1.1"],\
           ["react", "npm:16.14.0"],\
+          ["react-reconciler", "virtual:c2d9f2af95a3144bc299208685503d0f55d24e38bc5febbe60fbedbc5e533a266140389f4bb20261060fec2fc403b53737094816b4afdeab78cc795d2cadb7d6#npm:0.26.2"],\
           ["scheduler", "npm:0.20.2"]\
         ],\
         "packagePeers": [\
@@ -3550,8 +3552,8 @@ const RAW_RUNTIME_STATE =
       ["npm:3.6.0", {\
         "packageLocation": "./.yarn/cache/readable-stream-npm-3.6.0-23a4a5eb56-937bedd29a.zip/node_modules/readable-stream/",\
         "packageDependencies": [\
-          ["readable-stream", "npm:3.6.0"],\
           ["inherits", "npm:2.0.4"],\
+          ["readable-stream", "npm:3.6.0"],\
           ["string_decoder", "npm:1.3.0"],\
           ["util-deprecate", "npm:1.0.2"]\
         ],\
@@ -3580,8 +3582,8 @@ const RAW_RUNTIME_STATE =
       ["npm:2.0.1", {\
         "packageLocation": "./.yarn/cache/responselike-npm-2.0.1-7f64b6e122-360b6deb5f.zip/node_modules/responselike/",\
         "packageDependencies": [\
-          ["responselike", "npm:2.0.1"],\
-          ["lowercase-keys", "npm:2.0.0"]\
+          ["lowercase-keys", "npm:2.0.0"],\
+          ["responselike", "npm:2.0.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3590,8 +3592,8 @@ const RAW_RUNTIME_STATE =
       ["npm:3.1.0", {\
         "packageLocation": "./.yarn/cache/restore-cursor-npm-3.1.0-52c5a4c98f-8051a371d6.zip/node_modules/restore-cursor/",\
         "packageDependencies": [\
-          ["restore-cursor", "npm:3.1.0"],\
           ["onetime", "npm:5.1.2"],\
+          ["restore-cursor", "npm:3.1.0"],\
           ["signal-exit", "npm:3.0.7"]\
         ],\
         "linkType": "HARD"\
@@ -3610,8 +3612,8 @@ const RAW_RUNTIME_STATE =
       ["npm:1.2.0", {\
         "packageLocation": "./.yarn/cache/run-parallel-npm-1.2.0-3f47ff2034-200b5ab25b.zip/node_modules/run-parallel/",\
         "packageDependencies": [\
-          ["run-parallel", "npm:1.2.0"],\
-          ["queue-microtask", "npm:1.2.3"]\
+          ["queue-microtask", "npm:1.2.3"],\
+          ["run-parallel", "npm:1.2.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3629,9 +3631,9 @@ const RAW_RUNTIME_STATE =
       ["npm:0.20.2", {\
         "packageLocation": "./.yarn/cache/scheduler-npm-0.20.2-90beaecfba-b0982e4b0f.zip/node_modules/scheduler/",\
         "packageDependencies": [\
-          ["scheduler", "npm:0.20.2"],\
           ["loose-envify", "npm:1.4.0"],\
-          ["object-assign", "npm:4.1.1"]\
+          ["object-assign", "npm:4.1.1"],\
+          ["scheduler", "npm:0.20.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3640,8 +3642,8 @@ const RAW_RUNTIME_STATE =
       ["npm:7.3.8", {\
         "packageLocation": "./.yarn/cache/semver-npm-7.3.8-25a996cb4f-7e581d6795.zip/node_modules/semver/",\
         "packageDependencies": [\
-          ["semver", "npm:7.3.8"],\
-          ["lru-cache", "npm:6.0.0"]\
+          ["lru-cache", "npm:6.0.0"],\
+          ["semver", "npm:7.3.8"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3687,10 +3689,10 @@ const RAW_RUNTIME_STATE =
       ["npm:3.0.0", {\
         "packageLocation": "./.yarn/cache/slice-ansi-npm-3.0.0-d9999864af-88083c9d0c.zip/node_modules/slice-ansi/",\
         "packageDependencies": [\
-          ["slice-ansi", "npm:3.0.0"],\
           ["ansi-styles", "npm:4.3.0"],\
           ["astral-regex", "npm:2.0.0"],\
-          ["is-fullwidth-code-point", "npm:3.0.0"]\
+          ["is-fullwidth-code-point", "npm:3.0.0"],\
+          ["slice-ansi", "npm:3.0.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3708,8 +3710,8 @@ const RAW_RUNTIME_STATE =
       ["npm:6.0.2", {\
         "packageLocation": "./.yarn/cache/ssri-npm-6.0.2-4b770f07fd-e6f18c57dc.zip/node_modules/ssri/",\
         "packageDependencies": [\
-          ["ssri", "npm:6.0.2"],\
-          ["figgy-pudding", "npm:3.5.2"]\
+          ["figgy-pudding", "npm:3.5.2"],\
+          ["ssri", "npm:6.0.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3718,8 +3720,8 @@ const RAW_RUNTIME_STATE =
       ["npm:2.0.5", {\
         "packageLocation": "./.yarn/cache/stack-utils-npm-2.0.5-e0438f409a-059f828eed.zip/node_modules/stack-utils/",\
         "packageDependencies": [\
-          ["stack-utils", "npm:2.0.5"],\
-          ["escape-string-regexp", "npm:2.0.0"]\
+          ["escape-string-regexp", "npm:2.0.0"],\
+          ["stack-utils", "npm:2.0.5"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3728,9 +3730,9 @@ const RAW_RUNTIME_STATE =
       ["npm:4.2.3", {\
         "packageLocation": "./.yarn/cache/string-width-npm-4.2.3-2c27177bae-1e525e92e5.zip/node_modules/string-width/",\
         "packageDependencies": [\
-          ["string-width", "npm:4.2.3"],\
           ["emoji-regex", "npm:8.0.0"],\
           ["is-fullwidth-code-point", "npm:3.0.0"],\
+          ["string-width", "npm:4.2.3"],\
           ["strip-ansi", "npm:6.0.1"]\
         ],\
         "linkType": "HARD"\
@@ -3740,8 +3742,8 @@ const RAW_RUNTIME_STATE =
       ["npm:1.3.0", {\
         "packageLocation": "./.yarn/cache/string_decoder-npm-1.3.0-2422117fd0-810614ddb0.zip/node_modules/string_decoder/",\
         "packageDependencies": [\
-          ["string_decoder", "npm:1.3.0"],\
-          ["safe-buffer", "npm:5.2.1"]\
+          ["safe-buffer", "npm:5.2.1"],\
+          ["string_decoder", "npm:1.3.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3750,8 +3752,8 @@ const RAW_RUNTIME_STATE =
       ["npm:6.0.1", {\
         "packageLocation": "./.yarn/cache/strip-ansi-npm-6.0.1-caddc7cb40-1ae5f212a1.zip/node_modules/strip-ansi/",\
         "packageDependencies": [\
-          ["strip-ansi", "npm:6.0.1"],\
-          ["ansi-regex", "npm:5.0.1"]\
+          ["ansi-regex", "npm:5.0.1"],\
+          ["strip-ansi", "npm:6.0.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3769,8 +3771,8 @@ const RAW_RUNTIME_STATE =
       ["npm:7.2.0", {\
         "packageLocation": "./.yarn/cache/supports-color-npm-7.2.0-606bfcf7da-afb4c88521.zip/node_modules/supports-color/",\
         "packageDependencies": [\
-          ["supports-color", "npm:7.2.0"],\
-          ["has-flag", "npm:4.0.0"]\
+          ["has-flag", "npm:4.0.0"],\
+          ["supports-color", "npm:7.2.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3779,12 +3781,12 @@ const RAW_RUNTIME_STATE =
       ["npm:6.1.11", {\
         "packageLocation": "./.yarn/cache/tar-npm-6.1.11-e6ac3cba9c-5a016f5330.zip/node_modules/tar/",\
         "packageDependencies": [\
-          ["tar", "npm:6.1.11"],\
           ["chownr", "npm:2.0.0"],\
           ["fs-minipass", "npm:2.1.0"],\
           ["minipass", "npm:3.3.5"],\
           ["minizlib", "npm:2.1.2"],\
           ["mkdirp", "npm:1.0.4"],\
+          ["tar", "npm:6.1.11"],\
           ["yallist", "npm:4.0.0"]\
         ],\
         "linkType": "HARD"\
@@ -3794,12 +3796,12 @@ const RAW_RUNTIME_STATE =
       ["npm:2.2.0", {\
         "packageLocation": "./.yarn/cache/tar-stream-npm-2.2.0-884c79b510-2f4c910b3e.zip/node_modules/tar-stream/",\
         "packageDependencies": [\
-          ["tar-stream", "npm:2.2.0"],\
           ["bl", "npm:4.1.0"],\
           ["end-of-stream", "npm:1.4.4"],\
           ["fs-constants", "npm:1.0.0"],\
           ["inherits", "npm:2.0.4"],\
-          ["readable-stream", "npm:3.6.0"]\
+          ["readable-stream", "npm:3.6.0"],\
+          ["tar-stream", "npm:2.2.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3808,9 +3810,9 @@ const RAW_RUNTIME_STATE =
       ["npm:0.2.81", {\
         "packageLocation": "./.yarn/cache/tau-prolog-npm-0.2.81-09404ec7c6-7e21ded5ba.zip/node_modules/tau-prolog/",\
         "packageDependencies": [\
-          ["tau-prolog", "npm:0.2.81"],\
           ["qunit", "npm:2.19.3"],\
-          ["readline-sync", "npm:1.4.9"]\
+          ["readline-sync", "npm:1.4.9"],\
+          ["tau-prolog", "npm:0.2.81"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3819,9 +3821,9 @@ const RAW_RUNTIME_STATE =
       ["npm:0.2.9", {\
         "packageLocation": "./.yarn/cache/tiny-glob-npm-0.2.9-068f4ab3f8-cbe072f0d2.zip/node_modules/tiny-glob/",\
         "packageDependencies": [\
-          ["tiny-glob", "npm:0.2.9"],\
           ["globalyzer", "npm:0.1.0"],\
-          ["globrex", "npm:0.1.2"]\
+          ["globrex", "npm:0.1.2"],\
+          ["tiny-glob", "npm:0.2.9"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3839,8 +3841,8 @@ const RAW_RUNTIME_STATE =
       ["npm:5.0.1", {\
         "packageLocation": "./.yarn/cache/to-regex-range-npm-5.0.1-f1e8263b00-487988b0a1.zip/node_modules/to-regex-range/",\
         "packageDependencies": [\
-          ["to-regex-range", "npm:5.0.1"],\
-          ["is-number", "npm:7.0.0"]\
+          ["is-number", "npm:7.0.0"],\
+          ["to-regex-range", "npm:5.0.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3942,8 +3944,8 @@ const RAW_RUNTIME_STATE =
       ["npm:2.0.2", {\
         "packageLocation": "./.yarn/cache/which-npm-2.0.2-320ddf72f7-66522872a7.zip/node_modules/which/",\
         "packageDependencies": [\
-          ["which", "npm:2.0.2"],\
-          ["isexe", "npm:2.0.0"]\
+          ["isexe", "npm:2.0.0"],\
+          ["which", "npm:2.0.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3952,8 +3954,8 @@ const RAW_RUNTIME_STATE =
       ["npm:3.1.0", {\
         "packageLocation": "./.yarn/cache/widest-line-npm-3.1.0-717bf2680b-b1e623adcf.zip/node_modules/widest-line/",\
         "packageDependencies": [\
-          ["widest-line", "npm:3.1.0"],\
-          ["string-width", "npm:4.2.3"]\
+          ["string-width", "npm:4.2.3"],\
+          ["widest-line", "npm:3.1.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3962,10 +3964,10 @@ const RAW_RUNTIME_STATE =
       ["npm:6.2.0", {\
         "packageLocation": "./.yarn/cache/wrap-ansi-npm-6.2.0-439a7246d8-baad244e6e.zip/node_modules/wrap-ansi/",\
         "packageDependencies": [\
-          ["wrap-ansi", "npm:6.2.0"],\
           ["ansi-styles", "npm:4.3.0"],\
           ["string-width", "npm:4.2.3"],\
-          ["strip-ansi", "npm:6.0.1"]\
+          ["strip-ansi", "npm:6.0.1"],\
+          ["wrap-ansi", "npm:6.2.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3990,11 +3992,11 @@ const RAW_RUNTIME_STATE =
       ["virtual:4e282c21e19d2b6c13f99228f2f76c94b0061772e0a328136628eaa5edda17693d84f37287aec17fcf0e6d7033d5ba1e76ba1c9b3e700bef0e3437279a648331#npm:7.5.9", {\
         "packageLocation": "./.yarn/__virtual__/ws-virtual-dca1b4da23/0/cache/ws-npm-7.5.9-26f12a5ed6-aec4ef4eb6.zip/node_modules/ws/",\
         "packageDependencies": [\
-          ["ws", "virtual:4e282c21e19d2b6c13f99228f2f76c94b0061772e0a328136628eaa5edda17693d84f37287aec17fcf0e6d7033d5ba1e76ba1c9b3e700bef0e3437279a648331#npm:7.5.9"],\
           ["@types/bufferutil", null],\
           ["@types/utf-8-validate", null],\
           ["bufferutil", null],\
-          ["utf-8-validate", null]\
+          ["utf-8-validate", null],\
+          ["ws", "virtual:4e282c21e19d2b6c13f99228f2f76c94b0061772e0a328136628eaa5edda17693d84f37287aec17fcf0e6d7033d5ba1e76ba1c9b3e700bef0e3437279a648331#npm:7.5.9"]\
         ],\
         "packagePeers": [\
           "@types/bufferutil",\
@@ -4018,7 +4020,6 @@ const RAW_RUNTIME_STATE =
       ["workspace:.", {\
         "packageLocation": "./",\
         "packageDependencies": [\
-          ["yarn-plugin-yarnpnp2nix", "workspace:."],\
           ["@types/node", "npm:20.12.7"],\
           ["@yarnpkg/builder", "patch:@yarnpkg/builder@npm%3A4.2.0#~/.yarn/patches/@yarnpkg-builder-npm-4.2.0-0172c1ac46.patch::version=4.2.0&hash=b2046d"],\
           ["@yarnpkg/cli", "virtual:151a33b4060e74d5a8d1ca6037f01dc661cf852cc3b99afe527af5d3642beba830002a148c0c5077c86211c56645a8a78dcab624ad3f08d7d13fc3e0ebdabdb5#npm:4.5.3"],\
@@ -4031,7 +4032,8 @@ const RAW_RUNTIME_STATE =
           ["clipanion", "virtual:86d7de1687c2bb562baf2ee42f526156a485c7578f9d0ee2ca74b44c070966aae8ce5ffb82b15302665ed693bab39a89f7fe06eac89640c52bcb464f9f7a6241#npm:4.0.0-rc.3"],\
           ["execa", "npm:7.2.0"],\
           ["typanion", "npm:3.14.0"],\
-          ["typescript", "patch:typescript@npm%3A5.1.6#optional!builtin<compat/typescript>::version=5.1.6&hash=5da071"]\
+          ["typescript", "patch:typescript@npm%3A5.1.6#optional!builtin<compat/typescript>::version=5.1.6&hash=5da071"],\
+          ["yarn-plugin-yarnpnp2nix", "workspace:."]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -4040,8 +4042,8 @@ const RAW_RUNTIME_STATE =
       ["npm:1.10.0", {\
         "packageLocation": "./.yarn/cache/yoga-layout-prebuilt-npm-1.10.0-855b15449f-e83b6b7078.zip/node_modules/yoga-layout-prebuilt/",\
         "packageDependencies": [\
-          ["yoga-layout-prebuilt", "npm:1.10.0"],\
-          ["@types/yoga-layout", "npm:1.9.2"]\
+          ["@types/yoga-layout", "npm:1.9.2"],\
+          ["yoga-layout-prebuilt", "npm:1.10.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4458,7 +4460,7 @@ async function copyImpl(prelayout, postlayout, destinationFs, destination, sourc
 async function maybeLStat(baseFs, p) {
   try {
     return await baseFs.lstatPromise(p);
-  } catch (e) {
+  } catch {
     return null;
   }
 }
@@ -4717,7 +4719,7 @@ class CustomStatWatcher extends events.EventEmitter {
   stat() {
     try {
       return this.fakeFs.statSync(this.path, { bigint: this.bigint });
-    } catch (error) {
+    } catch {
       const statInstance = this.bigint ? new BigIntStatsEntry() : new StatEntry();
       return clearStats(statInstance);
     }
@@ -5043,7 +5045,7 @@ class FakeFS {
     let current = Buffer.alloc(0);
     try {
       current = await this.readFilePromise(p);
-    } catch (error) {
+    } catch {
     }
     if (Buffer.compare(current, content) === 0)
       return;
@@ -5053,7 +5055,7 @@ class FakeFS {
     let current = ``;
     try {
       current = await this.readFilePromise(p, `utf8`);
-    } catch (error) {
+    } catch {
     }
     const normalizedContent = automaticNewlines ? normalizeLineEndings(current, content) : content;
     if (current === normalizedContent)
@@ -5071,7 +5073,7 @@ class FakeFS {
     let current = Buffer.alloc(0);
     try {
       current = this.readFileSync(p);
-    } catch (error) {
+    } catch {
     }
     if (Buffer.compare(current, content) === 0)
       return;
@@ -5081,7 +5083,7 @@ class FakeFS {
     let current = ``;
     try {
       current = this.readFileSync(p, `utf8`);
-    } catch (error) {
+    } catch {
     }
     const normalizedContent = automaticNewlines ? normalizeLineEndings(current, content) : content;
     if (current === normalizedContent)
@@ -5121,13 +5123,13 @@ class FakeFS {
       let pid;
       try {
         [pid] = await this.readJsonPromise(lockPath);
-      } catch (error) {
+      } catch {
         return Date.now() - startTime < 500;
       }
       try {
         process.kill(pid, 0);
         return true;
-      } catch (error) {
+      } catch {
         return false;
       }
     };
@@ -5140,7 +5142,7 @@ class FakeFS {
             try {
               await this.unlinkPromise(lockPath);
               continue;
-            } catch (error2) {
+            } catch {
             }
           }
           if (Date.now() - startTime < 60 * 1e3) {
@@ -5160,7 +5162,7 @@ class FakeFS {
       try {
         await this.closePromise(fd);
         await this.unlinkPromise(lockPath);
-      } catch (error) {
+      } catch {
       }
     }
   }
@@ -5456,7 +5458,7 @@ class ProxiedFS extends FakeFS {
   watch(p, a, b) {
     return this.baseFs.watch(
       this.mapToBase(p),
-      // @ts-expect-error
+      // @ts-expect-error - reason TBS
       a,
       b
     );
@@ -5464,7 +5466,7 @@ class ProxiedFS extends FakeFS {
   watchFile(p, a, b) {
     return this.baseFs.watchFile(
       this.mapToBase(p),
-      // @ts-expect-error
+      // @ts-expect-error - reason TBS
       a,
       b
     );
@@ -5884,7 +5886,7 @@ class NodeFS extends BasePortableFakeFS {
   watch(p, a, b) {
     return this.realFs.watch(
       npath.fromPortablePath(p),
-      // @ts-expect-error
+      // @ts-expect-error - reason TBS
       a,
       b
     );
@@ -5892,7 +5894,7 @@ class NodeFS extends BasePortableFakeFS {
   watchFile(p, a, b) {
     return this.realFs.watchFile(
       npath.fromPortablePath(p),
-      // @ts-expect-error
+      // @ts-expect-error - reason TBS
       a,
       b
     );
@@ -6310,7 +6312,7 @@ class MountFS extends BasePortableFakeFS {
       let content;
       try {
         content = await sourceFs.readFilePromise(sourceP2);
-      } catch (error) {
+      } catch {
         throw Object.assign(new Error(`EINVAL: invalid argument, copyfile '${sourceP2}' -> '${destP2}'`), { code: `EINVAL` });
       }
       await destFs.writeFilePromise(destP2, content);
@@ -6342,7 +6344,7 @@ class MountFS extends BasePortableFakeFS {
       let content;
       try {
         content = sourceFs.readFileSync(sourceP2);
-      } catch (error) {
+      } catch {
         throw Object.assign(new Error(`EINVAL: invalid argument, copyfile '${sourceP2}' -> '${destP2}'`), { code: `EINVAL` });
       }
       destFs.writeFileSync(destP2, content);
@@ -6587,14 +6589,14 @@ class MountFS extends BasePortableFakeFS {
     return this.makeCallSync(p, () => {
       return this.baseFs.watch(
         p,
-        // @ts-expect-error
+        // @ts-expect-error - reason TBS
         a,
         b
       );
     }, (mountFs, { subPath }) => {
       return mountFs.watch(
         subPath,
-        // @ts-expect-error
+        // @ts-expect-error - reason TBS
         a,
         b
       );
@@ -6604,7 +6606,7 @@ class MountFS extends BasePortableFakeFS {
     return this.makeCallSync(p, () => {
       return this.baseFs.watchFile(
         p,
-        // @ts-expect-error
+        // @ts-expect-error - reason TBS
         a,
         b
       );
@@ -7257,7 +7259,7 @@ function patchFs(patchedFs, fakeFs) {
     setupFn(patchedFs, `existsSync`, (p) => {
       try {
         return fakeFs.existsSync(p);
-      } catch (error) {
+      } catch {
         return false;
       }
     });
@@ -8196,14 +8198,16 @@ class ZipOpenFS extends MountFS {
       return new ZipFS(p, {
         baseFs,
         readOnly: readOnlyArchives,
-        stats: baseFs.statSync(p)
+        stats: baseFs.statSync(p),
+        customZipImplementation: opts.customZipImplementation
       });
     };
     const factoryPromise = async (baseFs, p) => {
       const zipOptions = {
         baseFs,
         readOnly: readOnlyArchives,
-        stats: await baseFs.statPromise(p)
+        stats: await baseFs.statPromise(p),
+        customZipImplementation: opts.customZipImplementation
       };
       return () => {
         return new ZipFS(p, zipOptions);
@@ -8218,6 +8222,236 @@ class ZipOpenFS extends MountFS {
   }
 }
 
+class LibzipError extends Error {
+  code;
+  constructor(message, code) {
+    super(message);
+    this.name = `Libzip Error`;
+    this.code = code;
+  }
+}
+class LibZipImpl {
+  libzip;
+  lzSource;
+  zip;
+  listings;
+  symlinkCount;
+  filesShouldBeCached = true;
+  constructor(opts) {
+    const buffer = `buffer` in opts ? opts.buffer : opts.baseFs.readFileSync(opts.path);
+    this.libzip = getInstance();
+    const errPtr = this.libzip.malloc(4);
+    try {
+      let flags = 0;
+      if (opts.readOnly)
+        flags |= this.libzip.ZIP_RDONLY;
+      const lzSource = this.allocateUnattachedSource(buffer);
+      try {
+        this.zip = this.libzip.openFromSource(lzSource, flags, errPtr);
+        this.lzSource = lzSource;
+      } catch (error) {
+        this.libzip.source.free(lzSource);
+        throw error;
+      }
+      if (this.zip === 0) {
+        const error = this.libzip.struct.errorS();
+        this.libzip.error.initWithCode(error, this.libzip.getValue(errPtr, `i32`));
+        throw this.makeLibzipError(error);
+      }
+    } finally {
+      this.libzip.free(errPtr);
+    }
+    const entryCount = this.libzip.getNumEntries(this.zip, 0);
+    const listings = new Array(entryCount);
+    for (let t = 0; t < entryCount; ++t)
+      listings[t] = this.libzip.getName(this.zip, t, 0);
+    this.listings = listings;
+    this.symlinkCount = this.libzip.ext.countSymlinks(this.zip);
+    if (this.symlinkCount === -1) {
+      throw this.makeLibzipError(this.libzip.getError(this.zip));
+    }
+  }
+  getSymlinkCount() {
+    return this.symlinkCount;
+  }
+  getListings() {
+    return this.listings;
+  }
+  stat(entry) {
+    const stat = this.libzip.struct.statS();
+    const rc = this.libzip.statIndex(this.zip, entry, 0, 0, stat);
+    if (rc === -1)
+      throw this.makeLibzipError(this.libzip.getError(this.zip));
+    const size = this.libzip.struct.statSize(stat) >>> 0;
+    const mtime = this.libzip.struct.statMtime(stat) >>> 0;
+    const crc = this.libzip.struct.statCrc(stat) >>> 0;
+    return { size, mtime, crc };
+  }
+  makeLibzipError(error) {
+    const errorCode = this.libzip.struct.errorCodeZip(error);
+    const strerror = this.libzip.error.strerror(error);
+    const libzipError = new LibzipError(strerror, this.libzip.errors[errorCode]);
+    if (errorCode === this.libzip.errors.ZIP_ER_CHANGED)
+      throw new Error(`Assertion failed: Unexpected libzip error: ${libzipError.message}`);
+    return libzipError;
+  }
+  setFileSource(target, compression, buffer) {
+    const lzSource = this.allocateSource(buffer);
+    try {
+      const newIndex = this.libzip.file.add(this.zip, target, lzSource, this.libzip.ZIP_FL_OVERWRITE);
+      if (newIndex === -1)
+        throw this.makeLibzipError(this.libzip.getError(this.zip));
+      if (compression !== null) {
+        const rc = this.libzip.file.setCompression(this.zip, newIndex, 0, compression[0], compression[1]);
+        if (rc === -1) {
+          throw this.makeLibzipError(this.libzip.getError(this.zip));
+        }
+      }
+      return newIndex;
+    } catch (error) {
+      this.libzip.source.free(lzSource);
+      throw error;
+    }
+  }
+  setMtime(entry, mtime) {
+    const rc = this.libzip.file.setMtime(this.zip, entry, 0, mtime, 0);
+    if (rc === -1) {
+      throw this.makeLibzipError(this.libzip.getError(this.zip));
+    }
+  }
+  getExternalAttributes(index) {
+    const attrs = this.libzip.file.getExternalAttributes(this.zip, index, 0, 0, this.libzip.uint08S, this.libzip.uint32S);
+    if (attrs === -1)
+      throw this.makeLibzipError(this.libzip.getError(this.zip));
+    const opsys = this.libzip.getValue(this.libzip.uint08S, `i8`) >>> 0;
+    const attributes = this.libzip.getValue(this.libzip.uint32S, `i32`) >>> 0;
+    return [opsys, attributes];
+  }
+  setExternalAttributes(index, opsys, attributes) {
+    const rc = this.libzip.file.setExternalAttributes(this.zip, index, 0, 0, opsys, attributes);
+    if (rc === -1) {
+      throw this.makeLibzipError(this.libzip.getError(this.zip));
+    }
+  }
+  locate(name) {
+    return this.libzip.name.locate(this.zip, name, 0);
+  }
+  getFileSource(index) {
+    const stat = this.libzip.struct.statS();
+    const rc = this.libzip.statIndex(this.zip, index, 0, 0, stat);
+    if (rc === -1)
+      throw this.makeLibzipError(this.libzip.getError(this.zip));
+    const size = this.libzip.struct.statCompSize(stat);
+    const compressionMethod = this.libzip.struct.statCompMethod(stat);
+    const buffer = this.libzip.malloc(size);
+    try {
+      const file = this.libzip.fopenIndex(this.zip, index, 0, this.libzip.ZIP_FL_COMPRESSED);
+      if (file === 0)
+        throw this.makeLibzipError(this.libzip.getError(this.zip));
+      try {
+        const rc2 = this.libzip.fread(file, buffer, size, 0);
+        if (rc2 === -1)
+          throw this.makeLibzipError(this.libzip.file.getError(file));
+        else if (rc2 < size)
+          throw new Error(`Incomplete read`);
+        else if (rc2 > size)
+          throw new Error(`Overread`);
+        const memory = this.libzip.HEAPU8.subarray(buffer, buffer + size);
+        const data = Buffer.from(memory);
+        return { data, compressionMethod };
+      } finally {
+        this.libzip.fclose(file);
+      }
+    } finally {
+      this.libzip.free(buffer);
+    }
+  }
+  deleteEntry(index) {
+    const rc = this.libzip.delete(this.zip, index);
+    if (rc === -1) {
+      throw this.makeLibzipError(this.libzip.getError(this.zip));
+    }
+  }
+  addDirectory(path) {
+    const index = this.libzip.dir.add(this.zip, path);
+    if (index === -1)
+      throw this.makeLibzipError(this.libzip.getError(this.zip));
+    return index;
+  }
+  getBufferAndClose() {
+    try {
+      this.libzip.source.keep(this.lzSource);
+      if (this.libzip.close(this.zip) === -1)
+        throw this.makeLibzipError(this.libzip.getError(this.zip));
+      if (this.libzip.source.open(this.lzSource) === -1)
+        throw this.makeLibzipError(this.libzip.source.error(this.lzSource));
+      if (this.libzip.source.seek(this.lzSource, 0, 0, this.libzip.SEEK_END) === -1)
+        throw this.makeLibzipError(this.libzip.source.error(this.lzSource));
+      const size = this.libzip.source.tell(this.lzSource);
+      if (size === -1)
+        throw this.makeLibzipError(this.libzip.source.error(this.lzSource));
+      if (this.libzip.source.seek(this.lzSource, 0, 0, this.libzip.SEEK_SET) === -1)
+        throw this.makeLibzipError(this.libzip.source.error(this.lzSource));
+      const buffer = this.libzip.malloc(size);
+      if (!buffer)
+        throw new Error(`Couldn't allocate enough memory`);
+      try {
+        const rc = this.libzip.source.read(this.lzSource, buffer, size);
+        if (rc === -1)
+          throw this.makeLibzipError(this.libzip.source.error(this.lzSource));
+        else if (rc < size)
+          throw new Error(`Incomplete read`);
+        else if (rc > size)
+          throw new Error(`Overread`);
+        let result = Buffer.from(this.libzip.HEAPU8.subarray(buffer, buffer + size));
+        if (process.env.YARN_IS_TEST_ENV && process.env.YARN_ZIP_DATA_EPILOGUE)
+          result = Buffer.concat([result, Buffer.from(process.env.YARN_ZIP_DATA_EPILOGUE)]);
+        return result;
+      } finally {
+        this.libzip.free(buffer);
+      }
+    } finally {
+      this.libzip.source.close(this.lzSource);
+      this.libzip.source.free(this.lzSource);
+    }
+  }
+  allocateBuffer(content) {
+    if (!Buffer.isBuffer(content))
+      content = Buffer.from(content);
+    const buffer = this.libzip.malloc(content.byteLength);
+    if (!buffer)
+      throw new Error(`Couldn't allocate enough memory`);
+    const heap = new Uint8Array(this.libzip.HEAPU8.buffer, buffer, content.byteLength);
+    heap.set(content);
+    return { buffer, byteLength: content.byteLength };
+  }
+  allocateUnattachedSource(content) {
+    const error = this.libzip.struct.errorS();
+    const { buffer, byteLength } = this.allocateBuffer(content);
+    const source = this.libzip.source.fromUnattachedBuffer(buffer, byteLength, 0, 1, error);
+    if (source === 0) {
+      this.libzip.free(error);
+      throw this.makeLibzipError(error);
+    }
+    return source;
+  }
+  allocateSource(content) {
+    const { buffer, byteLength } = this.allocateBuffer(content);
+    const source = this.libzip.source.fromBuffer(this.zip, buffer, byteLength, 0, 1);
+    if (source === 0) {
+      this.libzip.free(buffer);
+      throw this.makeLibzipError(this.libzip.getError(this.zip));
+    }
+    return source;
+  }
+  discard() {
+    this.libzip.discard(this.zip);
+  }
+}
+
+const ZIP_UNIX = 3;
+const STORE = 0;
+const DEFLATE = 8;
 const DEFAULT_COMPRESSION_LEVEL = `mixed`;
 function toUnixTimestamp(time) {
   if (typeof time === `string` && String(+time) === time)
@@ -8259,22 +8493,12 @@ function makeEmptyArchive() {
     0
   ]);
 }
-class LibzipError extends Error {
-  code;
-  constructor(message, code) {
-    super(message);
-    this.name = `Libzip Error`;
-    this.code = code;
-  }
-}
 class ZipFS extends BasePortableFakeFS {
-  libzip;
   baseFs;
   path;
   stats;
-  zip;
-  lzSource;
   level;
+  zipImpl;
   listings = /* @__PURE__ */ new Map();
   entries = /* @__PURE__ */ new Map();
   /**
@@ -8290,9 +8514,11 @@ class ZipFS extends BasePortableFakeFS {
   readOnly = false;
   constructor(source, opts = {}) {
     super();
+    if (opts.readOnly)
+      this.readOnly = true;
     const pathOptions = opts;
     this.level = typeof pathOptions.level !== `undefined` ? pathOptions.level : DEFAULT_COMPRESSION_LEVEL;
-    source ??= makeEmptyArchive();
+    const ZipImplCls = opts.customZipImplementation ?? LibZipImpl;
     if (typeof source === `string`) {
       const { baseFs = new NodeFS() } = pathOptions;
       this.baseFs = baseFs;
@@ -8318,36 +8544,19 @@ class ZipFS extends BasePortableFakeFS {
         this.stats = makeDefaultStats();
       }
     }
-    this.libzip = getInstance();
-    const errPtr = this.libzip.malloc(4);
-    try {
-      let flags = 0;
-      if (opts.readOnly) {
-        flags |= this.libzip.ZIP_RDONLY;
-        this.readOnly = true;
+    if (typeof source === `string`) {
+      if (opts.create) {
+        this.zipImpl = new ZipImplCls({ buffer: makeEmptyArchive(), readOnly: this.readOnly });
+      } else {
+        this.zipImpl = new ZipImplCls({ path: source, baseFs: this.baseFs, readOnly: this.readOnly, size: this.stats.size });
       }
-      if (typeof source === `string`)
-        source = pathOptions.create ? makeEmptyArchive() : this.baseFs.readFileSync(source);
-      const lzSource = this.allocateUnattachedSource(source);
-      try {
-        this.zip = this.libzip.openFromSource(lzSource, flags, errPtr);
-        this.lzSource = lzSource;
-      } catch (error) {
-        this.libzip.source.free(lzSource);
-        throw error;
-      }
-      if (this.zip === 0) {
-        const error = this.libzip.struct.errorS();
-        this.libzip.error.initWithCode(error, this.libzip.getValue(errPtr, `i32`));
-        throw this.makeLibzipError(error);
-      }
-    } finally {
-      this.libzip.free(errPtr);
+    } else {
+      this.zipImpl = new ZipImplCls({ buffer: source ?? makeEmptyArchive(), readOnly: this.readOnly });
     }
     this.listings.set(PortablePath.root, /* @__PURE__ */ new Set());
-    const entryCount = this.libzip.getNumEntries(this.zip, 0);
-    for (let t = 0; t < entryCount; ++t) {
-      const raw = this.libzip.getName(this.zip, t, 0);
+    const listings = this.zipImpl.getListings();
+    for (let t = 0; t < listings.length; t++) {
+      const raw = listings[t];
       if (ppath.isAbsolute(raw))
         continue;
       const p = ppath.resolve(PortablePath.root, raw);
@@ -8356,18 +8565,8 @@ class ZipFS extends BasePortableFakeFS {
         this.registerListing(p);
       }
     }
-    this.symlinkCount = this.libzip.ext.countSymlinks(this.zip);
-    if (this.symlinkCount === -1)
-      throw this.makeLibzipError(this.libzip.getError(this.zip));
+    this.symlinkCount = this.zipImpl.getSymlinkCount();
     this.ready = true;
-  }
-  makeLibzipError(error) {
-    const errorCode = this.libzip.struct.errorCodeZip(error);
-    const strerror = this.libzip.error.strerror(error);
-    const libzipError = new LibzipError(strerror, this.libzip.errors[errorCode]);
-    if (errorCode === this.libzip.errors.ZIP_ER_CHANGED)
-      throw new Error(`Assertion failed: Unexpected libzip error: ${libzipError.message}`);
-    return libzipError;
   }
   getExtractHint(hints) {
     for (const fileName of this.entries.keys()) {
@@ -8398,45 +8597,14 @@ class ZipFS extends BasePortableFakeFS {
       return makeEmptyArchive();
     }
     try {
-      this.libzip.source.keep(this.lzSource);
-      if (this.libzip.close(this.zip) === -1)
-        throw this.makeLibzipError(this.libzip.getError(this.zip));
-      if (this.libzip.source.open(this.lzSource) === -1)
-        throw this.makeLibzipError(this.libzip.source.error(this.lzSource));
-      if (this.libzip.source.seek(this.lzSource, 0, 0, this.libzip.SEEK_END) === -1)
-        throw this.makeLibzipError(this.libzip.source.error(this.lzSource));
-      const size = this.libzip.source.tell(this.lzSource);
-      if (size === -1)
-        throw this.makeLibzipError(this.libzip.source.error(this.lzSource));
-      if (this.libzip.source.seek(this.lzSource, 0, 0, this.libzip.SEEK_SET) === -1)
-        throw this.makeLibzipError(this.libzip.source.error(this.lzSource));
-      const buffer = this.libzip.malloc(size);
-      if (!buffer)
-        throw new Error(`Couldn't allocate enough memory`);
-      try {
-        const rc = this.libzip.source.read(this.lzSource, buffer, size);
-        if (rc === -1)
-          throw this.makeLibzipError(this.libzip.source.error(this.lzSource));
-        else if (rc < size)
-          throw new Error(`Incomplete read`);
-        else if (rc > size)
-          throw new Error(`Overread`);
-        let result = Buffer.from(this.libzip.HEAPU8.subarray(buffer, buffer + size));
-        if (process.env.YARN_IS_TEST_ENV && process.env.YARN_ZIP_DATA_EPILOGUE)
-          result = Buffer.concat([result, Buffer.from(process.env.YARN_ZIP_DATA_EPILOGUE)]);
-        return result;
-      } finally {
-        this.libzip.free(buffer);
-      }
+      return this.zipImpl.getBufferAndClose();
     } finally {
-      this.libzip.source.close(this.lzSource);
-      this.libzip.source.free(this.lzSource);
       this.ready = false;
     }
   }
   discardAndClose() {
     this.prepareClose();
-    this.libzip.discard(this.zip);
+    this.zipImpl.discard();
     this.ready = false;
   }
   saveAndClose() {
@@ -8618,7 +8786,7 @@ class ZipFS extends BasePortableFakeFS {
     let resolvedP;
     try {
       resolvedP = this.resolveFilename(`stat '${p}'`, p, void 0, false);
-    } catch (error) {
+    } catch {
       return false;
     }
     if (resolvedP === void 0)
@@ -8690,16 +8858,14 @@ class ZipFS extends BasePortableFakeFS {
   statImpl(reason, p, opts = {}) {
     const entry = this.entries.get(p);
     if (typeof entry !== `undefined`) {
-      const stat = this.libzip.struct.statS();
-      const rc = this.libzip.statIndex(this.zip, entry, 0, 0, stat);
-      if (rc === -1)
-        throw this.makeLibzipError(this.libzip.getError(this.zip));
+      const stat = this.zipImpl.stat(entry);
+      const crc = stat.crc;
+      const size = stat.size;
+      const mtimeMs = stat.mtime * 1e3;
       const uid = this.stats.uid;
       const gid = this.stats.gid;
-      const size = this.libzip.struct.statSize(stat) >>> 0;
       const blksize = 512;
-      const blocks = Math.ceil(size / blksize);
-      const mtimeMs = (this.libzip.struct.statMtime(stat) >>> 0) * 1e3;
+      const blocks = Math.ceil(stat.size / blksize);
       const atimeMs = mtimeMs;
       const birthtimeMs = mtimeMs;
       const ctimeMs = mtimeMs;
@@ -8710,7 +8876,6 @@ class ZipFS extends BasePortableFakeFS {
       const type = this.listings.has(p) ? fs.constants.S_IFDIR : this.isSymbolicLink(entry) ? fs.constants.S_IFLNK : fs.constants.S_IFREG;
       const defaultMode = type === fs.constants.S_IFDIR ? 493 : 420;
       const mode = type | this.getUnixMode(entry, defaultMode) & 511;
-      const crc = this.libzip.struct.statCrc(stat);
       const statInstance = Object.assign(new StatEntry(), { uid, gid, size, blksize, blocks, atime, birthtime, ctime, mtime, atimeMs, birthtimeMs, ctimeMs, mtimeMs, mode, crc });
       return opts.bigint === true ? convertToBigIntStats(statInstance) : statInstance;
     }
@@ -8736,13 +8901,10 @@ class ZipFS extends BasePortableFakeFS {
     throw new Error(`Unreachable`);
   }
   getUnixMode(index, defaultMode) {
-    const rc = this.libzip.file.getExternalAttributes(this.zip, index, 0, 0, this.libzip.uint08S, this.libzip.uint32S);
-    if (rc === -1)
-      throw this.makeLibzipError(this.libzip.getError(this.zip));
-    const opsys = this.libzip.getValue(this.libzip.uint08S, `i8`) >>> 0;
-    if (opsys !== this.libzip.ZIP_OPSYS_UNIX)
+    const [opsys, attributes] = this.zipImpl.getExternalAttributes(index);
+    if (opsys !== ZIP_UNIX)
       return defaultMode;
-    return this.libzip.getValue(this.libzip.uint32S, `i32`) >>> 16;
+    return attributes >>> 16;
   }
   registerListing(p) {
     const existingListing = this.listings.get(p);
@@ -8777,10 +8939,7 @@ class ZipFS extends BasePortableFakeFS {
   }
   deleteEntry(p, index) {
     this.unregisterEntry(p);
-    const rc = this.libzip.delete(this.zip, index);
-    if (rc === -1) {
-      throw this.makeLibzipError(this.libzip.getError(this.zip));
-    }
+    this.zipImpl.deleteEntry(index);
   }
   resolveFilename(reason, p, resolveLastComponent = true, throwIfNoEntry = true) {
     if (!this.ready)
@@ -8813,7 +8972,7 @@ class ZipFS extends BasePortableFakeFS {
       resolvedP = ppath.resolve(parentP, ppath.basename(resolvedP));
       if (!resolveLastComponent || this.symlinkCount === 0)
         break;
-      const index = this.libzip.name.locate(this.zip, resolvedP.slice(1), 0);
+      const index = this.zipImpl.locate(resolvedP.slice(1));
       if (index === -1)
         break;
       if (this.isSymbolicLink(index)) {
@@ -8825,118 +8984,57 @@ class ZipFS extends BasePortableFakeFS {
     }
     return resolvedP;
   }
-  allocateBuffer(content) {
-    if (!Buffer.isBuffer(content))
-      content = Buffer.from(content);
-    const buffer = this.libzip.malloc(content.byteLength);
-    if (!buffer)
-      throw new Error(`Couldn't allocate enough memory`);
-    const heap = new Uint8Array(this.libzip.HEAPU8.buffer, buffer, content.byteLength);
-    heap.set(content);
-    return { buffer, byteLength: content.byteLength };
-  }
-  allocateUnattachedSource(content) {
-    const error = this.libzip.struct.errorS();
-    const { buffer, byteLength } = this.allocateBuffer(content);
-    const source = this.libzip.source.fromUnattachedBuffer(buffer, byteLength, 0, 1, error);
-    if (source === 0) {
-      this.libzip.free(error);
-      throw this.makeLibzipError(error);
-    }
-    return source;
-  }
-  allocateSource(content) {
-    const { buffer, byteLength } = this.allocateBuffer(content);
-    const source = this.libzip.source.fromBuffer(this.zip, buffer, byteLength, 0, 1);
-    if (source === 0) {
-      this.libzip.free(buffer);
-      throw this.makeLibzipError(this.libzip.getError(this.zip));
-    }
-    return source;
-  }
   setFileSource(p, content) {
     const buffer = Buffer.isBuffer(content) ? content : Buffer.from(content);
     const target = ppath.relative(PortablePath.root, p);
-    const lzSource = this.allocateSource(content);
-    try {
-      const newIndex = this.libzip.file.add(this.zip, target, lzSource, this.libzip.ZIP_FL_OVERWRITE);
-      if (newIndex === -1)
-        throw this.makeLibzipError(this.libzip.getError(this.zip));
-      if (this.level !== `mixed`) {
-        const method = this.level === 0 ? this.libzip.ZIP_CM_STORE : this.libzip.ZIP_CM_DEFLATE;
-        const rc = this.libzip.file.setCompression(this.zip, newIndex, 0, method, this.level);
-        if (rc === -1) {
-          throw this.makeLibzipError(this.libzip.getError(this.zip));
-        }
-      }
-      this.fileSources.set(newIndex, buffer);
-      return newIndex;
-    } catch (error) {
-      this.libzip.source.free(lzSource);
-      throw error;
+    let compression = null;
+    if (this.level !== `mixed`) {
+      const method = this.level === 0 ? STORE : DEFLATE;
+      compression = [method, this.level];
     }
+    const newIndex = this.zipImpl.setFileSource(target, compression, buffer);
+    this.fileSources.set(newIndex, buffer);
+    return newIndex;
   }
   isSymbolicLink(index) {
     if (this.symlinkCount === 0)
       return false;
-    const attrs = this.libzip.file.getExternalAttributes(this.zip, index, 0, 0, this.libzip.uint08S, this.libzip.uint32S);
-    if (attrs === -1)
-      throw this.makeLibzipError(this.libzip.getError(this.zip));
-    const opsys = this.libzip.getValue(this.libzip.uint08S, `i8`) >>> 0;
-    if (opsys !== this.libzip.ZIP_OPSYS_UNIX)
+    const [opsys, attrs] = this.zipImpl.getExternalAttributes(index);
+    if (opsys !== ZIP_UNIX)
       return false;
-    const attributes = this.libzip.getValue(this.libzip.uint32S, `i32`) >>> 16;
+    const attributes = attrs >>> 16;
     return (attributes & fs.constants.S_IFMT) === fs.constants.S_IFLNK;
   }
   getFileSource(index, opts = { asyncDecompress: false }) {
     const cachedFileSource = this.fileSources.get(index);
     if (typeof cachedFileSource !== `undefined`)
       return cachedFileSource;
-    const stat = this.libzip.struct.statS();
-    const rc = this.libzip.statIndex(this.zip, index, 0, 0, stat);
-    if (rc === -1)
-      throw this.makeLibzipError(this.libzip.getError(this.zip));
-    const size = this.libzip.struct.statCompSize(stat);
-    const compressionMethod = this.libzip.struct.statCompMethod(stat);
-    const buffer = this.libzip.malloc(size);
-    try {
-      const file = this.libzip.fopenIndex(this.zip, index, 0, this.libzip.ZIP_FL_COMPRESSED);
-      if (file === 0)
-        throw this.makeLibzipError(this.libzip.getError(this.zip));
-      try {
-        const rc2 = this.libzip.fread(file, buffer, size, 0);
-        if (rc2 === -1)
-          throw this.makeLibzipError(this.libzip.file.getError(file));
-        else if (rc2 < size)
-          throw new Error(`Incomplete read`);
-        else if (rc2 > size)
-          throw new Error(`Overread`);
-        const memory = this.libzip.HEAPU8.subarray(buffer, buffer + size);
-        const data = Buffer.from(memory);
-        if (compressionMethod === 0) {
-          this.fileSources.set(index, data);
-          return data;
-        } else if (opts.asyncDecompress) {
-          return new Promise((resolve, reject) => {
-            zlib__default.default.inflateRaw(data, (error, result) => {
-              if (error) {
-                reject(error);
-              } else {
+    const { data, compressionMethod } = this.zipImpl.getFileSource(index);
+    if (compressionMethod === STORE) {
+      if (this.zipImpl.filesShouldBeCached)
+        this.fileSources.set(index, data);
+      return data;
+    } else if (compressionMethod === DEFLATE) {
+      if (opts.asyncDecompress) {
+        return new Promise((resolve, reject) => {
+          zlib__default.default.inflateRaw(data, (error, result) => {
+            if (error) {
+              reject(error);
+            } else {
+              if (this.zipImpl.filesShouldBeCached)
                 this.fileSources.set(index, result);
-                resolve(result);
-              }
-            });
+              resolve(result);
+            }
           });
-        } else {
-          const decompressedData = zlib__default.default.inflateRawSync(data);
+        });
+      } else {
+        const decompressedData = zlib__default.default.inflateRawSync(data);
+        if (this.zipImpl.filesShouldBeCached)
           this.fileSources.set(index, decompressedData);
-          return decompressedData;
-        }
-      } finally {
-        this.libzip.fclose(file);
+        return decompressedData;
       }
-    } finally {
-      this.libzip.free(buffer);
+    } else {
+      throw new Error(`Unsupported compression method: ${compressionMethod}`);
     }
   }
   async fchmodPromise(fd, mask) {
@@ -8958,10 +9056,7 @@ class ZipFS extends BasePortableFakeFS {
       throw new Error(`Assertion failed: The entry should have been registered (${resolvedP})`);
     const oldMod = this.getUnixMode(entry, fs.constants.S_IFREG | 0);
     const newMod = oldMod & ~511 | mask;
-    const rc = this.libzip.file.setExternalAttributes(this.zip, entry, 0, 0, this.libzip.ZIP_OPSYS_UNIX, newMod << 16);
-    if (rc === -1) {
-      throw this.makeLibzipError(this.libzip.getError(this.zip));
-    }
+    this.zipImpl.setExternalAttributes(entry, ZIP_UNIX, newMod << 16);
   }
   async fchownPromise(fd, uid, gid) {
     return this.chownPromise(this.fdToPath(fd, `fchown`), uid, gid);
@@ -9135,10 +9230,7 @@ class ZipFS extends BasePortableFakeFS {
     const entry = this.entries.get(resolvedP);
     if (entry === void 0)
       throw new Error(`Unreachable`);
-    const rc = this.libzip.file.setMtime(this.zip, entry, 0, toUnixTimestamp(mtime), 0);
-    if (rc === -1) {
-      throw this.makeLibzipError(this.libzip.getError(this.zip));
-    }
+    this.zipImpl.setMtime(entry, toUnixTimestamp(mtime));
   }
   async mkdirPromise(p, opts) {
     return this.mkdirSync(p, opts);
@@ -9198,9 +9290,7 @@ class ZipFS extends BasePortableFakeFS {
     this.deleteEntry(p, index);
   }
   hydrateDirectory(resolvedP) {
-    const index = this.libzip.dir.add(this.zip, ppath.relative(PortablePath.root, resolvedP));
-    if (index === -1)
-      throw this.makeLibzipError(this.libzip.getError(this.zip));
+    const index = this.zipImpl.addDirectory(ppath.relative(PortablePath.root, resolvedP));
     this.registerListing(resolvedP);
     this.registerEntry(resolvedP, index);
     return index;
@@ -9224,9 +9314,7 @@ class ZipFS extends BasePortableFakeFS {
       throw EEXIST(`symlink '${target}' -> '${p}'`);
     const index = this.setFileSource(resolvedP, target);
     this.registerEntry(resolvedP, index);
-    const rc = this.libzip.file.setExternalAttributes(this.zip, index, 0, 0, this.libzip.ZIP_OPSYS_UNIX, (fs.constants.S_IFLNK | 511) << 16);
-    if (rc === -1)
-      throw this.makeLibzipError(this.libzip.getError(this.zip));
+    this.zipImpl.setExternalAttributes(index, ZIP_UNIX, (fs.constants.S_IFLNK | 511) << 16);
     this.symlinkCount += 1;
   }
   async readFilePromise(p, encoding) {
@@ -9381,10 +9469,13 @@ class ZipFS extends BasePortableFakeFS {
       } };
     const interval = setInterval(() => {
     }, 24 * 60 * 60 * 1e3);
-    return { on: () => {
-    }, close: () => {
-      clearInterval(interval);
-    } };
+    return {
+      on: () => {
+      },
+      close: () => {
+        clearInterval(interval);
+      }
+    };
   }
   watchFile(p, a, b) {
     const resolvedP = ppath.resolve(PortablePath.root, p);
@@ -9396,2996 +9487,205 @@ class ZipFS extends BasePortableFakeFS {
   }
 }
 
+const SIGNATURE = {
+  CENTRAL_DIRECTORY: 33639248,
+  END_OF_CENTRAL_DIRECTORY: 101010256
+};
+const noCommentCDSize = 22;
+class JsZipImpl {
+  fd;
+  baseFs;
+  entries;
+  filesShouldBeCached = false;
+  constructor(opts) {
+    if (`buffer` in opts)
+      throw new Error(`Buffer based zip archives are not supported`);
+    if (!opts.readOnly)
+      throw new Error(`Writable zip archives are not supported`);
+    this.baseFs = opts.baseFs;
+    this.fd = this.baseFs.openSync(opts.path, `r`);
+    try {
+      this.entries = JsZipImpl.readZipSync(this.fd, this.baseFs, opts.size);
+    } catch (error) {
+      this.baseFs.closeSync(this.fd);
+      this.fd = `closed`;
+      throw error;
+    }
+  }
+  static readZipSync(fd, baseFs, fileSize) {
+    if (fileSize < noCommentCDSize)
+      throw new Error(`Invalid ZIP file: EOCD not found`);
+    let eocdOffset = -1;
+    let eocdBuffer = Buffer.alloc(noCommentCDSize);
+    baseFs.readSync(
+      fd,
+      eocdBuffer,
+      0,
+      noCommentCDSize,
+      fileSize - noCommentCDSize
+    );
+    if (eocdBuffer.readUInt32LE(0) === SIGNATURE.END_OF_CENTRAL_DIRECTORY) {
+      eocdOffset = 0;
+    } else {
+      const bufferSize = Math.min(65557, fileSize);
+      eocdBuffer = Buffer.alloc(bufferSize);
+      baseFs.readSync(
+        fd,
+        eocdBuffer,
+        0,
+        bufferSize,
+        Math.max(0, fileSize - bufferSize)
+      );
+      for (let i = eocdBuffer.length - 4; i >= 0; i--) {
+        if (eocdBuffer.readUInt32LE(i) === SIGNATURE.END_OF_CENTRAL_DIRECTORY) {
+          eocdOffset = i;
+          break;
+        }
+      }
+      if (eocdOffset === -1) {
+        throw new Error(`Not a zip archive`);
+      }
+    }
+    const totalEntries = eocdBuffer.readUInt16LE(eocdOffset + 10);
+    const centralDirSize = eocdBuffer.readUInt32LE(eocdOffset + 12);
+    const centralDirOffset = eocdBuffer.readUInt32LE(eocdOffset + 16);
+    const commentLength = eocdBuffer.readUInt16LE(eocdOffset + 20);
+    if (eocdOffset + commentLength + noCommentCDSize > eocdBuffer.length)
+      throw new Error(`Zip archive inconsistent`);
+    if (totalEntries == 65535 || centralDirSize == 4294967295 || centralDirOffset == 4294967295)
+      throw new Error(`Zip 64 is not supported`);
+    if (centralDirSize > fileSize)
+      throw new Error(`Zip archive inconsistent`);
+    if (totalEntries > centralDirSize / 46)
+      throw new Error(`Zip archive inconsistent`);
+    const cdBuffer = Buffer.alloc(centralDirSize);
+    if (baseFs.readSync(fd, cdBuffer, 0, cdBuffer.length, centralDirOffset) !== cdBuffer.length)
+      throw new Error(`Zip archive inconsistent`);
+    const entries = [];
+    let offset = 0;
+    let index = 0;
+    let sumCompressedSize = 0;
+    while (index < totalEntries) {
+      if (offset + 46 > cdBuffer.length)
+        throw new Error(`Zip archive inconsistent`);
+      if (cdBuffer.readUInt32LE(offset) !== SIGNATURE.CENTRAL_DIRECTORY)
+        throw new Error(`Zip archive inconsistent`);
+      const versionMadeBy = cdBuffer.readUInt16LE(offset + 4);
+      const os = versionMadeBy >>> 8;
+      const flags = cdBuffer.readUInt16LE(offset + 8);
+      if ((flags & 1) !== 0)
+        throw new Error(`Encrypted zip files are not supported`);
+      const compressionMethod = cdBuffer.readUInt16LE(offset + 10);
+      const crc = cdBuffer.readUInt32LE(offset + 16);
+      const nameLength = cdBuffer.readUInt16LE(offset + 28);
+      const extraLength = cdBuffer.readUInt16LE(offset + 30);
+      const commentLength2 = cdBuffer.readUInt16LE(offset + 32);
+      const localHeaderOffset = cdBuffer.readUInt32LE(offset + 42);
+      const name = cdBuffer.toString(`utf8`, offset + 46, offset + 46 + nameLength).replaceAll(`\0`, ` `);
+      if (name.includes(`\0`))
+        throw new Error(`Invalid ZIP file`);
+      const compressedSize = cdBuffer.readUInt32LE(offset + 20);
+      const externalAttributes = cdBuffer.readUInt32LE(offset + 38);
+      entries.push({
+        name,
+        os,
+        mtime: SAFE_TIME,
+        //we dont care,
+        crc,
+        compressionMethod,
+        isSymbolicLink: os === ZIP_UNIX && (externalAttributes >>> 16 & S_IFMT) === S_IFLNK,
+        size: cdBuffer.readUInt32LE(offset + 24),
+        compressedSize,
+        externalAttributes,
+        localHeaderOffset
+      });
+      sumCompressedSize += compressedSize;
+      index += 1;
+      offset += 46 + nameLength + extraLength + commentLength2;
+    }
+    if (sumCompressedSize > fileSize)
+      throw new Error(`Zip archive inconsistent`);
+    if (offset !== cdBuffer.length)
+      throw new Error(`Zip archive inconsistent`);
+    return entries;
+  }
+  getExternalAttributes(index) {
+    const entry = this.entries[index];
+    return [entry.os, entry.externalAttributes];
+  }
+  getListings() {
+    return this.entries.map((e) => e.name);
+  }
+  getSymlinkCount() {
+    let count = 0;
+    for (const entry of this.entries)
+      if (entry.isSymbolicLink)
+        count += 1;
+    return count;
+  }
+  stat(index) {
+    const entry = this.entries[index];
+    return {
+      crc: entry.crc,
+      mtime: entry.mtime,
+      size: entry.size
+    };
+  }
+  locate(name) {
+    for (let ind = 0; ind < this.entries.length; ind++)
+      if (this.entries[ind].name === name)
+        return ind;
+    return -1;
+  }
+  getFileSource(index) {
+    if (this.fd === `closed`)
+      throw new Error(`ZIP file is closed`);
+    const entry = this.entries[index];
+    const localHeaderBuf = Buffer.alloc(30);
+    this.baseFs.readSync(
+      this.fd,
+      localHeaderBuf,
+      0,
+      localHeaderBuf.length,
+      entry.localHeaderOffset
+    );
+    const nameLength = localHeaderBuf.readUInt16LE(26);
+    const extraLength = localHeaderBuf.readUInt16LE(28);
+    const buffer = Buffer.alloc(entry.compressedSize);
+    if (this.baseFs.readSync(this.fd, buffer, 0, entry.compressedSize, entry.localHeaderOffset + 30 + nameLength + extraLength) !== entry.compressedSize)
+      throw new Error(`Invalid ZIP file`);
+    return { data: buffer, compressionMethod: entry.compressionMethod };
+  }
+  discard() {
+    if (this.fd !== `closed`) {
+      this.baseFs.closeSync(this.fd);
+      this.fd = `closed`;
+    }
+  }
+  addDirectory(path) {
+    throw new Error(`Not implemented`);
+  }
+  deleteEntry(index) {
+    throw new Error(`Not implemented`);
+  }
+  setMtime(index, mtime) {
+    throw new Error(`Not implemented`);
+  }
+  getBufferAndClose() {
+    throw new Error(`Not implemented`);
+  }
+  setFileSource(target, compression, buffer) {
+    throw new Error(`Not implemented`);
+  }
+  setExternalAttributes(index, opsys, attributes) {
+    throw new Error(`Not implemented`);
+  }
+}
+
 setFactory(() => {
   const emZip = createModule();
   return makeInterface(emZip);
 });
-
-var re$4 = {exports: {}};
-
-// Note: this is the semver.org version of the spec that it implements
-// Not necessarily the package version of this code.
-const SEMVER_SPEC_VERSION = '2.0.0';
-
-const MAX_LENGTH$1 = 256;
-const MAX_SAFE_INTEGER$1 = Number.MAX_SAFE_INTEGER ||
-/* istanbul ignore next */ 9007199254740991;
-
-// Max safe segment length for coercion.
-const MAX_SAFE_COMPONENT_LENGTH = 16;
-
-// Max safe length for a build identifier. The max length minus 6 characters for
-// the shortest version with a build 0.0.0+BUILD.
-const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH$1 - 6;
-
-const RELEASE_TYPES = [
-  'major',
-  'premajor',
-  'minor',
-  'preminor',
-  'patch',
-  'prepatch',
-  'prerelease',
-];
-
-var constants$1 = {
-  MAX_LENGTH: MAX_LENGTH$1,
-  MAX_SAFE_COMPONENT_LENGTH,
-  MAX_SAFE_BUILD_LENGTH,
-  MAX_SAFE_INTEGER: MAX_SAFE_INTEGER$1,
-  RELEASE_TYPES,
-  SEMVER_SPEC_VERSION,
-  FLAG_INCLUDE_PRERELEASE: 0b001,
-  FLAG_LOOSE: 0b010,
-};
-
-const debug$3 = (
-  typeof process === 'object' &&
-  process.env &&
-  process.env.NODE_DEBUG &&
-  /\bsemver\b/i.test(process.env.NODE_DEBUG)
-) ? (...args) => console.error('SEMVER', ...args)
-  : () => {};
-
-var debug_1 = debug$3;
-
-(function (module, exports) {
-const {
-  MAX_SAFE_COMPONENT_LENGTH,
-  MAX_SAFE_BUILD_LENGTH,
-  MAX_LENGTH,
-} = constants$1;
-const debug = debug_1;
-exports = module.exports = {};
-
-// The actual regexps go on exports.re
-const re = exports.re = [];
-const safeRe = exports.safeRe = [];
-const src = exports.src = [];
-const t = exports.t = {};
-let R = 0;
-
-const LETTERDASHNUMBER = '[a-zA-Z0-9-]';
-
-// Replace some greedy regex tokens to prevent regex dos issues. These regex are
-// used internally via the safeRe object since all inputs in this library get
-// normalized first to trim and collapse all extra whitespace. The original
-// regexes are exported for userland consumption and lower level usage. A
-// future breaking change could export the safer regex only with a note that
-// all input should have extra whitespace removed.
-const safeRegexReplacements = [
-  ['\\s', 1],
-  ['\\d', MAX_LENGTH],
-  [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH],
-];
-
-const makeSafeRegex = (value) => {
-  for (const [token, max] of safeRegexReplacements) {
-    value = value
-      .split(`${token}*`).join(`${token}{0,${max}}`)
-      .split(`${token}+`).join(`${token}{1,${max}}`);
-  }
-  return value
-};
-
-const createToken = (name, value, isGlobal) => {
-  const safe = makeSafeRegex(value);
-  const index = R++;
-  debug(name, index, value);
-  t[name] = index;
-  src[index] = value;
-  re[index] = new RegExp(value, isGlobal ? 'g' : undefined);
-  safeRe[index] = new RegExp(safe, isGlobal ? 'g' : undefined);
-};
-
-// The following Regular Expressions can be used for tokenizing,
-// validating, and parsing SemVer version strings.
-
-// ## Numeric Identifier
-// A single `0`, or a non-zero digit followed by zero or more digits.
-
-createToken('NUMERICIDENTIFIER', '0|[1-9]\\d*');
-createToken('NUMERICIDENTIFIERLOOSE', '\\d+');
-
-// ## Non-numeric Identifier
-// Zero or more digits, followed by a letter or hyphen, and then zero or
-// more letters, digits, or hyphens.
-
-createToken('NONNUMERICIDENTIFIER', `\\d*[a-zA-Z-]${LETTERDASHNUMBER}*`);
-
-// ## Main Version
-// Three dot-separated numeric identifiers.
-
-createToken('MAINVERSION', `(${src[t.NUMERICIDENTIFIER]})\\.` +
-                   `(${src[t.NUMERICIDENTIFIER]})\\.` +
-                   `(${src[t.NUMERICIDENTIFIER]})`);
-
-createToken('MAINVERSIONLOOSE', `(${src[t.NUMERICIDENTIFIERLOOSE]})\\.` +
-                        `(${src[t.NUMERICIDENTIFIERLOOSE]})\\.` +
-                        `(${src[t.NUMERICIDENTIFIERLOOSE]})`);
-
-// ## Pre-release Version Identifier
-// A numeric identifier, or a non-numeric identifier.
-
-createToken('PRERELEASEIDENTIFIER', `(?:${src[t.NUMERICIDENTIFIER]
-}|${src[t.NONNUMERICIDENTIFIER]})`);
-
-createToken('PRERELEASEIDENTIFIERLOOSE', `(?:${src[t.NUMERICIDENTIFIERLOOSE]
-}|${src[t.NONNUMERICIDENTIFIER]})`);
-
-// ## Pre-release Version
-// Hyphen, followed by one or more dot-separated pre-release version
-// identifiers.
-
-createToken('PRERELEASE', `(?:-(${src[t.PRERELEASEIDENTIFIER]
-}(?:\\.${src[t.PRERELEASEIDENTIFIER]})*))`);
-
-createToken('PRERELEASELOOSE', `(?:-?(${src[t.PRERELEASEIDENTIFIERLOOSE]
-}(?:\\.${src[t.PRERELEASEIDENTIFIERLOOSE]})*))`);
-
-// ## Build Metadata Identifier
-// Any combination of digits, letters, or hyphens.
-
-createToken('BUILDIDENTIFIER', `${LETTERDASHNUMBER}+`);
-
-// ## Build Metadata
-// Plus sign, followed by one or more period-separated build metadata
-// identifiers.
-
-createToken('BUILD', `(?:\\+(${src[t.BUILDIDENTIFIER]
-}(?:\\.${src[t.BUILDIDENTIFIER]})*))`);
-
-// ## Full Version String
-// A main version, followed optionally by a pre-release version and
-// build metadata.
-
-// Note that the only major, minor, patch, and pre-release sections of
-// the version string are capturing groups.  The build metadata is not a
-// capturing group, because it should not ever be used in version
-// comparison.
-
-createToken('FULLPLAIN', `v?${src[t.MAINVERSION]
-}${src[t.PRERELEASE]}?${
-  src[t.BUILD]}?`);
-
-createToken('FULL', `^${src[t.FULLPLAIN]}$`);
-
-// like full, but allows v1.2.3 and =1.2.3, which people do sometimes.
-// also, 1.0.0alpha1 (prerelease without the hyphen) which is pretty
-// common in the npm registry.
-createToken('LOOSEPLAIN', `[v=\\s]*${src[t.MAINVERSIONLOOSE]
-}${src[t.PRERELEASELOOSE]}?${
-  src[t.BUILD]}?`);
-
-createToken('LOOSE', `^${src[t.LOOSEPLAIN]}$`);
-
-createToken('GTLT', '((?:<|>)?=?)');
-
-// Something like "2.*" or "1.2.x".
-// Note that "x.x" is a valid xRange identifer, meaning "any version"
-// Only the first item is strictly required.
-createToken('XRANGEIDENTIFIERLOOSE', `${src[t.NUMERICIDENTIFIERLOOSE]}|x|X|\\*`);
-createToken('XRANGEIDENTIFIER', `${src[t.NUMERICIDENTIFIER]}|x|X|\\*`);
-
-createToken('XRANGEPLAIN', `[v=\\s]*(${src[t.XRANGEIDENTIFIER]})` +
-                   `(?:\\.(${src[t.XRANGEIDENTIFIER]})` +
-                   `(?:\\.(${src[t.XRANGEIDENTIFIER]})` +
-                   `(?:${src[t.PRERELEASE]})?${
-                     src[t.BUILD]}?` +
-                   `)?)?`);
-
-createToken('XRANGEPLAINLOOSE', `[v=\\s]*(${src[t.XRANGEIDENTIFIERLOOSE]})` +
-                        `(?:\\.(${src[t.XRANGEIDENTIFIERLOOSE]})` +
-                        `(?:\\.(${src[t.XRANGEIDENTIFIERLOOSE]})` +
-                        `(?:${src[t.PRERELEASELOOSE]})?${
-                          src[t.BUILD]}?` +
-                        `)?)?`);
-
-createToken('XRANGE', `^${src[t.GTLT]}\\s*${src[t.XRANGEPLAIN]}$`);
-createToken('XRANGELOOSE', `^${src[t.GTLT]}\\s*${src[t.XRANGEPLAINLOOSE]}$`);
-
-// Coercion.
-// Extract anything that could conceivably be a part of a valid semver
-createToken('COERCEPLAIN', `${'(^|[^\\d])' +
-              '(\\d{1,'}${MAX_SAFE_COMPONENT_LENGTH}})` +
-              `(?:\\.(\\d{1,${MAX_SAFE_COMPONENT_LENGTH}}))?` +
-              `(?:\\.(\\d{1,${MAX_SAFE_COMPONENT_LENGTH}}))?`);
-createToken('COERCE', `${src[t.COERCEPLAIN]}(?:$|[^\\d])`);
-createToken('COERCEFULL', src[t.COERCEPLAIN] +
-              `(?:${src[t.PRERELEASE]})?` +
-              `(?:${src[t.BUILD]})?` +
-              `(?:$|[^\\d])`);
-createToken('COERCERTL', src[t.COERCE], true);
-createToken('COERCERTLFULL', src[t.COERCEFULL], true);
-
-// Tilde ranges.
-// Meaning is "reasonably at or greater than"
-createToken('LONETILDE', '(?:~>?)');
-
-createToken('TILDETRIM', `(\\s*)${src[t.LONETILDE]}\\s+`, true);
-exports.tildeTrimReplace = '$1~';
-
-createToken('TILDE', `^${src[t.LONETILDE]}${src[t.XRANGEPLAIN]}$`);
-createToken('TILDELOOSE', `^${src[t.LONETILDE]}${src[t.XRANGEPLAINLOOSE]}$`);
-
-// Caret ranges.
-// Meaning is "at least and backwards compatible with"
-createToken('LONECARET', '(?:\\^)');
-
-createToken('CARETTRIM', `(\\s*)${src[t.LONECARET]}\\s+`, true);
-exports.caretTrimReplace = '$1^';
-
-createToken('CARET', `^${src[t.LONECARET]}${src[t.XRANGEPLAIN]}$`);
-createToken('CARETLOOSE', `^${src[t.LONECARET]}${src[t.XRANGEPLAINLOOSE]}$`);
-
-// A simple gt/lt/eq thing, or just "" to indicate "any version"
-createToken('COMPARATORLOOSE', `^${src[t.GTLT]}\\s*(${src[t.LOOSEPLAIN]})$|^$`);
-createToken('COMPARATOR', `^${src[t.GTLT]}\\s*(${src[t.FULLPLAIN]})$|^$`);
-
-// An expression to strip any whitespace between the gtlt and the thing
-// it modifies, so that `> 1.2.3` ==> `>1.2.3`
-createToken('COMPARATORTRIM', `(\\s*)${src[t.GTLT]
-}\\s*(${src[t.LOOSEPLAIN]}|${src[t.XRANGEPLAIN]})`, true);
-exports.comparatorTrimReplace = '$1$2$3';
-
-// Something like `1.2.3 - 1.2.4`
-// Note that these all use the loose form, because they'll be
-// checked against either the strict or loose comparator form
-// later.
-createToken('HYPHENRANGE', `^\\s*(${src[t.XRANGEPLAIN]})` +
-                   `\\s+-\\s+` +
-                   `(${src[t.XRANGEPLAIN]})` +
-                   `\\s*$`);
-
-createToken('HYPHENRANGELOOSE', `^\\s*(${src[t.XRANGEPLAINLOOSE]})` +
-                        `\\s+-\\s+` +
-                        `(${src[t.XRANGEPLAINLOOSE]})` +
-                        `\\s*$`);
-
-// Star ranges basically just allow anything at all.
-createToken('STAR', '(<|>)?=?\\s*\\*');
-// >=0.0.0 is like a star
-createToken('GTE0', '^\\s*>=\\s*0\\.0\\.0\\s*$');
-createToken('GTE0PRE', '^\\s*>=\\s*0\\.0\\.0-0\\s*$');
-}(re$4, re$4.exports));
-
-// parse out just the options we care about
-const looseOption = Object.freeze({ loose: true });
-const emptyOpts = Object.freeze({ });
-const parseOptions$4 = options => {
-  if (!options) {
-    return emptyOpts
-  }
-
-  if (typeof options !== 'object') {
-    return looseOption
-  }
-
-  return options
-};
-var parseOptions_1 = parseOptions$4;
-
-const numeric = /^[0-9]+$/;
-const compareIdentifiers$1 = (a, b) => {
-  const anum = numeric.test(a);
-  const bnum = numeric.test(b);
-
-  if (anum && bnum) {
-    a = +a;
-    b = +b;
-  }
-
-  return a === b ? 0
-    : (anum && !bnum) ? -1
-    : (bnum && !anum) ? 1
-    : a < b ? -1
-    : 1
-};
-
-const rcompareIdentifiers = (a, b) => compareIdentifiers$1(b, a);
-
-var identifiers$1 = {
-  compareIdentifiers: compareIdentifiers$1,
-  rcompareIdentifiers,
-};
-
-const debug$2 = debug_1;
-const { MAX_LENGTH, MAX_SAFE_INTEGER } = constants$1;
-const { safeRe: re$3, t: t$3 } = re$4.exports;
-
-const parseOptions$3 = parseOptions_1;
-const { compareIdentifiers } = identifiers$1;
-class SemVer$f {
-  constructor (version, options) {
-    options = parseOptions$3(options);
-
-    if (version instanceof SemVer$f) {
-      if (version.loose === !!options.loose &&
-          version.includePrerelease === !!options.includePrerelease) {
-        return version
-      } else {
-        version = version.version;
-      }
-    } else if (typeof version !== 'string') {
-      throw new TypeError(`Invalid version. Must be a string. Got type "${typeof version}".`)
-    }
-
-    if (version.length > MAX_LENGTH) {
-      throw new TypeError(
-        `version is longer than ${MAX_LENGTH} characters`
-      )
-    }
-
-    debug$2('SemVer', version, options);
-    this.options = options;
-    this.loose = !!options.loose;
-    // this isn't actually relevant for versions, but keep it so that we
-    // don't run into trouble passing this.options around.
-    this.includePrerelease = !!options.includePrerelease;
-
-    const m = version.trim().match(options.loose ? re$3[t$3.LOOSE] : re$3[t$3.FULL]);
-
-    if (!m) {
-      throw new TypeError(`Invalid Version: ${version}`)
-    }
-
-    this.raw = version;
-
-    // these are actually numbers
-    this.major = +m[1];
-    this.minor = +m[2];
-    this.patch = +m[3];
-
-    if (this.major > MAX_SAFE_INTEGER || this.major < 0) {
-      throw new TypeError('Invalid major version')
-    }
-
-    if (this.minor > MAX_SAFE_INTEGER || this.minor < 0) {
-      throw new TypeError('Invalid minor version')
-    }
-
-    if (this.patch > MAX_SAFE_INTEGER || this.patch < 0) {
-      throw new TypeError('Invalid patch version')
-    }
-
-    // numberify any prerelease numeric ids
-    if (!m[4]) {
-      this.prerelease = [];
-    } else {
-      this.prerelease = m[4].split('.').map((id) => {
-        if (/^[0-9]+$/.test(id)) {
-          const num = +id;
-          if (num >= 0 && num < MAX_SAFE_INTEGER) {
-            return num
-          }
-        }
-        return id
-      });
-    }
-
-    this.build = m[5] ? m[5].split('.') : [];
-    this.format();
-  }
-
-  format () {
-    this.version = `${this.major}.${this.minor}.${this.patch}`;
-    if (this.prerelease.length) {
-      this.version += `-${this.prerelease.join('.')}`;
-    }
-    return this.version
-  }
-
-  toString () {
-    return this.version
-  }
-
-  compare (other) {
-    debug$2('SemVer.compare', this.version, this.options, other);
-    if (!(other instanceof SemVer$f)) {
-      if (typeof other === 'string' && other === this.version) {
-        return 0
-      }
-      other = new SemVer$f(other, this.options);
-    }
-
-    if (other.version === this.version) {
-      return 0
-    }
-
-    return this.compareMain(other) || this.comparePre(other)
-  }
-
-  compareMain (other) {
-    if (!(other instanceof SemVer$f)) {
-      other = new SemVer$f(other, this.options);
-    }
-
-    return (
-      compareIdentifiers(this.major, other.major) ||
-      compareIdentifiers(this.minor, other.minor) ||
-      compareIdentifiers(this.patch, other.patch)
-    )
-  }
-
-  comparePre (other) {
-    if (!(other instanceof SemVer$f)) {
-      other = new SemVer$f(other, this.options);
-    }
-
-    // NOT having a prerelease is > having one
-    if (this.prerelease.length && !other.prerelease.length) {
-      return -1
-    } else if (!this.prerelease.length && other.prerelease.length) {
-      return 1
-    } else if (!this.prerelease.length && !other.prerelease.length) {
-      return 0
-    }
-
-    let i = 0;
-    do {
-      const a = this.prerelease[i];
-      const b = other.prerelease[i];
-      debug$2('prerelease compare', i, a, b);
-      if (a === undefined && b === undefined) {
-        return 0
-      } else if (b === undefined) {
-        return 1
-      } else if (a === undefined) {
-        return -1
-      } else if (a === b) {
-        continue
-      } else {
-        return compareIdentifiers(a, b)
-      }
-    } while (++i)
-  }
-
-  compareBuild (other) {
-    if (!(other instanceof SemVer$f)) {
-      other = new SemVer$f(other, this.options);
-    }
-
-    let i = 0;
-    do {
-      const a = this.build[i];
-      const b = other.build[i];
-      debug$2('prerelease compare', i, a, b);
-      if (a === undefined && b === undefined) {
-        return 0
-      } else if (b === undefined) {
-        return 1
-      } else if (a === undefined) {
-        return -1
-      } else if (a === b) {
-        continue
-      } else {
-        return compareIdentifiers(a, b)
-      }
-    } while (++i)
-  }
-
-  // preminor will bump the version up to the next minor release, and immediately
-  // down to pre-release. premajor and prepatch work the same way.
-  inc (release, identifier, identifierBase) {
-    switch (release) {
-      case 'premajor':
-        this.prerelease.length = 0;
-        this.patch = 0;
-        this.minor = 0;
-        this.major++;
-        this.inc('pre', identifier, identifierBase);
-        break
-      case 'preminor':
-        this.prerelease.length = 0;
-        this.patch = 0;
-        this.minor++;
-        this.inc('pre', identifier, identifierBase);
-        break
-      case 'prepatch':
-        // If this is already a prerelease, it will bump to the next version
-        // drop any prereleases that might already exist, since they are not
-        // relevant at this point.
-        this.prerelease.length = 0;
-        this.inc('patch', identifier, identifierBase);
-        this.inc('pre', identifier, identifierBase);
-        break
-      // If the input is a non-prerelease version, this acts the same as
-      // prepatch.
-      case 'prerelease':
-        if (this.prerelease.length === 0) {
-          this.inc('patch', identifier, identifierBase);
-        }
-        this.inc('pre', identifier, identifierBase);
-        break
-
-      case 'major':
-        // If this is a pre-major version, bump up to the same major version.
-        // Otherwise increment major.
-        // 1.0.0-5 bumps to 1.0.0
-        // 1.1.0 bumps to 2.0.0
-        if (
-          this.minor !== 0 ||
-          this.patch !== 0 ||
-          this.prerelease.length === 0
-        ) {
-          this.major++;
-        }
-        this.minor = 0;
-        this.patch = 0;
-        this.prerelease = [];
-        break
-      case 'minor':
-        // If this is a pre-minor version, bump up to the same minor version.
-        // Otherwise increment minor.
-        // 1.2.0-5 bumps to 1.2.0
-        // 1.2.1 bumps to 1.3.0
-        if (this.patch !== 0 || this.prerelease.length === 0) {
-          this.minor++;
-        }
-        this.patch = 0;
-        this.prerelease = [];
-        break
-      case 'patch':
-        // If this is not a pre-release version, it will increment the patch.
-        // If it is a pre-release it will bump up to the same patch version.
-        // 1.2.0-5 patches to 1.2.0
-        // 1.2.0 patches to 1.2.1
-        if (this.prerelease.length === 0) {
-          this.patch++;
-        }
-        this.prerelease = [];
-        break
-      // This probably shouldn't be used publicly.
-      // 1.0.0 'pre' would become 1.0.0-0 which is the wrong direction.
-      case 'pre': {
-        const base = Number(identifierBase) ? 1 : 0;
-
-        if (!identifier && identifierBase === false) {
-          throw new Error('invalid increment argument: identifier is empty')
-        }
-
-        if (this.prerelease.length === 0) {
-          this.prerelease = [base];
-        } else {
-          let i = this.prerelease.length;
-          while (--i >= 0) {
-            if (typeof this.prerelease[i] === 'number') {
-              this.prerelease[i]++;
-              i = -2;
-            }
-          }
-          if (i === -1) {
-            // didn't increment anything
-            if (identifier === this.prerelease.join('.') && identifierBase === false) {
-              throw new Error('invalid increment argument: identifier already exists')
-            }
-            this.prerelease.push(base);
-          }
-        }
-        if (identifier) {
-          // 1.2.0-beta.1 bumps to 1.2.0-beta.2,
-          // 1.2.0-beta.fooblz or 1.2.0-beta bumps to 1.2.0-beta.0
-          let prerelease = [identifier, base];
-          if (identifierBase === false) {
-            prerelease = [identifier];
-          }
-          if (compareIdentifiers(this.prerelease[0], identifier) === 0) {
-            if (isNaN(this.prerelease[1])) {
-              this.prerelease = prerelease;
-            }
-          } else {
-            this.prerelease = prerelease;
-          }
-        }
-        break
-      }
-      default:
-        throw new Error(`invalid increment argument: ${release}`)
-    }
-    this.raw = this.format();
-    if (this.build.length) {
-      this.raw += `+${this.build.join('.')}`;
-    }
-    return this
-  }
-}
-
-var semver$1 = SemVer$f;
-
-const SemVer$e = semver$1;
-const parse$6 = (version, options, throwErrors = false) => {
-  if (version instanceof SemVer$e) {
-    return version
-  }
-  try {
-    return new SemVer$e(version, options)
-  } catch (er) {
-    if (!throwErrors) {
-      return null
-    }
-    throw er
-  }
-};
-
-var parse_1 = parse$6;
-
-const parse$5 = parse_1;
-const valid$2 = (version, options) => {
-  const v = parse$5(version, options);
-  return v ? v.version : null
-};
-var valid_1 = valid$2;
-
-const parse$4 = parse_1;
-const clean$1 = (version, options) => {
-  const s = parse$4(version.trim().replace(/^[=v]+/, ''), options);
-  return s ? s.version : null
-};
-var clean_1 = clean$1;
-
-const SemVer$d = semver$1;
-
-const inc$1 = (version, release, options, identifier, identifierBase) => {
-  if (typeof (options) === 'string') {
-    identifierBase = identifier;
-    identifier = options;
-    options = undefined;
-  }
-
-  try {
-    return new SemVer$d(
-      version instanceof SemVer$d ? version.version : version,
-      options
-    ).inc(release, identifier, identifierBase).version
-  } catch (er) {
-    return null
-  }
-};
-var inc_1 = inc$1;
-
-const parse$3 = parse_1;
-
-const diff$1 = (version1, version2) => {
-  const v1 = parse$3(version1, null, true);
-  const v2 = parse$3(version2, null, true);
-  const comparison = v1.compare(v2);
-
-  if (comparison === 0) {
-    return null
-  }
-
-  const v1Higher = comparison > 0;
-  const highVersion = v1Higher ? v1 : v2;
-  const lowVersion = v1Higher ? v2 : v1;
-  const highHasPre = !!highVersion.prerelease.length;
-  const lowHasPre = !!lowVersion.prerelease.length;
-
-  if (lowHasPre && !highHasPre) {
-    // Going from prerelease -> no prerelease requires some special casing
-
-    // If the low version has only a major, then it will always be a major
-    // Some examples:
-    // 1.0.0-1 -> 1.0.0
-    // 1.0.0-1 -> 1.1.1
-    // 1.0.0-1 -> 2.0.0
-    if (!lowVersion.patch && !lowVersion.minor) {
-      return 'major'
-    }
-
-    // Otherwise it can be determined by checking the high version
-
-    if (highVersion.patch) {
-      // anything higher than a patch bump would result in the wrong version
-      return 'patch'
-    }
-
-    if (highVersion.minor) {
-      // anything higher than a minor bump would result in the wrong version
-      return 'minor'
-    }
-
-    // bumping major/minor/patch all have same result
-    return 'major'
-  }
-
-  // add the `pre` prefix if we are going to a prerelease version
-  const prefix = highHasPre ? 'pre' : '';
-
-  if (v1.major !== v2.major) {
-    return prefix + 'major'
-  }
-
-  if (v1.minor !== v2.minor) {
-    return prefix + 'minor'
-  }
-
-  if (v1.patch !== v2.patch) {
-    return prefix + 'patch'
-  }
-
-  // high and low are preleases
-  return 'prerelease'
-};
-
-var diff_1 = diff$1;
-
-const SemVer$c = semver$1;
-const major$2 = (a, loose) => new SemVer$c(a, loose).major;
-var major_1 = major$2;
-
-const SemVer$b = semver$1;
-const minor$2 = (a, loose) => new SemVer$b(a, loose).minor;
-var minor_1 = minor$2;
-
-const SemVer$a = semver$1;
-const patch$1 = (a, loose) => new SemVer$a(a, loose).patch;
-var patch_1 = patch$1;
-
-const parse$2 = parse_1;
-const prerelease$1 = (version, options) => {
-  const parsed = parse$2(version, options);
-  return (parsed && parsed.prerelease.length) ? parsed.prerelease : null
-};
-var prerelease_1 = prerelease$1;
-
-const SemVer$9 = semver$1;
-const compare$b = (a, b, loose) =>
-  new SemVer$9(a, loose).compare(new SemVer$9(b, loose));
-
-var compare_1 = compare$b;
-
-const compare$a = compare_1;
-const rcompare$1 = (a, b, loose) => compare$a(b, a, loose);
-var rcompare_1 = rcompare$1;
-
-const compare$9 = compare_1;
-const compareLoose$1 = (a, b) => compare$9(a, b, true);
-var compareLoose_1 = compareLoose$1;
-
-const SemVer$8 = semver$1;
-const compareBuild$3 = (a, b, loose) => {
-  const versionA = new SemVer$8(a, loose);
-  const versionB = new SemVer$8(b, loose);
-  return versionA.compare(versionB) || versionA.compareBuild(versionB)
-};
-var compareBuild_1 = compareBuild$3;
-
-const compareBuild$2 = compareBuild_1;
-const sort$1 = (list, loose) => list.sort((a, b) => compareBuild$2(a, b, loose));
-var sort_1 = sort$1;
-
-const compareBuild$1 = compareBuild_1;
-const rsort$1 = (list, loose) => list.sort((a, b) => compareBuild$1(b, a, loose));
-var rsort_1 = rsort$1;
-
-const compare$8 = compare_1;
-const gt$4 = (a, b, loose) => compare$8(a, b, loose) > 0;
-var gt_1 = gt$4;
-
-const compare$7 = compare_1;
-const lt$3 = (a, b, loose) => compare$7(a, b, loose) < 0;
-var lt_1 = lt$3;
-
-const compare$6 = compare_1;
-const eq$2 = (a, b, loose) => compare$6(a, b, loose) === 0;
-var eq_1 = eq$2;
-
-const compare$5 = compare_1;
-const neq$2 = (a, b, loose) => compare$5(a, b, loose) !== 0;
-var neq_1 = neq$2;
-
-const compare$4 = compare_1;
-const gte$3 = (a, b, loose) => compare$4(a, b, loose) >= 0;
-var gte_1 = gte$3;
-
-const compare$3 = compare_1;
-const lte$3 = (a, b, loose) => compare$3(a, b, loose) <= 0;
-var lte_1 = lte$3;
-
-const eq$1 = eq_1;
-const neq$1 = neq_1;
-const gt$3 = gt_1;
-const gte$2 = gte_1;
-const lt$2 = lt_1;
-const lte$2 = lte_1;
-
-const cmp$2 = (a, op, b, loose) => {
-  switch (op) {
-    case '===':
-      if (typeof a === 'object') {
-        a = a.version;
-      }
-      if (typeof b === 'object') {
-        b = b.version;
-      }
-      return a === b
-
-    case '!==':
-      if (typeof a === 'object') {
-        a = a.version;
-      }
-      if (typeof b === 'object') {
-        b = b.version;
-      }
-      return a !== b
-
-    case '':
-    case '=':
-    case '==':
-      return eq$1(a, b, loose)
-
-    case '!=':
-      return neq$1(a, b, loose)
-
-    case '>':
-      return gt$3(a, b, loose)
-
-    case '>=':
-      return gte$2(a, b, loose)
-
-    case '<':
-      return lt$2(a, b, loose)
-
-    case '<=':
-      return lte$2(a, b, loose)
-
-    default:
-      throw new TypeError(`Invalid operator: ${op}`)
-  }
-};
-var cmp_1 = cmp$2;
-
-const SemVer$7 = semver$1;
-const parse$1 = parse_1;
-const { safeRe: re$2, t: t$2 } = re$4.exports;
-
-const coerce$1 = (version, options) => {
-  if (version instanceof SemVer$7) {
-    return version
-  }
-
-  if (typeof version === 'number') {
-    version = String(version);
-  }
-
-  if (typeof version !== 'string') {
-    return null
-  }
-
-  options = options || {};
-
-  let match = null;
-  if (!options.rtl) {
-    match = version.match(options.includePrerelease ? re$2[t$2.COERCEFULL] : re$2[t$2.COERCE]);
-  } else {
-    // Find the right-most coercible string that does not share
-    // a terminus with a more left-ward coercible string.
-    // Eg, '1.2.3.4' wants to coerce '2.3.4', not '3.4' or '4'
-    // With includePrerelease option set, '1.2.3.4-rc' wants to coerce '2.3.4-rc', not '2.3.4'
-    //
-    // Walk through the string checking with a /g regexp
-    // Manually set the index so as to pick up overlapping matches.
-    // Stop when we get a match that ends at the string end, since no
-    // coercible string can be more right-ward without the same terminus.
-    const coerceRtlRegex = options.includePrerelease ? re$2[t$2.COERCERTLFULL] : re$2[t$2.COERCERTL];
-    let next;
-    while ((next = coerceRtlRegex.exec(version)) &&
-        (!match || match.index + match[0].length !== version.length)
-    ) {
-      if (!match ||
-            next.index + next[0].length !== match.index + match[0].length) {
-        match = next;
-      }
-      coerceRtlRegex.lastIndex = next.index + next[1].length + next[2].length;
-    }
-    // leave it in a clean state
-    coerceRtlRegex.lastIndex = -1;
-  }
-
-  if (match === null) {
-    return null
-  }
-
-  const major = match[2];
-  const minor = match[3] || '0';
-  const patch = match[4] || '0';
-  const prerelease = options.includePrerelease && match[5] ? `-${match[5]}` : '';
-  const build = options.includePrerelease && match[6] ? `+${match[6]}` : '';
-
-  return parse$1(`${major}.${minor}.${patch}${prerelease}${build}`, options)
-};
-var coerce_1 = coerce$1;
-
-var yallist = Yallist$1;
-
-Yallist$1.Node = Node;
-Yallist$1.create = Yallist$1;
-
-function Yallist$1 (list) {
-  var self = this;
-  if (!(self instanceof Yallist$1)) {
-    self = new Yallist$1();
-  }
-
-  self.tail = null;
-  self.head = null;
-  self.length = 0;
-
-  if (list && typeof list.forEach === 'function') {
-    list.forEach(function (item) {
-      self.push(item);
-    });
-  } else if (arguments.length > 0) {
-    for (var i = 0, l = arguments.length; i < l; i++) {
-      self.push(arguments[i]);
-    }
-  }
-
-  return self
-}
-
-Yallist$1.prototype.removeNode = function (node) {
-  if (node.list !== this) {
-    throw new Error('removing node which does not belong to this list')
-  }
-
-  var next = node.next;
-  var prev = node.prev;
-
-  if (next) {
-    next.prev = prev;
-  }
-
-  if (prev) {
-    prev.next = next;
-  }
-
-  if (node === this.head) {
-    this.head = next;
-  }
-  if (node === this.tail) {
-    this.tail = prev;
-  }
-
-  node.list.length--;
-  node.next = null;
-  node.prev = null;
-  node.list = null;
-
-  return next
-};
-
-Yallist$1.prototype.unshiftNode = function (node) {
-  if (node === this.head) {
-    return
-  }
-
-  if (node.list) {
-    node.list.removeNode(node);
-  }
-
-  var head = this.head;
-  node.list = this;
-  node.next = head;
-  if (head) {
-    head.prev = node;
-  }
-
-  this.head = node;
-  if (!this.tail) {
-    this.tail = node;
-  }
-  this.length++;
-};
-
-Yallist$1.prototype.pushNode = function (node) {
-  if (node === this.tail) {
-    return
-  }
-
-  if (node.list) {
-    node.list.removeNode(node);
-  }
-
-  var tail = this.tail;
-  node.list = this;
-  node.prev = tail;
-  if (tail) {
-    tail.next = node;
-  }
-
-  this.tail = node;
-  if (!this.head) {
-    this.head = node;
-  }
-  this.length++;
-};
-
-Yallist$1.prototype.push = function () {
-  for (var i = 0, l = arguments.length; i < l; i++) {
-    push(this, arguments[i]);
-  }
-  return this.length
-};
-
-Yallist$1.prototype.unshift = function () {
-  for (var i = 0, l = arguments.length; i < l; i++) {
-    unshift(this, arguments[i]);
-  }
-  return this.length
-};
-
-Yallist$1.prototype.pop = function () {
-  if (!this.tail) {
-    return undefined
-  }
-
-  var res = this.tail.value;
-  this.tail = this.tail.prev;
-  if (this.tail) {
-    this.tail.next = null;
-  } else {
-    this.head = null;
-  }
-  this.length--;
-  return res
-};
-
-Yallist$1.prototype.shift = function () {
-  if (!this.head) {
-    return undefined
-  }
-
-  var res = this.head.value;
-  this.head = this.head.next;
-  if (this.head) {
-    this.head.prev = null;
-  } else {
-    this.tail = null;
-  }
-  this.length--;
-  return res
-};
-
-Yallist$1.prototype.forEach = function (fn, thisp) {
-  thisp = thisp || this;
-  for (var walker = this.head, i = 0; walker !== null; i++) {
-    fn.call(thisp, walker.value, i, this);
-    walker = walker.next;
-  }
-};
-
-Yallist$1.prototype.forEachReverse = function (fn, thisp) {
-  thisp = thisp || this;
-  for (var walker = this.tail, i = this.length - 1; walker !== null; i--) {
-    fn.call(thisp, walker.value, i, this);
-    walker = walker.prev;
-  }
-};
-
-Yallist$1.prototype.get = function (n) {
-  for (var i = 0, walker = this.head; walker !== null && i < n; i++) {
-    // abort out of the list early if we hit a cycle
-    walker = walker.next;
-  }
-  if (i === n && walker !== null) {
-    return walker.value
-  }
-};
-
-Yallist$1.prototype.getReverse = function (n) {
-  for (var i = 0, walker = this.tail; walker !== null && i < n; i++) {
-    // abort out of the list early if we hit a cycle
-    walker = walker.prev;
-  }
-  if (i === n && walker !== null) {
-    return walker.value
-  }
-};
-
-Yallist$1.prototype.map = function (fn, thisp) {
-  thisp = thisp || this;
-  var res = new Yallist$1();
-  for (var walker = this.head; walker !== null;) {
-    res.push(fn.call(thisp, walker.value, this));
-    walker = walker.next;
-  }
-  return res
-};
-
-Yallist$1.prototype.mapReverse = function (fn, thisp) {
-  thisp = thisp || this;
-  var res = new Yallist$1();
-  for (var walker = this.tail; walker !== null;) {
-    res.push(fn.call(thisp, walker.value, this));
-    walker = walker.prev;
-  }
-  return res
-};
-
-Yallist$1.prototype.reduce = function (fn, initial) {
-  var acc;
-  var walker = this.head;
-  if (arguments.length > 1) {
-    acc = initial;
-  } else if (this.head) {
-    walker = this.head.next;
-    acc = this.head.value;
-  } else {
-    throw new TypeError('Reduce of empty list with no initial value')
-  }
-
-  for (var i = 0; walker !== null; i++) {
-    acc = fn(acc, walker.value, i);
-    walker = walker.next;
-  }
-
-  return acc
-};
-
-Yallist$1.prototype.reduceReverse = function (fn, initial) {
-  var acc;
-  var walker = this.tail;
-  if (arguments.length > 1) {
-    acc = initial;
-  } else if (this.tail) {
-    walker = this.tail.prev;
-    acc = this.tail.value;
-  } else {
-    throw new TypeError('Reduce of empty list with no initial value')
-  }
-
-  for (var i = this.length - 1; walker !== null; i--) {
-    acc = fn(acc, walker.value, i);
-    walker = walker.prev;
-  }
-
-  return acc
-};
-
-Yallist$1.prototype.toArray = function () {
-  var arr = new Array(this.length);
-  for (var i = 0, walker = this.head; walker !== null; i++) {
-    arr[i] = walker.value;
-    walker = walker.next;
-  }
-  return arr
-};
-
-Yallist$1.prototype.toArrayReverse = function () {
-  var arr = new Array(this.length);
-  for (var i = 0, walker = this.tail; walker !== null; i++) {
-    arr[i] = walker.value;
-    walker = walker.prev;
-  }
-  return arr
-};
-
-Yallist$1.prototype.slice = function (from, to) {
-  to = to || this.length;
-  if (to < 0) {
-    to += this.length;
-  }
-  from = from || 0;
-  if (from < 0) {
-    from += this.length;
-  }
-  var ret = new Yallist$1();
-  if (to < from || to < 0) {
-    return ret
-  }
-  if (from < 0) {
-    from = 0;
-  }
-  if (to > this.length) {
-    to = this.length;
-  }
-  for (var i = 0, walker = this.head; walker !== null && i < from; i++) {
-    walker = walker.next;
-  }
-  for (; walker !== null && i < to; i++, walker = walker.next) {
-    ret.push(walker.value);
-  }
-  return ret
-};
-
-Yallist$1.prototype.sliceReverse = function (from, to) {
-  to = to || this.length;
-  if (to < 0) {
-    to += this.length;
-  }
-  from = from || 0;
-  if (from < 0) {
-    from += this.length;
-  }
-  var ret = new Yallist$1();
-  if (to < from || to < 0) {
-    return ret
-  }
-  if (from < 0) {
-    from = 0;
-  }
-  if (to > this.length) {
-    to = this.length;
-  }
-  for (var i = this.length, walker = this.tail; walker !== null && i > to; i--) {
-    walker = walker.prev;
-  }
-  for (; walker !== null && i > from; i--, walker = walker.prev) {
-    ret.push(walker.value);
-  }
-  return ret
-};
-
-Yallist$1.prototype.splice = function (start, deleteCount, ...nodes) {
-  if (start > this.length) {
-    start = this.length - 1;
-  }
-  if (start < 0) {
-    start = this.length + start;
-  }
-
-  for (var i = 0, walker = this.head; walker !== null && i < start; i++) {
-    walker = walker.next;
-  }
-
-  var ret = [];
-  for (var i = 0; walker && i < deleteCount; i++) {
-    ret.push(walker.value);
-    walker = this.removeNode(walker);
-  }
-  if (walker === null) {
-    walker = this.tail;
-  }
-
-  if (walker !== this.head && walker !== this.tail) {
-    walker = walker.prev;
-  }
-
-  for (var i = 0; i < nodes.length; i++) {
-    walker = insert(this, walker, nodes[i]);
-  }
-  return ret;
-};
-
-Yallist$1.prototype.reverse = function () {
-  var head = this.head;
-  var tail = this.tail;
-  for (var walker = head; walker !== null; walker = walker.prev) {
-    var p = walker.prev;
-    walker.prev = walker.next;
-    walker.next = p;
-  }
-  this.head = tail;
-  this.tail = head;
-  return this
-};
-
-function insert (self, node, value) {
-  var inserted = node === self.head ?
-    new Node(value, null, node, self) :
-    new Node(value, node, node.next, self);
-
-  if (inserted.next === null) {
-    self.tail = inserted;
-  }
-  if (inserted.prev === null) {
-    self.head = inserted;
-  }
-
-  self.length++;
-
-  return inserted
-}
-
-function push (self, item) {
-  self.tail = new Node(item, self.tail, null, self);
-  if (!self.head) {
-    self.head = self.tail;
-  }
-  self.length++;
-}
-
-function unshift (self, item) {
-  self.head = new Node(item, null, self.head, self);
-  if (!self.tail) {
-    self.tail = self.head;
-  }
-  self.length++;
-}
-
-function Node (value, prev, next, list) {
-  if (!(this instanceof Node)) {
-    return new Node(value, prev, next, list)
-  }
-
-  this.list = list;
-  this.value = value;
-
-  if (prev) {
-    prev.next = this;
-    this.prev = prev;
-  } else {
-    this.prev = null;
-  }
-
-  if (next) {
-    next.prev = this;
-    this.next = next;
-  } else {
-    this.next = null;
-  }
-}
-
-try {
-  // add if support for Symbol.iterator is present
-  require('./iterator.js')(Yallist$1);
-} catch (er) {}
-
-// A linked list to keep track of recently-used-ness
-const Yallist = yallist;
-
-const MAX = Symbol('max');
-const LENGTH = Symbol('length');
-const LENGTH_CALCULATOR = Symbol('lengthCalculator');
-const ALLOW_STALE = Symbol('allowStale');
-const MAX_AGE = Symbol('maxAge');
-const DISPOSE = Symbol('dispose');
-const NO_DISPOSE_ON_SET = Symbol('noDisposeOnSet');
-const LRU_LIST = Symbol('lruList');
-const CACHE = Symbol('cache');
-const UPDATE_AGE_ON_GET = Symbol('updateAgeOnGet');
-
-const naiveLength = () => 1;
-
-// lruList is a yallist where the head is the youngest
-// item, and the tail is the oldest.  the list contains the Hit
-// objects as the entries.
-// Each Hit object has a reference to its Yallist.Node.  This
-// never changes.
-//
-// cache is a Map (or PseudoMap) that matches the keys to
-// the Yallist.Node object.
-class LRUCache {
-  constructor (options) {
-    if (typeof options === 'number')
-      options = { max: options };
-
-    if (!options)
-      options = {};
-
-    if (options.max && (typeof options.max !== 'number' || options.max < 0))
-      throw new TypeError('max must be a non-negative number')
-    // Kind of weird to have a default max of Infinity, but oh well.
-    this[MAX] = options.max || Infinity;
-
-    const lc = options.length || naiveLength;
-    this[LENGTH_CALCULATOR] = (typeof lc !== 'function') ? naiveLength : lc;
-    this[ALLOW_STALE] = options.stale || false;
-    if (options.maxAge && typeof options.maxAge !== 'number')
-      throw new TypeError('maxAge must be a number')
-    this[MAX_AGE] = options.maxAge || 0;
-    this[DISPOSE] = options.dispose;
-    this[NO_DISPOSE_ON_SET] = options.noDisposeOnSet || false;
-    this[UPDATE_AGE_ON_GET] = options.updateAgeOnGet || false;
-    this.reset();
-  }
-
-  // resize the cache when the max changes.
-  set max (mL) {
-    if (typeof mL !== 'number' || mL < 0)
-      throw new TypeError('max must be a non-negative number')
-
-    this[MAX] = mL || Infinity;
-    trim(this);
-  }
-  get max () {
-    return this[MAX]
-  }
-
-  set allowStale (allowStale) {
-    this[ALLOW_STALE] = !!allowStale;
-  }
-  get allowStale () {
-    return this[ALLOW_STALE]
-  }
-
-  set maxAge (mA) {
-    if (typeof mA !== 'number')
-      throw new TypeError('maxAge must be a non-negative number')
-
-    this[MAX_AGE] = mA;
-    trim(this);
-  }
-  get maxAge () {
-    return this[MAX_AGE]
-  }
-
-  // resize the cache when the lengthCalculator changes.
-  set lengthCalculator (lC) {
-    if (typeof lC !== 'function')
-      lC = naiveLength;
-
-    if (lC !== this[LENGTH_CALCULATOR]) {
-      this[LENGTH_CALCULATOR] = lC;
-      this[LENGTH] = 0;
-      this[LRU_LIST].forEach(hit => {
-        hit.length = this[LENGTH_CALCULATOR](hit.value, hit.key);
-        this[LENGTH] += hit.length;
-      });
-    }
-    trim(this);
-  }
-  get lengthCalculator () { return this[LENGTH_CALCULATOR] }
-
-  get length () { return this[LENGTH] }
-  get itemCount () { return this[LRU_LIST].length }
-
-  rforEach (fn, thisp) {
-    thisp = thisp || this;
-    for (let walker = this[LRU_LIST].tail; walker !== null;) {
-      const prev = walker.prev;
-      forEachStep(this, fn, walker, thisp);
-      walker = prev;
-    }
-  }
-
-  forEach (fn, thisp) {
-    thisp = thisp || this;
-    for (let walker = this[LRU_LIST].head; walker !== null;) {
-      const next = walker.next;
-      forEachStep(this, fn, walker, thisp);
-      walker = next;
-    }
-  }
-
-  keys () {
-    return this[LRU_LIST].toArray().map(k => k.key)
-  }
-
-  values () {
-    return this[LRU_LIST].toArray().map(k => k.value)
-  }
-
-  reset () {
-    if (this[DISPOSE] &&
-        this[LRU_LIST] &&
-        this[LRU_LIST].length) {
-      this[LRU_LIST].forEach(hit => this[DISPOSE](hit.key, hit.value));
-    }
-
-    this[CACHE] = new Map(); // hash of items by key
-    this[LRU_LIST] = new Yallist(); // list of items in order of use recency
-    this[LENGTH] = 0; // length of items in the list
-  }
-
-  dump () {
-    return this[LRU_LIST].map(hit =>
-      isStale(this, hit) ? false : {
-        k: hit.key,
-        v: hit.value,
-        e: hit.now + (hit.maxAge || 0)
-      }).toArray().filter(h => h)
-  }
-
-  dumpLru () {
-    return this[LRU_LIST]
-  }
-
-  set (key, value, maxAge) {
-    maxAge = maxAge || this[MAX_AGE];
-
-    if (maxAge && typeof maxAge !== 'number')
-      throw new TypeError('maxAge must be a number')
-
-    const now = maxAge ? Date.now() : 0;
-    const len = this[LENGTH_CALCULATOR](value, key);
-
-    if (this[CACHE].has(key)) {
-      if (len > this[MAX]) {
-        del(this, this[CACHE].get(key));
-        return false
-      }
-
-      const node = this[CACHE].get(key);
-      const item = node.value;
-
-      // dispose of the old one before overwriting
-      // split out into 2 ifs for better coverage tracking
-      if (this[DISPOSE]) {
-        if (!this[NO_DISPOSE_ON_SET])
-          this[DISPOSE](key, item.value);
-      }
-
-      item.now = now;
-      item.maxAge = maxAge;
-      item.value = value;
-      this[LENGTH] += len - item.length;
-      item.length = len;
-      this.get(key);
-      trim(this);
-      return true
-    }
-
-    const hit = new Entry(key, value, len, now, maxAge);
-
-    // oversized objects fall out of cache automatically.
-    if (hit.length > this[MAX]) {
-      if (this[DISPOSE])
-        this[DISPOSE](key, value);
-
-      return false
-    }
-
-    this[LENGTH] += hit.length;
-    this[LRU_LIST].unshift(hit);
-    this[CACHE].set(key, this[LRU_LIST].head);
-    trim(this);
-    return true
-  }
-
-  has (key) {
-    if (!this[CACHE].has(key)) return false
-    const hit = this[CACHE].get(key).value;
-    return !isStale(this, hit)
-  }
-
-  get (key) {
-    return get(this, key, true)
-  }
-
-  peek (key) {
-    return get(this, key, false)
-  }
-
-  pop () {
-    const node = this[LRU_LIST].tail;
-    if (!node)
-      return null
-
-    del(this, node);
-    return node.value
-  }
-
-  del (key) {
-    del(this, this[CACHE].get(key));
-  }
-
-  load (arr) {
-    // reset the cache
-    this.reset();
-
-    const now = Date.now();
-    // A previous serialized cache has the most recent items first
-    for (let l = arr.length - 1; l >= 0; l--) {
-      const hit = arr[l];
-      const expiresAt = hit.e || 0;
-      if (expiresAt === 0)
-        // the item was created without expiration in a non aged cache
-        this.set(hit.k, hit.v);
-      else {
-        const maxAge = expiresAt - now;
-        // dont add already expired items
-        if (maxAge > 0) {
-          this.set(hit.k, hit.v, maxAge);
-        }
-      }
-    }
-  }
-
-  prune () {
-    this[CACHE].forEach((value, key) => get(this, key, false));
-  }
-}
-
-const get = (self, key, doUse) => {
-  const node = self[CACHE].get(key);
-  if (node) {
-    const hit = node.value;
-    if (isStale(self, hit)) {
-      del(self, node);
-      if (!self[ALLOW_STALE])
-        return undefined
-    } else {
-      if (doUse) {
-        if (self[UPDATE_AGE_ON_GET])
-          node.value.now = Date.now();
-        self[LRU_LIST].unshiftNode(node);
-      }
-    }
-    return hit.value
-  }
-};
-
-const isStale = (self, hit) => {
-  if (!hit || (!hit.maxAge && !self[MAX_AGE]))
-    return false
-
-  const diff = Date.now() - hit.now;
-  return hit.maxAge ? diff > hit.maxAge
-    : self[MAX_AGE] && (diff > self[MAX_AGE])
-};
-
-const trim = self => {
-  if (self[LENGTH] > self[MAX]) {
-    for (let walker = self[LRU_LIST].tail;
-      self[LENGTH] > self[MAX] && walker !== null;) {
-      // We know that we're about to delete this one, and also
-      // what the next least recently used key will be, so just
-      // go ahead and set it now.
-      const prev = walker.prev;
-      del(self, walker);
-      walker = prev;
-    }
-  }
-};
-
-const del = (self, node) => {
-  if (node) {
-    const hit = node.value;
-    if (self[DISPOSE])
-      self[DISPOSE](hit.key, hit.value);
-
-    self[LENGTH] -= hit.length;
-    self[CACHE].delete(hit.key);
-    self[LRU_LIST].removeNode(node);
-  }
-};
-
-class Entry {
-  constructor (key, value, length, now, maxAge) {
-    this.key = key;
-    this.value = value;
-    this.length = length;
-    this.now = now;
-    this.maxAge = maxAge || 0;
-  }
-}
-
-const forEachStep = (self, fn, node, thisp) => {
-  let hit = node.value;
-  if (isStale(self, hit)) {
-    del(self, node);
-    if (!self[ALLOW_STALE])
-      hit = undefined;
-  }
-  if (hit)
-    fn.call(thisp, hit.value, hit.key, self);
-};
-
-var lruCache = LRUCache;
-
-// hoisted class for cyclic dependency
-class Range$b {
-  constructor (range, options) {
-    options = parseOptions$2(options);
-
-    if (range instanceof Range$b) {
-      if (
-        range.loose === !!options.loose &&
-        range.includePrerelease === !!options.includePrerelease
-      ) {
-        return range
-      } else {
-        return new Range$b(range.raw, options)
-      }
-    }
-
-    if (range instanceof Comparator$4) {
-      // just put it in the set and return
-      this.raw = range.value;
-      this.set = [[range]];
-      this.format();
-      return this
-    }
-
-    this.options = options;
-    this.loose = !!options.loose;
-    this.includePrerelease = !!options.includePrerelease;
-
-    // First reduce all whitespace as much as possible so we do not have to rely
-    // on potentially slow regexes like \s*. This is then stored and used for
-    // future error messages as well.
-    this.raw = range
-      .trim()
-      .split(/\s+/)
-      .join(' ');
-
-    // First, split on ||
-    this.set = this.raw
-      .split('||')
-      // map the range to a 2d array of comparators
-      .map(r => this.parseRange(r.trim()))
-      // throw out any comparator lists that are empty
-      // this generally means that it was not a valid range, which is allowed
-      // in loose mode, but will still throw if the WHOLE range is invalid.
-      .filter(c => c.length);
-
-    if (!this.set.length) {
-      throw new TypeError(`Invalid SemVer Range: ${this.raw}`)
-    }
-
-    // if we have any that are not the null set, throw out null sets.
-    if (this.set.length > 1) {
-      // keep the first one, in case they're all null sets
-      const first = this.set[0];
-      this.set = this.set.filter(c => !isNullSet(c[0]));
-      if (this.set.length === 0) {
-        this.set = [first];
-      } else if (this.set.length > 1) {
-        // if we have any that are *, then the range is just *
-        for (const c of this.set) {
-          if (c.length === 1 && isAny(c[0])) {
-            this.set = [c];
-            break
-          }
-        }
-      }
-    }
-
-    this.format();
-  }
-
-  format () {
-    this.range = this.set
-      .map((comps) => comps.join(' ').trim())
-      .join('||')
-      .trim();
-    return this.range
-  }
-
-  toString () {
-    return this.range
-  }
-
-  parseRange (range) {
-    // memoize range parsing for performance.
-    // this is a very hot path, and fully deterministic.
-    const memoOpts =
-      (this.options.includePrerelease && FLAG_INCLUDE_PRERELEASE) |
-      (this.options.loose && FLAG_LOOSE);
-    const memoKey = memoOpts + ':' + range;
-    const cached = cache.get(memoKey);
-    if (cached) {
-      return cached
-    }
-
-    const loose = this.options.loose;
-    // `1.2.3 - 1.2.4` => `>=1.2.3 <=1.2.4`
-    const hr = loose ? re$1[t$1.HYPHENRANGELOOSE] : re$1[t$1.HYPHENRANGE];
-    range = range.replace(hr, hyphenReplace(this.options.includePrerelease));
-    debug$1('hyphen replace', range);
-
-    // `> 1.2.3 < 1.2.5` => `>1.2.3 <1.2.5`
-    range = range.replace(re$1[t$1.COMPARATORTRIM], comparatorTrimReplace);
-    debug$1('comparator trim', range);
-
-    // `~ 1.2.3` => `~1.2.3`
-    range = range.replace(re$1[t$1.TILDETRIM], tildeTrimReplace);
-    debug$1('tilde trim', range);
-
-    // `^ 1.2.3` => `^1.2.3`
-    range = range.replace(re$1[t$1.CARETTRIM], caretTrimReplace);
-    debug$1('caret trim', range);
-
-    // At this point, the range is completely trimmed and
-    // ready to be split into comparators.
-
-    let rangeList = range
-      .split(' ')
-      .map(comp => parseComparator(comp, this.options))
-      .join(' ')
-      .split(/\s+/)
-      // >=0.0.0 is equivalent to *
-      .map(comp => replaceGTE0(comp, this.options));
-
-    if (loose) {
-      // in loose mode, throw out any that are not valid comparators
-      rangeList = rangeList.filter(comp => {
-        debug$1('loose invalid filter', comp, this.options);
-        return !!comp.match(re$1[t$1.COMPARATORLOOSE])
-      });
-    }
-    debug$1('range list', rangeList);
-
-    // if any comparators are the null set, then replace with JUST null set
-    // if more than one comparator, remove any * comparators
-    // also, don't include the same comparator more than once
-    const rangeMap = new Map();
-    const comparators = rangeList.map(comp => new Comparator$4(comp, this.options));
-    for (const comp of comparators) {
-      if (isNullSet(comp)) {
-        return [comp]
-      }
-      rangeMap.set(comp.value, comp);
-    }
-    if (rangeMap.size > 1 && rangeMap.has('')) {
-      rangeMap.delete('');
-    }
-
-    const result = [...rangeMap.values()];
-    cache.set(memoKey, result);
-    return result
-  }
-
-  intersects (range, options) {
-    if (!(range instanceof Range$b)) {
-      throw new TypeError('a Range is required')
-    }
-
-    return this.set.some((thisComparators) => {
-      return (
-        isSatisfiable(thisComparators, options) &&
-        range.set.some((rangeComparators) => {
-          return (
-            isSatisfiable(rangeComparators, options) &&
-            thisComparators.every((thisComparator) => {
-              return rangeComparators.every((rangeComparator) => {
-                return thisComparator.intersects(rangeComparator, options)
-              })
-            })
-          )
-        })
-      )
-    })
-  }
-
-  // if ANY of the sets match ALL of its comparators, then pass
-  test (version) {
-    if (!version) {
-      return false
-    }
-
-    if (typeof version === 'string') {
-      try {
-        version = new SemVer$6(version, this.options);
-      } catch (er) {
-        return false
-      }
-    }
-
-    for (let i = 0; i < this.set.length; i++) {
-      if (testSet(this.set[i], version, this.options)) {
-        return true
-      }
-    }
-    return false
-  }
-}
-
-var range = Range$b;
-
-const LRU = lruCache;
-const cache = new LRU({ max: 1000 });
-
-const parseOptions$2 = parseOptions_1;
-const Comparator$4 = comparator;
-const debug$1 = debug_1;
-const SemVer$6 = semver$1;
-const {
-  safeRe: re$1,
-  t: t$1,
-  comparatorTrimReplace,
-  tildeTrimReplace,
-  caretTrimReplace,
-} = re$4.exports;
-const { FLAG_INCLUDE_PRERELEASE, FLAG_LOOSE } = constants$1;
-
-const isNullSet = c => c.value === '<0.0.0-0';
-const isAny = c => c.value === '';
-
-// take a set of comparators and determine whether there
-// exists a version which can satisfy it
-const isSatisfiable = (comparators, options) => {
-  let result = true;
-  const remainingComparators = comparators.slice();
-  let testComparator = remainingComparators.pop();
-
-  while (result && remainingComparators.length) {
-    result = remainingComparators.every((otherComparator) => {
-      return testComparator.intersects(otherComparator, options)
-    });
-
-    testComparator = remainingComparators.pop();
-  }
-
-  return result
-};
-
-// comprised of xranges, tildes, stars, and gtlt's at this point.
-// already replaced the hyphen ranges
-// turn into a set of JUST comparators.
-const parseComparator = (comp, options) => {
-  debug$1('comp', comp, options);
-  comp = replaceCarets(comp, options);
-  debug$1('caret', comp);
-  comp = replaceTildes(comp, options);
-  debug$1('tildes', comp);
-  comp = replaceXRanges(comp, options);
-  debug$1('xrange', comp);
-  comp = replaceStars(comp, options);
-  debug$1('stars', comp);
-  return comp
-};
-
-const isX = id => !id || id.toLowerCase() === 'x' || id === '*';
-
-// ~, ~> --> * (any, kinda silly)
-// ~2, ~2.x, ~2.x.x, ~>2, ~>2.x ~>2.x.x --> >=2.0.0 <3.0.0-0
-// ~2.0, ~2.0.x, ~>2.0, ~>2.0.x --> >=2.0.0 <2.1.0-0
-// ~1.2, ~1.2.x, ~>1.2, ~>1.2.x --> >=1.2.0 <1.3.0-0
-// ~1.2.3, ~>1.2.3 --> >=1.2.3 <1.3.0-0
-// ~1.2.0, ~>1.2.0 --> >=1.2.0 <1.3.0-0
-// ~0.0.1 --> >=0.0.1 <0.1.0-0
-const replaceTildes = (comp, options) => {
-  return comp
-    .trim()
-    .split(/\s+/)
-    .map((c) => replaceTilde(c, options))
-    .join(' ')
-};
-
-const replaceTilde = (comp, options) => {
-  const r = options.loose ? re$1[t$1.TILDELOOSE] : re$1[t$1.TILDE];
-  return comp.replace(r, (_, M, m, p, pr) => {
-    debug$1('tilde', comp, _, M, m, p, pr);
-    let ret;
-
-    if (isX(M)) {
-      ret = '';
-    } else if (isX(m)) {
-      ret = `>=${M}.0.0 <${+M + 1}.0.0-0`;
-    } else if (isX(p)) {
-      // ~1.2 == >=1.2.0 <1.3.0-0
-      ret = `>=${M}.${m}.0 <${M}.${+m + 1}.0-0`;
-    } else if (pr) {
-      debug$1('replaceTilde pr', pr);
-      ret = `>=${M}.${m}.${p}-${pr
-      } <${M}.${+m + 1}.0-0`;
-    } else {
-      // ~1.2.3 == >=1.2.3 <1.3.0-0
-      ret = `>=${M}.${m}.${p
-      } <${M}.${+m + 1}.0-0`;
-    }
-
-    debug$1('tilde return', ret);
-    return ret
-  })
-};
-
-// ^ --> * (any, kinda silly)
-// ^2, ^2.x, ^2.x.x --> >=2.0.0 <3.0.0-0
-// ^2.0, ^2.0.x --> >=2.0.0 <3.0.0-0
-// ^1.2, ^1.2.x --> >=1.2.0 <2.0.0-0
-// ^1.2.3 --> >=1.2.3 <2.0.0-0
-// ^1.2.0 --> >=1.2.0 <2.0.0-0
-// ^0.0.1 --> >=0.0.1 <0.0.2-0
-// ^0.1.0 --> >=0.1.0 <0.2.0-0
-const replaceCarets = (comp, options) => {
-  return comp
-    .trim()
-    .split(/\s+/)
-    .map((c) => replaceCaret(c, options))
-    .join(' ')
-};
-
-const replaceCaret = (comp, options) => {
-  debug$1('caret', comp, options);
-  const r = options.loose ? re$1[t$1.CARETLOOSE] : re$1[t$1.CARET];
-  const z = options.includePrerelease ? '-0' : '';
-  return comp.replace(r, (_, M, m, p, pr) => {
-    debug$1('caret', comp, _, M, m, p, pr);
-    let ret;
-
-    if (isX(M)) {
-      ret = '';
-    } else if (isX(m)) {
-      ret = `>=${M}.0.0${z} <${+M + 1}.0.0-0`;
-    } else if (isX(p)) {
-      if (M === '0') {
-        ret = `>=${M}.${m}.0${z} <${M}.${+m + 1}.0-0`;
-      } else {
-        ret = `>=${M}.${m}.0${z} <${+M + 1}.0.0-0`;
-      }
-    } else if (pr) {
-      debug$1('replaceCaret pr', pr);
-      if (M === '0') {
-        if (m === '0') {
-          ret = `>=${M}.${m}.${p}-${pr
-          } <${M}.${m}.${+p + 1}-0`;
-        } else {
-          ret = `>=${M}.${m}.${p}-${pr
-          } <${M}.${+m + 1}.0-0`;
-        }
-      } else {
-        ret = `>=${M}.${m}.${p}-${pr
-        } <${+M + 1}.0.0-0`;
-      }
-    } else {
-      debug$1('no pr');
-      if (M === '0') {
-        if (m === '0') {
-          ret = `>=${M}.${m}.${p
-          }${z} <${M}.${m}.${+p + 1}-0`;
-        } else {
-          ret = `>=${M}.${m}.${p
-          }${z} <${M}.${+m + 1}.0-0`;
-        }
-      } else {
-        ret = `>=${M}.${m}.${p
-        } <${+M + 1}.0.0-0`;
-      }
-    }
-
-    debug$1('caret return', ret);
-    return ret
-  })
-};
-
-const replaceXRanges = (comp, options) => {
-  debug$1('replaceXRanges', comp, options);
-  return comp
-    .split(/\s+/)
-    .map((c) => replaceXRange(c, options))
-    .join(' ')
-};
-
-const replaceXRange = (comp, options) => {
-  comp = comp.trim();
-  const r = options.loose ? re$1[t$1.XRANGELOOSE] : re$1[t$1.XRANGE];
-  return comp.replace(r, (ret, gtlt, M, m, p, pr) => {
-    debug$1('xRange', comp, ret, gtlt, M, m, p, pr);
-    const xM = isX(M);
-    const xm = xM || isX(m);
-    const xp = xm || isX(p);
-    const anyX = xp;
-
-    if (gtlt === '=' && anyX) {
-      gtlt = '';
-    }
-
-    // if we're including prereleases in the match, then we need
-    // to fix this to -0, the lowest possible prerelease value
-    pr = options.includePrerelease ? '-0' : '';
-
-    if (xM) {
-      if (gtlt === '>' || gtlt === '<') {
-        // nothing is allowed
-        ret = '<0.0.0-0';
-      } else {
-        // nothing is forbidden
-        ret = '*';
-      }
-    } else if (gtlt && anyX) {
-      // we know patch is an x, because we have any x at all.
-      // replace X with 0
-      if (xm) {
-        m = 0;
-      }
-      p = 0;
-
-      if (gtlt === '>') {
-        // >1 => >=2.0.0
-        // >1.2 => >=1.3.0
-        gtlt = '>=';
-        if (xm) {
-          M = +M + 1;
-          m = 0;
-          p = 0;
-        } else {
-          m = +m + 1;
-          p = 0;
-        }
-      } else if (gtlt === '<=') {
-        // <=0.7.x is actually <0.8.0, since any 0.7.x should
-        // pass.  Similarly, <=7.x is actually <8.0.0, etc.
-        gtlt = '<';
-        if (xm) {
-          M = +M + 1;
-        } else {
-          m = +m + 1;
-        }
-      }
-
-      if (gtlt === '<') {
-        pr = '-0';
-      }
-
-      ret = `${gtlt + M}.${m}.${p}${pr}`;
-    } else if (xm) {
-      ret = `>=${M}.0.0${pr} <${+M + 1}.0.0-0`;
-    } else if (xp) {
-      ret = `>=${M}.${m}.0${pr
-      } <${M}.${+m + 1}.0-0`;
-    }
-
-    debug$1('xRange return', ret);
-
-    return ret
-  })
-};
-
-// Because * is AND-ed with everything else in the comparator,
-// and '' means "any version", just remove the *s entirely.
-const replaceStars = (comp, options) => {
-  debug$1('replaceStars', comp, options);
-  // Looseness is ignored here.  star is always as loose as it gets!
-  return comp
-    .trim()
-    .replace(re$1[t$1.STAR], '')
-};
-
-const replaceGTE0 = (comp, options) => {
-  debug$1('replaceGTE0', comp, options);
-  return comp
-    .trim()
-    .replace(re$1[options.includePrerelease ? t$1.GTE0PRE : t$1.GTE0], '')
-};
-
-// This function is passed to string.replace(re[t.HYPHENRANGE])
-// M, m, patch, prerelease, build
-// 1.2 - 3.4.5 => >=1.2.0 <=3.4.5
-// 1.2.3 - 3.4 => >=1.2.0 <3.5.0-0 Any 3.4.x will do
-// 1.2 - 3.4 => >=1.2.0 <3.5.0-0
-const hyphenReplace = incPr => ($0,
-  from, fM, fm, fp, fpr, fb,
-  to, tM, tm, tp, tpr, tb) => {
-  if (isX(fM)) {
-    from = '';
-  } else if (isX(fm)) {
-    from = `>=${fM}.0.0${incPr ? '-0' : ''}`;
-  } else if (isX(fp)) {
-    from = `>=${fM}.${fm}.0${incPr ? '-0' : ''}`;
-  } else if (fpr) {
-    from = `>=${from}`;
-  } else {
-    from = `>=${from}${incPr ? '-0' : ''}`;
-  }
-
-  if (isX(tM)) {
-    to = '';
-  } else if (isX(tm)) {
-    to = `<${+tM + 1}.0.0-0`;
-  } else if (isX(tp)) {
-    to = `<${tM}.${+tm + 1}.0-0`;
-  } else if (tpr) {
-    to = `<=${tM}.${tm}.${tp}-${tpr}`;
-  } else if (incPr) {
-    to = `<${tM}.${tm}.${+tp + 1}-0`;
-  } else {
-    to = `<=${to}`;
-  }
-
-  return `${from} ${to}`.trim()
-};
-
-const testSet = (set, version, options) => {
-  for (let i = 0; i < set.length; i++) {
-    if (!set[i].test(version)) {
-      return false
-    }
-  }
-
-  if (version.prerelease.length && !options.includePrerelease) {
-    // Find the set of versions that are allowed to have prereleases
-    // For example, ^1.2.3-pr.1 desugars to >=1.2.3-pr.1 <2.0.0
-    // That should allow `1.2.3-pr.2` to pass.
-    // However, `1.2.4-alpha.notready` should NOT be allowed,
-    // even though it's within the range set by the comparators.
-    for (let i = 0; i < set.length; i++) {
-      debug$1(set[i].semver);
-      if (set[i].semver === Comparator$4.ANY) {
-        continue
-      }
-
-      if (set[i].semver.prerelease.length > 0) {
-        const allowed = set[i].semver;
-        if (allowed.major === version.major &&
-            allowed.minor === version.minor &&
-            allowed.patch === version.patch) {
-          return true
-        }
-      }
-    }
-
-    // Version has a -pre, but it's not one of the ones we like.
-    return false
-  }
-
-  return true
-};
-
-const ANY$2 = Symbol('SemVer ANY');
-// hoisted class for cyclic dependency
-class Comparator$3 {
-  static get ANY () {
-    return ANY$2
-  }
-
-  constructor (comp, options) {
-    options = parseOptions$1(options);
-
-    if (comp instanceof Comparator$3) {
-      if (comp.loose === !!options.loose) {
-        return comp
-      } else {
-        comp = comp.value;
-      }
-    }
-
-    comp = comp.trim().split(/\s+/).join(' ');
-    debug('comparator', comp, options);
-    this.options = options;
-    this.loose = !!options.loose;
-    this.parse(comp);
-
-    if (this.semver === ANY$2) {
-      this.value = '';
-    } else {
-      this.value = this.operator + this.semver.version;
-    }
-
-    debug('comp', this);
-  }
-
-  parse (comp) {
-    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR];
-    const m = comp.match(r);
-
-    if (!m) {
-      throw new TypeError(`Invalid comparator: ${comp}`)
-    }
-
-    this.operator = m[1] !== undefined ? m[1] : '';
-    if (this.operator === '=') {
-      this.operator = '';
-    }
-
-    // if it literally is just '>' or '' then allow anything.
-    if (!m[2]) {
-      this.semver = ANY$2;
-    } else {
-      this.semver = new SemVer$5(m[2], this.options.loose);
-    }
-  }
-
-  toString () {
-    return this.value
-  }
-
-  test (version) {
-    debug('Comparator.test', version, this.options.loose);
-
-    if (this.semver === ANY$2 || version === ANY$2) {
-      return true
-    }
-
-    if (typeof version === 'string') {
-      try {
-        version = new SemVer$5(version, this.options);
-      } catch (er) {
-        return false
-      }
-    }
-
-    return cmp$1(version, this.operator, this.semver, this.options)
-  }
-
-  intersects (comp, options) {
-    if (!(comp instanceof Comparator$3)) {
-      throw new TypeError('a Comparator is required')
-    }
-
-    if (this.operator === '') {
-      if (this.value === '') {
-        return true
-      }
-      return new Range$a(comp.value, options).test(this.value)
-    } else if (comp.operator === '') {
-      if (comp.value === '') {
-        return true
-      }
-      return new Range$a(this.value, options).test(comp.semver)
-    }
-
-    options = parseOptions$1(options);
-
-    // Special cases where nothing can possibly be lower
-    if (options.includePrerelease &&
-      (this.value === '<0.0.0-0' || comp.value === '<0.0.0-0')) {
-      return false
-    }
-    if (!options.includePrerelease &&
-      (this.value.startsWith('<0.0.0') || comp.value.startsWith('<0.0.0'))) {
-      return false
-    }
-
-    // Same direction increasing (> or >=)
-    if (this.operator.startsWith('>') && comp.operator.startsWith('>')) {
-      return true
-    }
-    // Same direction decreasing (< or <=)
-    if (this.operator.startsWith('<') && comp.operator.startsWith('<')) {
-      return true
-    }
-    // same SemVer and both sides are inclusive (<= or >=)
-    if (
-      (this.semver.version === comp.semver.version) &&
-      this.operator.includes('=') && comp.operator.includes('=')) {
-      return true
-    }
-    // opposite directions less than
-    if (cmp$1(this.semver, '<', comp.semver, options) &&
-      this.operator.startsWith('>') && comp.operator.startsWith('<')) {
-      return true
-    }
-    // opposite directions greater than
-    if (cmp$1(this.semver, '>', comp.semver, options) &&
-      this.operator.startsWith('<') && comp.operator.startsWith('>')) {
-      return true
-    }
-    return false
-  }
-}
-
-var comparator = Comparator$3;
-
-const parseOptions$1 = parseOptions_1;
-const { safeRe: re, t } = re$4.exports;
-const cmp$1 = cmp_1;
-const debug = debug_1;
-const SemVer$5 = semver$1;
-const Range$a = range;
-
-const Range$9 = range;
-const satisfies$4 = (version, range, options) => {
-  try {
-    range = new Range$9(range, options);
-  } catch (er) {
-    return false
-  }
-  return range.test(version)
-};
-var satisfies_1 = satisfies$4;
-
-const Range$8 = range;
-
-// Mostly just for testing and legacy API reasons
-const toComparators$1 = (range, options) =>
-  new Range$8(range, options).set
-    .map(comp => comp.map(c => c.value).join(' ').trim().split(' '));
-
-var toComparators_1 = toComparators$1;
-
-const SemVer$4 = semver$1;
-const Range$7 = range;
-
-const maxSatisfying$1 = (versions, range, options) => {
-  let max = null;
-  let maxSV = null;
-  let rangeObj = null;
-  try {
-    rangeObj = new Range$7(range, options);
-  } catch (er) {
-    return null
-  }
-  versions.forEach((v) => {
-    if (rangeObj.test(v)) {
-      // satisfies(v, range, options)
-      if (!max || maxSV.compare(v) === -1) {
-        // compare(max, v, true)
-        max = v;
-        maxSV = new SemVer$4(max, options);
-      }
-    }
-  });
-  return max
-};
-var maxSatisfying_1 = maxSatisfying$1;
-
-const SemVer$3 = semver$1;
-const Range$6 = range;
-const minSatisfying$1 = (versions, range, options) => {
-  let min = null;
-  let minSV = null;
-  let rangeObj = null;
-  try {
-    rangeObj = new Range$6(range, options);
-  } catch (er) {
-    return null
-  }
-  versions.forEach((v) => {
-    if (rangeObj.test(v)) {
-      // satisfies(v, range, options)
-      if (!min || minSV.compare(v) === 1) {
-        // compare(min, v, true)
-        min = v;
-        minSV = new SemVer$3(min, options);
-      }
-    }
-  });
-  return min
-};
-var minSatisfying_1 = minSatisfying$1;
-
-const SemVer$2 = semver$1;
-const Range$5 = range;
-const gt$2 = gt_1;
-
-const minVersion$1 = (range, loose) => {
-  range = new Range$5(range, loose);
-
-  let minver = new SemVer$2('0.0.0');
-  if (range.test(minver)) {
-    return minver
-  }
-
-  minver = new SemVer$2('0.0.0-0');
-  if (range.test(minver)) {
-    return minver
-  }
-
-  minver = null;
-  for (let i = 0; i < range.set.length; ++i) {
-    const comparators = range.set[i];
-
-    let setMin = null;
-    comparators.forEach((comparator) => {
-      // Clone to avoid manipulating the comparator's semver object.
-      const compver = new SemVer$2(comparator.semver.version);
-      switch (comparator.operator) {
-        case '>':
-          if (compver.prerelease.length === 0) {
-            compver.patch++;
-          } else {
-            compver.prerelease.push(0);
-          }
-          compver.raw = compver.format();
-          /* fallthrough */
-        case '':
-        case '>=':
-          if (!setMin || gt$2(compver, setMin)) {
-            setMin = compver;
-          }
-          break
-        case '<':
-        case '<=':
-          /* Ignore maximum versions */
-          break
-        /* istanbul ignore next */
-        default:
-          throw new Error(`Unexpected operation: ${comparator.operator}`)
-      }
-    });
-    if (setMin && (!minver || gt$2(minver, setMin))) {
-      minver = setMin;
-    }
-  }
-
-  if (minver && range.test(minver)) {
-    return minver
-  }
-
-  return null
-};
-var minVersion_1 = minVersion$1;
-
-const Range$4 = range;
-const validRange$1 = (range, options) => {
-  try {
-    // Return '*' instead of '' so that truthiness works.
-    // This will throw if it's invalid anyway
-    return new Range$4(range, options).range || '*'
-  } catch (er) {
-    return null
-  }
-};
-var valid$1 = validRange$1;
-
-const SemVer$1 = semver$1;
-const Comparator$2 = comparator;
-const { ANY: ANY$1 } = Comparator$2;
-const Range$3 = range;
-const satisfies$3 = satisfies_1;
-const gt$1 = gt_1;
-const lt$1 = lt_1;
-const lte$1 = lte_1;
-const gte$1 = gte_1;
-
-const outside$3 = (version, range, hilo, options) => {
-  version = new SemVer$1(version, options);
-  range = new Range$3(range, options);
-
-  let gtfn, ltefn, ltfn, comp, ecomp;
-  switch (hilo) {
-    case '>':
-      gtfn = gt$1;
-      ltefn = lte$1;
-      ltfn = lt$1;
-      comp = '>';
-      ecomp = '>=';
-      break
-    case '<':
-      gtfn = lt$1;
-      ltefn = gte$1;
-      ltfn = gt$1;
-      comp = '<';
-      ecomp = '<=';
-      break
-    default:
-      throw new TypeError('Must provide a hilo val of "<" or ">"')
-  }
-
-  // If it satisfies the range it is not outside
-  if (satisfies$3(version, range, options)) {
-    return false
-  }
-
-  // From now on, variable terms are as if we're in "gtr" mode.
-  // but note that everything is flipped for the "ltr" function.
-
-  for (let i = 0; i < range.set.length; ++i) {
-    const comparators = range.set[i];
-
-    let high = null;
-    let low = null;
-
-    comparators.forEach((comparator) => {
-      if (comparator.semver === ANY$1) {
-        comparator = new Comparator$2('>=0.0.0');
-      }
-      high = high || comparator;
-      low = low || comparator;
-      if (gtfn(comparator.semver, high.semver, options)) {
-        high = comparator;
-      } else if (ltfn(comparator.semver, low.semver, options)) {
-        low = comparator;
-      }
-    });
-
-    // If the edge version comparator has a operator then our version
-    // isn't outside it
-    if (high.operator === comp || high.operator === ecomp) {
-      return false
-    }
-
-    // If the lowest version comparator has an operator and our version
-    // is less than it then it isn't higher than the range
-    if ((!low.operator || low.operator === comp) &&
-        ltefn(version, low.semver)) {
-      return false
-    } else if (low.operator === ecomp && ltfn(version, low.semver)) {
-      return false
-    }
-  }
-  return true
-};
-
-var outside_1 = outside$3;
-
-// Determine if version is greater than all the versions possible in the range.
-const outside$2 = outside_1;
-const gtr$1 = (version, range, options) => outside$2(version, range, '>', options);
-var gtr_1 = gtr$1;
-
-const outside$1 = outside_1;
-// Determine if version is less than all the versions possible in the range
-const ltr$1 = (version, range, options) => outside$1(version, range, '<', options);
-var ltr_1 = ltr$1;
-
-const Range$2 = range;
-const intersects$1 = (r1, r2, options) => {
-  r1 = new Range$2(r1, options);
-  r2 = new Range$2(r2, options);
-  return r1.intersects(r2, options)
-};
-var intersects_1 = intersects$1;
-
-// given a set of versions and a range, create a "simplified" range
-// that includes the same versions that the original range does
-// If the original range is shorter than the simplified one, return that.
-const satisfies$2 = satisfies_1;
-const compare$2 = compare_1;
-var simplify = (versions, range, options) => {
-  const set = [];
-  let first = null;
-  let prev = null;
-  const v = versions.sort((a, b) => compare$2(a, b, options));
-  for (const version of v) {
-    const included = satisfies$2(version, range, options);
-    if (included) {
-      prev = version;
-      if (!first) {
-        first = version;
-      }
-    } else {
-      if (prev) {
-        set.push([first, prev]);
-      }
-      prev = null;
-      first = null;
-    }
-  }
-  if (first) {
-    set.push([first, null]);
-  }
-
-  const ranges = [];
-  for (const [min, max] of set) {
-    if (min === max) {
-      ranges.push(min);
-    } else if (!max && min === v[0]) {
-      ranges.push('*');
-    } else if (!max) {
-      ranges.push(`>=${min}`);
-    } else if (min === v[0]) {
-      ranges.push(`<=${max}`);
-    } else {
-      ranges.push(`${min} - ${max}`);
-    }
-  }
-  const simplified = ranges.join(' || ');
-  const original = typeof range.raw === 'string' ? range.raw : String(range);
-  return simplified.length < original.length ? simplified : range
-};
-
-const Range$1 = range;
-const Comparator$1 = comparator;
-const { ANY } = Comparator$1;
-const satisfies$1 = satisfies_1;
-const compare$1 = compare_1;
-
-// Complex range `r1 || r2 || ...` is a subset of `R1 || R2 || ...` iff:
-// - Every simple range `r1, r2, ...` is a null set, OR
-// - Every simple range `r1, r2, ...` which is not a null set is a subset of
-//   some `R1, R2, ...`
-//
-// Simple range `c1 c2 ...` is a subset of simple range `C1 C2 ...` iff:
-// - If c is only the ANY comparator
-//   - If C is only the ANY comparator, return true
-//   - Else if in prerelease mode, return false
-//   - else replace c with `[>=0.0.0]`
-// - If C is only the ANY comparator
-//   - if in prerelease mode, return true
-//   - else replace C with `[>=0.0.0]`
-// - Let EQ be the set of = comparators in c
-// - If EQ is more than one, return true (null set)
-// - Let GT be the highest > or >= comparator in c
-// - Let LT be the lowest < or <= comparator in c
-// - If GT and LT, and GT.semver > LT.semver, return true (null set)
-// - If any C is a = range, and GT or LT are set, return false
-// - If EQ
-//   - If GT, and EQ does not satisfy GT, return true (null set)
-//   - If LT, and EQ does not satisfy LT, return true (null set)
-//   - If EQ satisfies every C, return true
-//   - Else return false
-// - If GT
-//   - If GT.semver is lower than any > or >= comp in C, return false
-//   - If GT is >=, and GT.semver does not satisfy every C, return false
-//   - If GT.semver has a prerelease, and not in prerelease mode
-//     - If no C has a prerelease and the GT.semver tuple, return false
-// - If LT
-//   - If LT.semver is greater than any < or <= comp in C, return false
-//   - If LT is <=, and LT.semver does not satisfy every C, return false
-//   - If GT.semver has a prerelease, and not in prerelease mode
-//     - If no C has a prerelease and the LT.semver tuple, return false
-// - Else return true
-
-const subset$1 = (sub, dom, options = {}) => {
-  if (sub === dom) {
-    return true
-  }
-
-  sub = new Range$1(sub, options);
-  dom = new Range$1(dom, options);
-  let sawNonNull = false;
-
-  OUTER: for (const simpleSub of sub.set) {
-    for (const simpleDom of dom.set) {
-      const isSub = simpleSubset(simpleSub, simpleDom, options);
-      sawNonNull = sawNonNull || isSub !== null;
-      if (isSub) {
-        continue OUTER
-      }
-    }
-    // the null set is a subset of everything, but null simple ranges in
-    // a complex range should be ignored.  so if we saw a non-null range,
-    // then we know this isn't a subset, but if EVERY simple range was null,
-    // then it is a subset.
-    if (sawNonNull) {
-      return false
-    }
-  }
-  return true
-};
-
-const minimumVersionWithPreRelease = [new Comparator$1('>=0.0.0-0')];
-const minimumVersion = [new Comparator$1('>=0.0.0')];
-
-const simpleSubset = (sub, dom, options) => {
-  if (sub === dom) {
-    return true
-  }
-
-  if (sub.length === 1 && sub[0].semver === ANY) {
-    if (dom.length === 1 && dom[0].semver === ANY) {
-      return true
-    } else if (options.includePrerelease) {
-      sub = minimumVersionWithPreRelease;
-    } else {
-      sub = minimumVersion;
-    }
-  }
-
-  if (dom.length === 1 && dom[0].semver === ANY) {
-    if (options.includePrerelease) {
-      return true
-    } else {
-      dom = minimumVersion;
-    }
-  }
-
-  const eqSet = new Set();
-  let gt, lt;
-  for (const c of sub) {
-    if (c.operator === '>' || c.operator === '>=') {
-      gt = higherGT(gt, c, options);
-    } else if (c.operator === '<' || c.operator === '<=') {
-      lt = lowerLT(lt, c, options);
-    } else {
-      eqSet.add(c.semver);
-    }
-  }
-
-  if (eqSet.size > 1) {
-    return null
-  }
-
-  let gtltComp;
-  if (gt && lt) {
-    gtltComp = compare$1(gt.semver, lt.semver, options);
-    if (gtltComp > 0) {
-      return null
-    } else if (gtltComp === 0 && (gt.operator !== '>=' || lt.operator !== '<=')) {
-      return null
-    }
-  }
-
-  // will iterate one or zero times
-  for (const eq of eqSet) {
-    if (gt && !satisfies$1(eq, String(gt), options)) {
-      return null
-    }
-
-    if (lt && !satisfies$1(eq, String(lt), options)) {
-      return null
-    }
-
-    for (const c of dom) {
-      if (!satisfies$1(eq, String(c), options)) {
-        return false
-      }
-    }
-
-    return true
-  }
-
-  let higher, lower;
-  let hasDomLT, hasDomGT;
-  // if the subset has a prerelease, we need a comparator in the superset
-  // with the same tuple and a prerelease, or it's not a subset
-  let needDomLTPre = lt &&
-    !options.includePrerelease &&
-    lt.semver.prerelease.length ? lt.semver : false;
-  let needDomGTPre = gt &&
-    !options.includePrerelease &&
-    gt.semver.prerelease.length ? gt.semver : false;
-  // exception: <1.2.3-0 is the same as <1.2.3
-  if (needDomLTPre && needDomLTPre.prerelease.length === 1 &&
-      lt.operator === '<' && needDomLTPre.prerelease[0] === 0) {
-    needDomLTPre = false;
-  }
-
-  for (const c of dom) {
-    hasDomGT = hasDomGT || c.operator === '>' || c.operator === '>=';
-    hasDomLT = hasDomLT || c.operator === '<' || c.operator === '<=';
-    if (gt) {
-      if (needDomGTPre) {
-        if (c.semver.prerelease && c.semver.prerelease.length &&
-            c.semver.major === needDomGTPre.major &&
-            c.semver.minor === needDomGTPre.minor &&
-            c.semver.patch === needDomGTPre.patch) {
-          needDomGTPre = false;
-        }
-      }
-      if (c.operator === '>' || c.operator === '>=') {
-        higher = higherGT(gt, c, options);
-        if (higher === c && higher !== gt) {
-          return false
-        }
-      } else if (gt.operator === '>=' && !satisfies$1(gt.semver, String(c), options)) {
-        return false
-      }
-    }
-    if (lt) {
-      if (needDomLTPre) {
-        if (c.semver.prerelease && c.semver.prerelease.length &&
-            c.semver.major === needDomLTPre.major &&
-            c.semver.minor === needDomLTPre.minor &&
-            c.semver.patch === needDomLTPre.patch) {
-          needDomLTPre = false;
-        }
-      }
-      if (c.operator === '<' || c.operator === '<=') {
-        lower = lowerLT(lt, c, options);
-        if (lower === c && lower !== lt) {
-          return false
-        }
-      } else if (lt.operator === '<=' && !satisfies$1(lt.semver, String(c), options)) {
-        return false
-      }
-    }
-    if (!c.operator && (lt || gt) && gtltComp !== 0) {
-      return false
-    }
-  }
-
-  // if there was a < or >, and nothing in the dom, then must be false
-  // UNLESS it was limited by another range in the other direction.
-  // Eg, >1.0.0 <1.0.1 is still a subset of <2.0.0
-  if (gt && hasDomLT && !lt && gtltComp !== 0) {
-    return false
-  }
-
-  if (lt && hasDomGT && !gt && gtltComp !== 0) {
-    return false
-  }
-
-  // we needed a prerelease range in a specific tuple, but didn't get one
-  // then this isn't a subset.  eg >=1.2.3-pre is not a subset of >=1.0.0,
-  // because it includes prereleases in the 1.2.3 tuple
-  if (needDomGTPre || needDomLTPre) {
-    return false
-  }
-
-  return true
-};
-
-// >=1.2.3 is lower than >1.2.3
-const higherGT = (a, b, options) => {
-  if (!a) {
-    return b
-  }
-  const comp = compare$1(a.semver, b.semver, options);
-  return comp > 0 ? a
-    : comp < 0 ? b
-    : b.operator === '>' && a.operator === '>=' ? b
-    : a
-};
-
-// <=1.2.3 is higher than <1.2.3
-const lowerLT = (a, b, options) => {
-  if (!a) {
-    return b
-  }
-  const comp = compare$1(a.semver, b.semver, options);
-  return comp < 0 ? a
-    : comp > 0 ? b
-    : b.operator === '<' && a.operator === '<=' ? b
-    : a
-};
-
-var subset_1 = subset$1;
-
-// just pre-load all the stuff that index.js lazily exports
-const internalRe = re$4.exports;
-const constants = constants$1;
-const SemVer = semver$1;
-const identifiers = identifiers$1;
-const parse = parse_1;
-const valid = valid_1;
-const clean = clean_1;
-const inc = inc_1;
-const diff = diff_1;
-const major$1 = major_1;
-const minor$1 = minor_1;
-const patch = patch_1;
-const prerelease = prerelease_1;
-const compare = compare_1;
-const rcompare = rcompare_1;
-const compareLoose = compareLoose_1;
-const compareBuild = compareBuild_1;
-const sort = sort_1;
-const rsort = rsort_1;
-const gt = gt_1;
-const lt = lt_1;
-const eq = eq_1;
-const neq = neq_1;
-const gte = gte_1;
-const lte = lte_1;
-const cmp = cmp_1;
-const coerce = coerce_1;
-const Comparator = comparator;
-const Range = range;
-const satisfies = satisfies_1;
-const toComparators = toComparators_1;
-const maxSatisfying = maxSatisfying_1;
-const minSatisfying = minSatisfying_1;
-const minVersion = minVersion_1;
-const validRange = valid$1;
-const outside = outside_1;
-const gtr = gtr_1;
-const ltr = ltr_1;
-const intersects = intersects_1;
-const simplifyRange = simplify;
-const subset = subset_1;
-var semver = {
-  parse,
-  valid,
-  clean,
-  inc,
-  diff,
-  major: major$1,
-  minor: minor$1,
-  patch,
-  prerelease,
-  compare,
-  rcompare,
-  compareLoose,
-  compareBuild,
-  sort,
-  rsort,
-  gt,
-  lt,
-  eq,
-  neq,
-  gte,
-  lte,
-  cmp,
-  coerce,
-  Comparator,
-  Range,
-  satisfies,
-  toComparators,
-  maxSatisfying,
-  minSatisfying,
-  minVersion,
-  validRange,
-  outside,
-  gtr,
-  ltr,
-  intersects,
-  simplifyRange,
-  subset,
-  SemVer,
-  re: internalRe.re,
-  src: internalRe.src,
-  tokens: internalRe.t,
-  SEMVER_SPEC_VERSION: constants.SEMVER_SPEC_VERSION,
-  RELEASE_TYPES: constants.RELEASE_TYPES,
-  compareIdentifiers: identifiers.compareIdentifiers,
-  rcompareIdentifiers: identifiers.rcompareIdentifiers,
-};
 
 var ErrorCode = /* @__PURE__ */ ((ErrorCode2) => {
   ErrorCode2["API_ERROR"] = `API_ERROR`;
@@ -12484,44 +9784,6 @@ function reportRequiredFilesToWatchMode(files) {
       }
     }
   }
-}
-function getNodeOptionsEnvArgv$1() {
-  const errors = [];
-  const envArgv = ParseNodeOptionsEnvVar$1(process.env.NODE_OPTIONS || "", errors);
-  if (errors.length !== 0) ;
-  return envArgv;
-}
-function ParseNodeOptionsEnvVar$1(node_options, errors) {
-  const env_argv = [];
-  let is_in_string = false;
-  let will_start_new_arg = true;
-  for (let index = 0; index < node_options.length; ++index) {
-    let c = node_options[index];
-    if (c === "\\" && is_in_string) {
-      if (index + 1 === node_options.length) {
-        errors.push("invalid value for NODE_OPTIONS (invalid escape)\n");
-        return env_argv;
-      } else {
-        c = node_options[++index];
-      }
-    } else if (c === " " && !is_in_string) {
-      will_start_new_arg = true;
-      continue;
-    } else if (c === '"') {
-      is_in_string = !is_in_string;
-      continue;
-    }
-    if (will_start_new_arg) {
-      env_argv.push(c);
-      will_start_new_arg = false;
-    } else {
-      env_argv[env_argv.length - 1] += c;
-    }
-  }
-  if (is_in_string) {
-    errors.push("invalid value for NODE_OPTIONS (unterminated string)\n");
-  }
-  return env_argv;
 }
 
 function applyPatch(pnpapi, opts) {
@@ -12683,7 +9945,7 @@ Require stack:
         } else {
           resolution = originalFindPath.call(require$$0.Module, request, [path], isMain);
         }
-      } catch (error) {
+      } catch {
         continue;
       }
       if (resolution) {
@@ -12692,19 +9954,20 @@ Require stack:
     }
     return false;
   };
-  const experimentalRequireModuleEnabled = semver.gte(process.version, "20.17.0") && getNodeOptionsEnvArgv$1().findIndex((x) => x.startsWith("--experimental-require-module")) !== -1;
-  const originalExtensionJSFunction = require$$0.Module._extensions[`.js`];
-  require$$0.Module._extensions[`.js`] = function(module, filename) {
-    if (!experimentalRequireModuleEnabled && filename.endsWith(`.js`)) {
-      const pkg = readPackageScope(filename);
-      if (pkg && pkg.data?.type === `module`) {
-        const err = ERR_REQUIRE_ESM(filename, module.parent?.filename);
-        Error.captureStackTrace(err);
-        throw err;
+  if (!process.features.require_module) {
+    const originalExtensionJSFunction = require$$0.Module._extensions[`.js`];
+    require$$0.Module._extensions[`.js`] = function(module, filename) {
+      if (filename.endsWith(`.js`)) {
+        const pkg = readPackageScope(filename);
+        if (pkg && pkg.data?.type === `module`) {
+          const err = ERR_REQUIRE_ESM(filename, module.parent?.filename);
+          Error.captureStackTrace(err);
+          throw err;
+        }
       }
-    }
-    originalExtensionJSFunction.call(this, module, filename);
-  };
+      originalExtensionJSFunction.call(this, module, filename);
+    };
+  }
   const originalDlopen = process.dlopen;
   process.dlopen = function(...args) {
     const [module, filename, ...rest] = args;
@@ -12769,6 +10032,7 @@ function hydrateRuntimeState(data, { basePath }) {
     dependencyTreeRoots,
     enableTopLevelFallback,
     fallbackExclusionList,
+    pnpZipBackend: data.pnpZipBackend,
     fallbackPool,
     ignorePattern,
     packageLocatorsByLocations,
@@ -13765,7 +11029,7 @@ function makeApi(runtimeState, opts) {
     try {
       candidates.push(unqualifiedPath);
       stat = opts.fakeFs.statSync(unqualifiedPath);
-    } catch (error) {
+    } catch {
     }
     if (stat && !stat.isDirectory())
       return opts.fakeFs.realpathSync(unqualifiedPath);
@@ -13773,7 +11037,7 @@ function makeApi(runtimeState, opts) {
       let pkgJson;
       try {
         pkgJson = JSON.parse(opts.fakeFs.readFileSync(ppath.join(unqualifiedPath, Filename.manifest), `utf8`));
-      } catch (error) {
+      } catch {
       }
       let nextUnqualifiedPath;
       if (pkgJson && pkgJson.main)
@@ -14425,8 +11689,10 @@ const localFs = { ...fs__default.default };
 const nodeFs = new NodeFS(localFs);
 const defaultRuntimeState = $$SETUP_STATE(hydrateRuntimeState);
 const defaultPnpapiResolution = __filename;
+const customZipImplementation = defaultRuntimeState.pnpZipBackend === `js` ? JsZipImpl : void 0;
 const defaultFsLayer = new VirtualFS({
   baseFs: new ZipOpenFS({
+    customZipImplementation,
     baseFs: nodeFs,
     maxOpenFiles: 80,
     readOnlyArchives: true
