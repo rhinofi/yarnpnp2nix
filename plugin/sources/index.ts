@@ -337,6 +337,7 @@ class GeneratePnpFile extends BaseCommand {
       ...project.configuration.get(`pnpIgnorePatterns`),
     ])
     const shebang = project.configuration.get(`pnpShebang`)
+    const pnpZipBackend = project.configuration.get(`pnpZipBackend`)
 
     const packageRegistry = new Map()
 
@@ -438,6 +439,7 @@ class GeneratePnpFile extends BaseCommand {
       fallbackPool,
       ignorePattern,
       packageRegistry,
+      pnpZipBackend,
       shebang,
     }
 
