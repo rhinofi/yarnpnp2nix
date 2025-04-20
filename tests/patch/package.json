@@ -1,6 +1,6 @@
 {
   "name": "patch",
-  "packageManager": "yarn@4.5.1",
+  "packageManager": "yarn@4.9.1",
   "workspaces": [
     "packages/*"
   ]
