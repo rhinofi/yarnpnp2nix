@@ -6,8 +6,13 @@ let
   nixPlugin = defaultPkgs.callPackage ../yarnPlugin.nix { };
   yarnBin = "${defaultPkgs.yarnBerry}/bin/yarn";
 
+  yarnEnvVars = [
+    "YARN_PLUGINS=${nixPlugin}"
+    "YARN_PNP_ZIP_BACKEND=js"
+  ];
+  yarnEnvVarsOneLine = lib.concatStringsSep " " yarnEnvVars;
   setupYarnBinScript = ''
-    export YARN_PLUGINS=${nixPlugin}
+    export ${yarnEnvVarsOneLine}
   '';
 
   nullableAttrOr =
@@ -245,7 +250,7 @@ let
                   #!${pkgs.bashInteractive}/bin/bash
 
                   pnpDir="\$(mktemp -d)"
-                  (cd $out && YARN_PLUGINS=${nixPlugin} ${yarnBin} nix generate-pnp-file \$pnpDir $out/packageRegistryData.json "${locatorString}")
+                  (cd $out && ${yarnEnvVarsOneLine} ${yarnBin} nix generate-pnp-file \$pnpDir $out/packageRegistryData.json "${locatorString}")
                   binPackageLocation="\$(${nodeBin} -r \$pnpDir/.pnp.cjs -e 'console.log(require("pnpapi").getPackageInformation({ name: process.argv[1], reference: process.argv[2] })?.packageLocation)' "${pkg.name}" "${pkg.reference}")"
 
                   export PATH="${nodejsPackage}/bin:\''$PATH"
