@@ -5537,6 +5537,14 @@ __metadata:
   languageName: node
   linkType: hard
 
+"test-bin@workspace:packages/test-bin":
+  version: 0.0.0-use.local
+  resolution: "test-bin@workspace:packages/test-bin"
+  bin:
+    test-bin: index.js
+  languageName: unknown
+  linkType: soft
+
 "test-exclude@npm:^6.0.0":
   version: 6.0.0
   resolution: "test-exclude@npm:6.0.0"

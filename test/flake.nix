@@ -99,6 +99,7 @@
             yarn-plugin = yarnpnp2nix.packages."${pkgs.stdenv.system}".yarn-plugin;
             react = yarnPackages."react@npm:18.2.0";
             esbuild = yarnPackages."esbuild@npm:0.15.10";
+            test-bin = yarnPackages."test-bin@workspace:packages/test-bin";
             testa = yarnPackages."testa@workspace:packages/testa";
             testb = yarnPackages."testb@workspace:packages/testb";
             teste = yarnPackages."teste@workspace:packages/teste";
