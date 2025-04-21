@@ -1,0 +1,53 @@
+diff --git a/lib/index.js b/lib/index.js
+index c03e01208cc32cdba32e085cb2c57be8f8e9e292..90c777de64042e4c73c4b1cf399c23d4a98eea68 100644
+--- a/lib/index.js
++++ b/lib/index.js
+@@ -1734,9 +1734,9 @@ function generateFallbackExclusionList(settings) {
+ function generateFallbackPoolData(settings) {
+   return sortMap(settings.fallbackPool || [], ([name]) => name);
+ }
+-function generatePackageRegistryData(settings) {
++function generatePackageRegistryData(settings, topLevelPackageLocator = null) {
+   const packageRegistryData = [];
+-  const topLevelPackageLocator = settings.dependencyTreeRoots.find((locator) => {
++  topLevelPackageLocator = topLevelPackageLocator ?? settings.dependencyTreeRoots.find((locator) => {
+     return settings.packageRegistry.get(locator.name)?.get(locator.reference)?.packageLocation === `./`;
+   });
+   for (const [packageName, packageStore] of sortMap(settings.packageRegistry, ([packageName2]) => packageName2 === null ? `0` : `1${packageName2}`)) {
+@@ -1770,7 +1770,7 @@ function generatePackageRegistryData(settings) {
+   }
+   return packageRegistryData;
+ }
+-function generateSerializedState(settings) {
++function generateSerializedState(settings, topLevelPackageLocator = null) {
+   return {
+     // @eslint-ignore-next-line @typescript-eslint/naming-convention
+     __info: [
+@@ -1783,7 +1783,7 @@ function generateSerializedState(settings) {
+     pnpZipBackend: settings.pnpZipBackend,
+     fallbackExclusionList: generateFallbackExclusionList(settings),
+     fallbackPool: generateFallbackPoolData(settings),
+-    packageRegistryData: generatePackageRegistryData(settings)
++    packageRegistryData: generatePackageRegistryData(settings, topLevelPackageLocator)
+   };
+ }
+ 
+@@ -1850,14 +1850,14 @@ function generateSplitSetup() {
+ `
+   ].join(``);
+ }
+-function generateInlinedScript(settings) {
+-  const data = generateSerializedState(settings);
++function generateInlinedScript(settings, topLevelPackageLocator = null) {
++  const data = generateSerializedState(settings, topLevelPackageLocator);
+   const setup = generateInlinedSetup(data);
+   const loaderFile = generateLoader(settings.shebang, setup);
+   return loaderFile;
+ }
+-function generateSplitScript(settings) {
+-  const data = generateSerializedState(settings);
++function generateSplitScript(settings, topLevelPackageLocator = null) {
++  const data = generateSerializedState(settings, topLevelPackageLocator);
+   const setup = generateSplitSetup();
+   const loaderFile = generateLoader(settings.shebang, setup);
+   return { dataFile: generateJsonString(data), loaderFile };

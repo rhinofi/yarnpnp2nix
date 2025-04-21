@@ -966,13 +966,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@yarnpkg/pnp@npm:4.1.1, @yarnpkg/pnp@npm:^4.0.9, @yarnpkg/pnp@npm:^4.1.0":
+"@yarnpkg/pnp@npm:4.1.1":
   version: 4.1.1
   resolution: "@yarnpkg/pnp@npm:4.1.1"
   dependencies:
     "@types/node": "npm:^18.17.15"
     "@yarnpkg/fslib": "npm:^3.1.2"
   checksum: 10c0/7b80b4d4c73fefd76773bdccef55091cfd36c1d8cb3883706448f37f2c1f547d479c64c22bee079211012f5f6999a328fb11aedb7be3007ba9360326994dc61e
+  languageName: node
+  linkType: hard
+
+"@yarnpkg/pnp@patch:@yarnpkg/pnp@npm%3A4.1.1#~/.yarn/patches/@yarnpkg-pnp-npm-4.1.1-79fb690260.patch":
+  version: 4.1.1
+  resolution: "@yarnpkg/pnp@patch:@yarnpkg/pnp@npm%3A4.1.1#~/.yarn/patches/@yarnpkg-pnp-npm-4.1.1-79fb690260.patch::version=4.1.1&hash=5dabe6"
+  dependencies:
+    "@types/node": "npm:^18.17.15"
+    "@yarnpkg/fslib": "npm:^3.1.2"
+  checksum: 10c0/3c3b4644d70c262753cb40804cf60d9ff37803293ccbd40c719fa21a07b3c338b2c56aa285d485bbef83ae6ed782b7b4c8b6e26e1e1f7708aa6de1bf6ca0dc5a
   languageName: node
   linkType: hard
 
@@ -3031,7 +3041,7 @@ __metadata:
     "@yarnpkg/libzip": "npm:3.2.1"
     "@yarnpkg/plugin-file": "npm:3.0.1"
     "@yarnpkg/plugin-pnp": "npm:4.1.0"
-    "@yarnpkg/pnp": "npm:4.1.1"
+    "@yarnpkg/pnp": "patch:@yarnpkg/pnp@npm%3A4.1.1#~/.yarn/patches/@yarnpkg-pnp-npm-4.1.1-79fb690260.patch"
     clipanion: "npm:4.0.0-rc.3"
     execa: "npm:^7.2.0"
     typanion: "npm:3.14.0"

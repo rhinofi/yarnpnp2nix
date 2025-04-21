@@ -310,7 +310,7 @@ class GeneratePnpFile extends BaseCommand {
 
   outDirectory = Option.String({ validator: t.isString() })
   packageRegistryDataPath = Option.String({ validator: t.isString() })
-  topLevelPackageLocator = Option.String({ validator: t.isString() })
+  topLevelPackageLocatorString = Option.String({ validator: t.isString() })
 
   async execute() {
     const configuration = await Configuration.find(
@@ -345,7 +345,7 @@ class GeneratePnpFile extends BaseCommand {
       fs.readFileSync(this.packageRegistryDataPath, 'utf8'),
     )
 
-    let topLevelPackage = null
+    let topLevelPackageLocator = null
 
     const outDirectoryReal = fs.realpathSync(this.outDirectory)
 
@@ -414,17 +414,15 @@ class GeneratePnpFile extends BaseCommand {
         })
       }
 
-      if (`${pkg.name}@${pkg.reference}` === this.topLevelPackageLocator) {
-        topLevelPackage = packageData
+      if (`${pkg.name}@${pkg.reference}` === this.topLevelPackageLocatorString) {
+        topLevelPackageLocator = {
+          name: structUtils.stringifyIdent(locator),
+          reference: locator.reference,
+        }
       }
     }
 
-    if (topLevelPackage != null) {
-      miscUtils.getMapWithDefault(packageRegistry, null).set(
-        null,
-        topLevelPackage,
-      )
-    } else {
+    if (topLevelPackageLocator === null) {
       throw new Error(
         'Could not determine topLevelPackage, this is NEEDED for the .pnp.cjs to be correctly generated',
       )
@@ -443,7 +441,7 @@ class GeneratePnpFile extends BaseCommand {
       shebang,
     }
 
-    const loaderFile = generateInlinedScript(pnpSettings)
+    const loaderFile = generateInlinedScript(pnpSettings, topLevelPackageLocator)
 
     await xfs.changeFilePromise(pnpPath, loaderFile, {
       automaticNewlines: true,

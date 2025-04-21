@@ -8,7 +8,7 @@
     "@yarnpkg/libzip": "3.2.1",
     "@yarnpkg/plugin-file": "3.0.1",
     "@yarnpkg/plugin-pnp": "4.1.0",
-    "@yarnpkg/pnp": "4.1.1",
+    "@yarnpkg/pnp": "patch:@yarnpkg/pnp@npm%3A4.1.1#~/.yarn/patches/@yarnpkg-pnp-npm-4.1.1-79fb690260.patch",
     "clipanion": "4.0.0-rc.3",
     "execa": "^7.2.0",
     "typanion": "3.14.0"
@@ -18,5 +18,9 @@
     "@yarnpkg/builder": "patch:@yarnpkg/builder@npm%3A4.2.1#~/.yarn/patches/@yarnpkg-builder-npm-4.2.1-d1aa54e810.patch",
     "typescript": "^5.1.6"
   },
-  "packageManager": "yarn@4.9.1"
+  "packageManager": "yarn@4.9.1",
+  "resolutions": {
+    "@yarnpkg/pnp@npm:^4.1.0": "patch:@yarnpkg/pnp@npm%3A4.1.1#~/.yarn/patches/@yarnpkg-pnp-npm-4.1.1-79fb690260.patch",
+    "@yarnpkg/pnp@npm:^4.0.9": "patch:@yarnpkg/pnp@npm%3A4.1.1#~/.yarn/patches/@yarnpkg-pnp-npm-4.1.1-79fb690260.patch"
+  }
 }

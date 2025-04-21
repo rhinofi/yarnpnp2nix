@@ -36,7 +36,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/libzip", "virtual:b47cca4d97c0981a08b375c3313ac0106aa3e2bad7bd06765b57decb75a48e7bf3a247b09b3898ea9c6c605423c1c8f27979b8bc6cb4a77922a14ccc2fcfcd39#npm:3.2.1"],\
           ["@yarnpkg/plugin-file", "virtual:6dfbf34536ea2860b11e10146bb22f2921eca4c4d1d62b935e753b33099d8052d69f0e76ac94e3ed0b22a645b11fdb95fba40b872c4fabf83da1a424ed4f01fa#npm:3.0.1"],\
           ["@yarnpkg/plugin-pnp", "virtual:6dfbf34536ea2860b11e10146bb22f2921eca4c4d1d62b935e753b33099d8052d69f0e76ac94e3ed0b22a645b11fdb95fba40b872c4fabf83da1a424ed4f01fa#npm:4.1.0"],\
-          ["@yarnpkg/pnp", "npm:4.1.1"],\
+          ["@yarnpkg/pnp", "patch:@yarnpkg/pnp@npm%3A4.1.1#~/.yarn/patches/@yarnpkg-pnp-npm-4.1.1-79fb690260.patch::version=4.1.1&hash=5dabe6"],\
           ["clipanion", "virtual:6dfbf34536ea2860b11e10146bb22f2921eca4c4d1d62b935e753b33099d8052d69f0e76ac94e3ed0b22a645b11fdb95fba40b872c4fabf83da1a424ed4f01fa#npm:4.0.0-rc.3"],\
           ["execa", "npm:7.2.0"],\
           ["typanion", "npm:3.14.0"],\
@@ -711,7 +711,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/core", "npm:4.4.1"],\
           ["@yarnpkg/fslib", "npm:3.1.2"],\
           ["@yarnpkg/nm", "npm:4.0.6"],\
-          ["@yarnpkg/pnp", "npm:4.1.1"]\
+          ["@yarnpkg/pnp", "patch:@yarnpkg/pnp@npm%3A4.1.1#~/.yarn/patches/@yarnpkg-pnp-npm-4.1.1-79fb690260.patch::version=4.1.1&hash=5dabe6"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -1120,7 +1120,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/parsers", "npm:3.0.3"],\
           ["@yarnpkg/plugin-nm", "virtual:6dfbf34536ea2860b11e10146bb22f2921eca4c4d1d62b935e753b33099d8052d69f0e76ac94e3ed0b22a645b11fdb95fba40b872c4fabf83da1a424ed4f01fa#npm:4.0.6"],\
           ["@yarnpkg/plugin-pnp", "virtual:6dfbf34536ea2860b11e10146bb22f2921eca4c4d1d62b935e753b33099d8052d69f0e76ac94e3ed0b22a645b11fdb95fba40b872c4fabf83da1a424ed4f01fa#npm:4.1.0"],\
-          ["@yarnpkg/pnp", "npm:4.1.1"],\
+          ["@yarnpkg/pnp", "patch:@yarnpkg/pnp@npm%3A4.1.1#~/.yarn/patches/@yarnpkg-pnp-npm-4.1.1-79fb690260.patch::version=4.1.1&hash=5dabe6"],\
           ["@zkochan/cmd-shim", "npm:5.3.1"],\
           ["clipanion", "virtual:978e3f6981951e26c20cd9400849acc15892a5cbeea180e08469a2605c9e6b11a19a4c61b428061a0b53e9927678a2b5caccb552526642247beb26c5c670054e#npm:4.0.0-rc.3"],\
           ["tslib", "npm:2.4.0"]\
@@ -1287,7 +1287,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/fslib", "npm:3.1.2"],\
           ["@yarnpkg/plugin-pnp", "virtual:6dfbf34536ea2860b11e10146bb22f2921eca4c4d1d62b935e753b33099d8052d69f0e76ac94e3ed0b22a645b11fdb95fba40b872c4fabf83da1a424ed4f01fa#npm:4.1.0"],\
           ["@yarnpkg/plugin-stage", "virtual:6dfbf34536ea2860b11e10146bb22f2921eca4c4d1d62b935e753b33099d8052d69f0e76ac94e3ed0b22a645b11fdb95fba40b872c4fabf83da1a424ed4f01fa#npm:4.0.1"],\
-          ["@yarnpkg/pnp", "npm:4.1.1"],\
+          ["@yarnpkg/pnp", "patch:@yarnpkg/pnp@npm%3A4.1.1#~/.yarn/patches/@yarnpkg-pnp-npm-4.1.1-79fb690260.patch::version=4.1.1&hash=5dabe6"],\
           ["clipanion", "virtual:978e3f6981951e26c20cd9400849acc15892a5cbeea180e08469a2605c9e6b11a19a4c61b428061a0b53e9927678a2b5caccb552526642247beb26c5c670054e#npm:4.0.0-rc.3"],\
           ["micromatch", "npm:4.0.5"],\
           ["tslib", "npm:2.4.0"]\
@@ -1473,12 +1473,12 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@yarnpkg/pnp", [\
-      ["npm:4.1.1", {\
-        "packageLocation": "./.yarn/cache/@yarnpkg-pnp-npm-4.1.1-79fb690260-7b80b4d4c7.zip/node_modules/@yarnpkg/pnp/",\
+      ["patch:@yarnpkg/pnp@npm%3A4.1.1#~/.yarn/patches/@yarnpkg-pnp-npm-4.1.1-79fb690260.patch::version=4.1.1&hash=5dabe6", {\
+        "packageLocation": "./.yarn/cache/@yarnpkg-pnp-patch-38845d84c7-3c3b4644d7.zip/node_modules/@yarnpkg/pnp/",\
         "packageDependencies": [\
           ["@types/node", "npm:18.19.31"],\
           ["@yarnpkg/fslib", "npm:3.1.2"],\
-          ["@yarnpkg/pnp", "npm:4.1.1"]\
+          ["@yarnpkg/pnp", "patch:@yarnpkg/pnp@npm%3A4.1.1#~/.yarn/patches/@yarnpkg-pnp-npm-4.1.1-79fb690260.patch::version=4.1.1&hash=5dabe6"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3842,7 +3842,7 @@ const RAW_RUNTIME_STATE =
           ["@yarnpkg/libzip", "virtual:b47cca4d97c0981a08b375c3313ac0106aa3e2bad7bd06765b57decb75a48e7bf3a247b09b3898ea9c6c605423c1c8f27979b8bc6cb4a77922a14ccc2fcfcd39#npm:3.2.1"],\
           ["@yarnpkg/plugin-file", "virtual:6dfbf34536ea2860b11e10146bb22f2921eca4c4d1d62b935e753b33099d8052d69f0e76ac94e3ed0b22a645b11fdb95fba40b872c4fabf83da1a424ed4f01fa#npm:3.0.1"],\
           ["@yarnpkg/plugin-pnp", "virtual:6dfbf34536ea2860b11e10146bb22f2921eca4c4d1d62b935e753b33099d8052d69f0e76ac94e3ed0b22a645b11fdb95fba40b872c4fabf83da1a424ed4f01fa#npm:4.1.0"],\
-          ["@yarnpkg/pnp", "npm:4.1.1"],\
+          ["@yarnpkg/pnp", "patch:@yarnpkg/pnp@npm%3A4.1.1#~/.yarn/patches/@yarnpkg-pnp-npm-4.1.1-79fb690260.patch::version=4.1.1&hash=5dabe6"],\
           ["clipanion", "virtual:6dfbf34536ea2860b11e10146bb22f2921eca4c4d1d62b935e753b33099d8052d69f0e76ac94e3ed0b22a645b11fdb95fba40b872c4fabf83da1a424ed4f01fa#npm:4.0.0-rc.3"],\
           ["execa", "npm:7.2.0"],\
           ["typanion", "npm:3.14.0"],\
