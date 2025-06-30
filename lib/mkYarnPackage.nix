@@ -167,6 +167,9 @@ let
       locatorString = "${name}@${reference}";
       reference = packageManifest.reference;
       bin = packageManifest.bin or null;
+      # This is useful when binaries are self contained and have no runtime deps,
+      # for examplet when they are bundled
+      disablePnpInBinWrappers = packageManifest.disablePnpInBinWrappers or false;
       useMjsLoader = packageManifest.useMjsLoader or true;
 
       _platformOutputHash = lib.mapNullable (
@@ -524,12 +527,16 @@ let
                 mapAttrsToList (binKey: binScript: ''
                   cat << EOF > $out/bin/${binKey}
                   #!${pkgs.bashInteractive}/bin/bash
-
-                  export PATH="${nodejsPackage}/bin:\''$PATH"
-
-                  nodeOptions="--require $out/.pnp.cjs${lib.optionalString useMjsLoader " --loader $out/.pnp.loader.mjs"}"
-                  export NODE_OPTIONS="\''$NODE_OPTIONS \''$nodeOptions"
-
+                  ${
+                    if disablePnpInBinWrappers then
+                      ""
+                    else
+                      ''
+                        nodeOptions="--require $out/.pnp.cjs${lib.optionalString useMjsLoader " --loader $out/.pnp.loader.mjs"}"
+                        export NODE_OPTIONS="\''$NODE_OPTIONS \''$nodeOptions"
+                        export PATH="${nodejsPackage}/bin:\''$PATH"
+                      ''
+                  }
                   ${
                     if shouldBeUnplugged then
                       ''exec ${packageDerivation}/node_modules/${name}/${binScript} "\$@"''
