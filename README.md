@@ -1,3 +1,13 @@
+# WARNING
+
+This fork has now significantly diverged from upstream as the original author didn't have time to review and merge our improvements. We've since done some refactoring (including treewide code formatting) which will make it difficult to merge the changes upstream in the near future, so the fork will most likely continue evolving independently from upstream.
+
+Some notable improvements over the original:
+- unplugged packages (ones which require a build step) are normal derivations instead of FODs so manually maintaining their hashes is not required
+- `yarn patch` just works, without having to manually fix up paths to patches in package.json files form using `~` (meaning root of the project) to relative
+
+The original README below might contain some info which is not applicable to this fork. Eventually we'll replace it with up to date info.
+
 # yarnpnp2nix
 
 Yet another way of packaging Node applications with Nix. Unlike alternatives, this plugin is built for performance (both speed and disk usage) and aims to be unique with the following goals:
