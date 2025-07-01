@@ -7,6 +7,7 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs-latest";
     utils.url = "github:numtide/flake-utils?rev=6ee9ebb6b1ee695d2cacc4faa053a7b9baa76817";
+    hercules-ci-effects.url = "github:hercules-ci/hercules-ci-effects";
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
@@ -19,6 +20,8 @@
       nixpkgs-latest,
       utils,
       treefmt-nix,
+      hercules-ci-effects,
+      self,
       ...
     }:
     let
@@ -38,6 +41,7 @@
           inherit system;
           overlays = [ overlay ];
         };
+        effectLib = hercules-ci-effects.lib.withPkgs pkgs;
         pkgs-latest = import nixpkgs-latest {
           inherit system;
         };
@@ -170,6 +174,11 @@
           };
         };
         lib = pkgs.yarnpnp2nixLib;
+        effects = {
+          runTests = effectLib.mkEffect {
+            effectScript = lib.getExe self.packages.${system}.yarnpnp2nix-test;
+          };
+        };
       }
     ))
     // {
