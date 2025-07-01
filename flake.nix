@@ -189,7 +189,7 @@
             effectLib = hercules-ci-effects.lib.withPkgs pkgs;
           in
           effectLib.mkEffect {
-            effectScript = self.lib.getExe self.packages.x86_64-linux.yarnpnp2nix-test;
+            effectScript = pkgs.getExe self.packages.x86_64-linux.yarnpnp2nix-test;
           };
       };
     };
