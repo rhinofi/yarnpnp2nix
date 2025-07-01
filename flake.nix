@@ -41,7 +41,6 @@
           inherit system;
           overlays = [ overlay ];
         };
-        effectLib = hercules-ci-effects.lib.withPkgs pkgs;
         pkgs-latest = import nixpkgs-latest {
           inherit system;
         };
@@ -175,15 +174,23 @@
           };
         };
         lib = pkgs.yarnpnp2nixLib;
-        effects = {
-          runTests = effectLib.mkEffect {
-            effectScript = lib.getExe self.packages.${system}.yarnpnp2nix-test;
-          };
-        };
       }
     ))
     // {
       overlays.default = overlay;
       herculesCI.ciSystems = [ "x86_64-linux" ];
+      effects = {
+        runTests =
+          let
+            pkgs = import nixpkgs {
+              system = "x86_64-linux";
+              overlays = [ overlay ];
+            };
+            effectLib = hercules-ci-effects.lib.withPkgs pkgs;
+          in
+          effectLib.mkEffect {
+            effectScript = self.lib.getExe self.packages.x86_64-linux.yarnpnp2nix-test;
+          };
+      };
     };
 }
