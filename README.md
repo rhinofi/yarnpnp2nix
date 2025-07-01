@@ -1,3 +1,5 @@
+[![Hercules CI](https://hercules-ci.com/api/v1/site/github/account/adrian-gierakowski/project/yarnpnp2nix/badge)](https://hercules-ci.com/github/adrian-gierakowski/yarnpnp2nix/status)
+
 # WARNING
 
 This fork has now significantly diverged from upstream as the original author didn't have time to review and merge our improvements. We've since done some refactoring (including treewide code formatting) which will make it difficult to merge the changes upstream in the near future, so the fork will most likely continue evolving independently from upstream.
