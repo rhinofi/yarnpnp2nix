@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cp --no-preserve=mode -r $ROOT src
+cp --no-preserve=mode -r "$ROOT" src
 cd src
 
 set -e
