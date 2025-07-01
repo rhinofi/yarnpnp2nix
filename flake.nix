@@ -161,6 +161,7 @@
               yarnBerry
               pkgs-latest.nixfmt-rfc-style
               treefmt-package
+              hci
             ];
           };
           tests-patch = pkgs.mkShell {
@@ -183,5 +184,6 @@
     ))
     // {
       overlays.default = overlay;
+      herculesCI.ciSystems = [ "x86_64-linux" ];
     };
 }
