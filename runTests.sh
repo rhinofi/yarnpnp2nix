@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+cp --no-preserve=mode -r $ROOT src
+cd src
+
 set -e
 
 nix build -L ".#tests.patch" --no-link -L

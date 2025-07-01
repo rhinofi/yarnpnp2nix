@@ -192,6 +192,7 @@
             effectScript = pkgs.lib.getExe self.packages.x86_64-linux.yarnpnp2nix-test;
             inputs = with pkgs; [ nixVersions.nix_2_25 ];
             env.NIX_CONFIG = "extra-experimental-features = nix-command flakes";
+            env.ROOT = self;
           };
       };
     };
