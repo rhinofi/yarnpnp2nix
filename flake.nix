@@ -2,11 +2,10 @@
   description = "yarnpnp2nix";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?rev=95ea544c84ebed84a31896b0ecea2570e5e0e236";
-    nixpkgs-latest.url = "github:nixos/nixpkgs?rev=c80f6a7e10b39afcc1894e02ef785b1ad0b0d7e5";
+    nixpkgs.url = "github:nixos/nixpkgs?rev=3016b4b15d13f3089db8a41ef937b13a9e33a8df";
     treefmt-nix.url = "github:numtide/treefmt-nix";
-    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs-latest";
-    utils.url = "github:numtide/flake-utils?rev=6ee9ebb6b1ee695d2cacc4faa053a7b9baa76817";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
+    utils.url = "github:numtide/flake-utils";
     hercules-ci-effects.url = "github:hercules-ci/hercules-ci-effects";
     flake-compat = {
       url = "github:edolstra/flake-compat";
@@ -17,7 +16,6 @@
   outputs =
     {
       nixpkgs,
-      nixpkgs-latest,
       utils,
       treefmt-nix,
       hercules-ci-effects,
@@ -40,9 +38,6 @@
         pkgs = import nixpkgs {
           inherit system;
           overlays = [ overlay ];
-        };
-        pkgs-latest = import nixpkgs-latest {
-          inherit system;
         };
         inherit (pkgs) lib;
         treefmt-eval = (import treefmt-nix).evalModule pkgs {
@@ -158,7 +153,7 @@
             packages = with pkgs; [
               nodejs
               yarnBerry
-              pkgs-latest.nixfmt-rfc-style
+              nixfmt-rfc-style
               treefmt-package
               hci
             ];
