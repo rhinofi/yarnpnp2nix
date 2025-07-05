@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
-cp --no-preserve=mode -r "$ROOT" src
-cd src
+if [[ -z "${ROOT:-}" ]]; then
+  echo "assuming source dir is PWD"
+else
+  echo "copying ${ROOT} to ./src"
+  cp --no-preserve=mode -r "${ROOT}" src
+fi
 
 set -e
 
