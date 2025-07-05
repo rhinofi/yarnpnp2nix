@@ -82,7 +82,7 @@ let
               let
                 overridesAsAttrsOrFunc = packageOverrides."${key}";
                 overridesAsAttrs =
-                  if builtins.isFunction overridesAsAttrsOrFunc then
+                  if (builtins.isFunction (overridesAsAttrsOrFunc.__functor or overridesAsAttrsOrFunc)) then
                     overridesAsAttrsOrFunc packageManifest
                   else
                     overridesAsAttrsOrFunc;
