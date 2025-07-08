@@ -170,6 +170,7 @@ let
       # This is useful when binaries are self contained and have no runtime deps,
       # for examplet when they are bundled
       disablePnpInBinWrappers = packageManifest.disablePnpInBinWrappers or false;
+      runtimeNodeOptions = packageManifest.runtimeNodeOptions or "";
       useMjsLoader = packageManifest.useMjsLoader or true;
 
       _platformOutputHash = lib.mapNullable (
@@ -529,10 +530,13 @@ let
                   #!${pkgs.bashInteractive}/bin/bash
                   ${
                     if disablePnpInBinWrappers then
-                      ""
+                      lib.optionalString (runtimeNodeOptions != "") ''
+                        export NODE_OPTIONS="\''$NODE_OPTIONS ${runtimeNodeOptions}"
+                      ''
                     else
                       ''
-                        nodeOptions="--require $out/.pnp.cjs${lib.optionalString useMjsLoader " --loader $out/.pnp.loader.mjs"}"
+                        pnpOptions="--require $out/.pnp.cjs${lib.optionalString useMjsLoader " --loader $out/.pnp.loader.mjs"}"
+                        nodeOptions="\''$pnpOptions ${runtimeNodeOptions}"
                         export NODE_OPTIONS="\''$NODE_OPTIONS \''$nodeOptions"
                         export PATH="${nodejsPackage}/bin:\''$PATH"
                       ''
