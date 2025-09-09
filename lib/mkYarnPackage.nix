@@ -238,7 +238,6 @@ let
             ${setupYarnBinScript}
 
             packageLocation="/"
-            packageDrvLocation="/"
             ${createLockFileScript}
 
             mkdir -p $out/bin
@@ -511,7 +510,6 @@ let
           ${setupYarnBinScript}
 
           packageLocation=${packageDerivation}/node_modules/${name}
-          packageDrvLocation=${packageDerivation}
           ${createLockFileScriptForRuntime}
 
           mkdir -p $out
@@ -560,7 +558,6 @@ let
           ${setupYarnBinScript}
 
           packageLocation="/"
-          packageDrvLocation="/"
           (cd $tmpDir && ${createLockFileScript})
           (cd $tmpDir && ${yarnBin} nix generate-pnp-file $tmpDir $tmpDir/packageRegistryData.json "${locatorString}")
 
