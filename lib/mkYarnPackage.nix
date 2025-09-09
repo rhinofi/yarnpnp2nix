@@ -554,19 +554,24 @@ let
             " ";
 
         shellHook = ''
-          tmpDir=$TMPDIR
+          set -eu
+          tmpDir=$(${pkgs.coreutils}/bin/mktemp -d)
+          echo "tmpDir: $tmpDir"
+
           ${setupYarnBinScript}
 
           packageLocation="/"
           (cd $tmpDir && ${createLockFileScript})
           (cd $tmpDir && ${yarnBin} nix generate-pnp-file $tmpDir $tmpDir/packageRegistryData.json "${locatorString}")
 
-          nodeOptions="--require $TMPDIR/.pnp.cjs"
-          export NODE_OPTIONS="$NODE_OPTIONS $nodeOptions"
+          nodeOptions="--require $tmpDir/.pnp.cjs${lib.optionalString useMjsLoader " --loader ${./.pnp.loader.mjs}"}"
+
+          export NODE_OPTIONS="''${NODE_OPTIONS-} $nodeOptions"
 
           mkdir -p $tmpDir/wrappedbins
           ${yarnBin} nix make-path-wrappers $tmpDir/wrappedbins $tmpDir $tmpDir/packageRegistryData.json "${locatorString}"
           export PATH="$PATH:$tmpDir/wrappedbins"
+          set +eu
         '';
       };
 
