@@ -238,7 +238,6 @@ let
             ${setupYarnBinScript}
 
             packageLocation="/"
-            packageDrvLocation="/"
             ${createLockFileScript}
 
             mkdir -p $out/bin
@@ -326,6 +325,26 @@ let
         ${yarnBin} nix generate-pnp-file $out $tmpDir/packageRegistryData.json "${locatorString}"
         cp --no-preserve=mode "${./.pnp.loader.mjs}" $out/.pnp.loader.mjs
       '';
+
+      buildSetup = ''
+        tmpDir=$PWD
+        ${setupYarnBinScript}
+
+        ${set_packageLocation_create_packageRegistryData_lockFile_and_pnp "$out/tmp/${name}"}
+
+        cp -rT ${src} $packageLocation
+        chmod -R +w $packageLocation
+
+        mkdir -p $tmpDir/wrappedbins
+        ${yarnBin} nix make-path-wrappers $tmpDir/wrappedbins $out $tmpDir/packageRegistryData.json "${locatorString}"
+
+        cd $packageLocation
+        nodeOptions="--require $out/.pnp.cjs --loader $out/.pnp.loader.mjs"
+        oldNodeOptions="$NODE_OPTIONS"
+        oldPath="$PATH"
+        export NODE_OPTIONS="$NODE_OPTIONS $nodeOptions"
+        export PATH="$PATH:$tmpDir/wrappedbins"
+      '';
       unpluggedDerivation = pkgs.stdenv.mkDerivation {
         name = outputName + (if willOutputBeZip then ".zip" else "");
         phases =
@@ -357,23 +376,7 @@ let
         buildPhase =
           if willBuild && build != "" then
             ''
-              tmpDir=$PWD
-              ${setupYarnBinScript}
-
-              ${set_packageLocation_create_packageRegistryData_lockFile_and_pnp "$out/tmp/${name}"}
-
-              cp -rT ${src} $packageLocation
-              chmod -R +w $packageLocation
-
-              mkdir -p $tmpDir/wrappedbins
-              ${yarnBin} nix make-path-wrappers $tmpDir/wrappedbins $out $tmpDir/packageRegistryData.json "${locatorString}"
-
-              cd $packageLocation
-              nodeOptions="--require $out/.pnp.cjs --loader $out/.pnp.loader.mjs"
-              oldNodeOptions="$NODE_OPTIONS"
-              oldPath="$PATH"
-              export NODE_OPTIONS="$NODE_OPTIONS $nodeOptions"
-              export PATH="$PATH:$tmpDir/wrappedbins"
+              ${buildSetup}
 
               ${build}
 
@@ -511,7 +514,6 @@ let
           ${setupYarnBinScript}
 
           packageLocation=${packageDerivation}/node_modules/${name}
-          packageDrvLocation=${packageDerivation}
           ${createLockFileScriptForRuntime}
 
           mkdir -p $out
@@ -556,21 +558,27 @@ let
             " ";
 
         shellHook = ''
-          tmpDir=$TMPDIR
+          set -eu
+          tmpDir=$(${pkgs.coreutils}/bin/mktemp -d)
+          echo "tmpDir: $tmpDir"
+
           ${setupYarnBinScript}
 
           packageLocation="/"
-          packageDrvLocation="/"
           (cd $tmpDir && ${createLockFileScript})
           (cd $tmpDir && ${yarnBin} nix generate-pnp-file $tmpDir $tmpDir/packageRegistryData.json "${locatorString}")
 
-          nodeOptions="--require $TMPDIR/.pnp.cjs"
-          export NODE_OPTIONS="$NODE_OPTIONS $nodeOptions"
+          nodeOptions="--require $tmpDir/.pnp.cjs${lib.optionalString useMjsLoader " --loader ${./.pnp.loader.mjs}"}"
+
+          export NODE_OPTIONS="''${NODE_OPTIONS-} $nodeOptions"
 
           mkdir -p $tmpDir/wrappedbins
           ${yarnBin} nix make-path-wrappers $tmpDir/wrappedbins $tmpDir $tmpDir/packageRegistryData.json "${locatorString}"
           export PATH="$PATH:$tmpDir/wrappedbins"
+          set +eu
         '';
+
+        inherit buildSetup;
       };
 
       dependencyBins = listToAttrs (
