@@ -326,25 +326,29 @@ let
         cp --no-preserve=mode "${./.pnp.loader.mjs}" $out/.pnp.loader.mjs
       '';
 
-      buildSetup = ''
-        tmpDir=$PWD
-        ${setupYarnBinScript}
+      buildSetup =
+        if willBuild && build != "" then
+          ''
+            tmpDir=$PWD
+            ${setupYarnBinScript}
 
-        ${set_packageLocation_create_packageRegistryData_lockFile_and_pnp "$out/tmp/${name}"}
+            ${set_packageLocation_create_packageRegistryData_lockFile_and_pnp "$out/tmp/${name}"}
 
-        cp -rT ${src} $packageLocation
-        chmod -R +w $packageLocation
+            cp -rT ${src} $packageLocation
+            chmod -R +w $packageLocation
 
-        mkdir -p $tmpDir/wrappedbins
-        ${yarnBin} nix make-path-wrappers $tmpDir/wrappedbins $out $tmpDir/packageRegistryData.json "${locatorString}"
+            mkdir -p $tmpDir/wrappedbins
+            ${yarnBin} nix make-path-wrappers $tmpDir/wrappedbins $out $tmpDir/packageRegistryData.json "${locatorString}"
 
-        cd $packageLocation
-        nodeOptions="--require $out/.pnp.cjs --loader $out/.pnp.loader.mjs"
-        oldNodeOptions="$NODE_OPTIONS"
-        oldPath="$PATH"
-        export NODE_OPTIONS="$NODE_OPTIONS $nodeOptions"
-        export PATH="$PATH:$tmpDir/wrappedbins"
-      '';
+            cd $packageLocation
+            nodeOptions="--require $out/.pnp.cjs --loader $out/.pnp.loader.mjs"
+            oldNodeOptions="$NODE_OPTIONS"
+            oldPath="$PATH"
+            export NODE_OPTIONS="$NODE_OPTIONS $nodeOptions"
+            export PATH="$PATH:$tmpDir/wrappedbins"
+          ''
+        else
+          "";
       unpluggedDerivation = pkgs.stdenv.mkDerivation {
         name = outputName + (if willOutputBeZip then ".zip" else "");
         phases =
