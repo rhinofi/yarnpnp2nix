@@ -1,0 +1,22 @@
+diff --git a/packages/yarnpkg-core/sources/Project.ts b/packages/yarnpkg-core/sources/Project.ts
+index 79ca347..e1ffe8c 100644
+--- a/packages/yarnpkg-core/sources/Project.ts
++++ b/packages/yarnpkg-core/sources/Project.ts
+@@ -1095,7 +1095,7 @@ export class Project {
+   async fetchEverything({cache, report, fetcher: userFetcher, mode, persistProject = true}: InstallOptions) {
+     const cacheOptions = {
+       mockedPackages: this.disabledLocators,
+-      unstablePackages: this.conditionalLocators,
++      unstablePackages: this.disabledLocators,
+     };
+ 
+     const fetcher = userFetcher || this.configuration.makeFetcher();
+@@ -1210,7 +1210,7 @@ export class Project {
+   async linkEverything({cache, report, fetcher: optFetcher, mode}: InstallOptions) {
+     const cacheOptions: CacheOptions = {
+       mockedPackages: this.disabledLocators,
+-      unstablePackages: this.conditionalLocators,
++      unstablePackages: this.disabledLocators,
+       skipIntegrityCheck: true,
+     };
+ 
