@@ -21,6 +21,7 @@ stdenv.mkDerivation {
 
   patches = [
     ./yarnPatches/pack-specific-project.patch
+    ./yarnPatches/checksums-for-conditional-locator.patch
   ];
 
   buildInputs = [
