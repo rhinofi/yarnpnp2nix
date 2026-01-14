@@ -6,6 +6,9 @@
   writeShellApplication,
 }:
 let
+  # Set this to true during development, to automatially rebuild
+  # from source.
+  dynamic = false;
   build = writeShellApplication {
     name = "build-yarn-plugin";
     runtimeInputs = [
@@ -15,6 +18,7 @@ let
     text = builtins.readFile ./plugin/build.sh;
   };
 in
+if dynamic then
 stdenv.mkDerivation {
   name = "yarn-plugin-yarnpnp2nix.js";
   phases = [ "build" ];
@@ -44,3 +48,6 @@ stdenv.mkDerivation {
     mv $tmpDir/@yarnpkg/* $out
   '';
 }
+else
+  # Using pre-built by default
+  ./plugin.js
