@@ -171,6 +171,7 @@ let
       # for examplet when they are bundled
       disablePnpInBinWrappers = packageManifest.disablePnpInBinWrappers or false;
       runtimeNodeOptions = packageManifest.runtimeNodeOptions or "";
+      addBinsToPath = packageManifest.addBinsToPath or false;
       useMjsLoader = packageManifest.useMjsLoader or true;
 
       _platformOutputHash = lib.mapNullable (
@@ -542,9 +543,12 @@ let
                     else
                       ''
                         pnpOptions="--require $out/.pnp.cjs${lib.optionalString useMjsLoader " --loader $out/.pnp.loader.mjs"}"
-                        nodeOptions="\''$pnpOptions ${runtimeNodeOptions}"
-                        export NODE_OPTIONS="\''$NODE_OPTIONS \''$nodeOptions"
-                        export PATH="${nodejsPackage}/bin:\''$PATH"
+                        nodeOptions="\$pnpOptions ${runtimeNodeOptions}"
+                        export NODE_OPTIONS="\$NODE_OPTIONS \$nodeOptions"
+                        export PATH="${nodejsPackage}/bin:\$PATH"
+                      ''
+                      + lib.optionalString addBinsToPath ''
+                        export PATH="${shellRuntimeEnvironment}/bin:\$PATH"
                       ''
                   }
                   ${
