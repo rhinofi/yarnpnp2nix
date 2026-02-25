@@ -2,13 +2,13 @@
   description = "yarnpnp2nix";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?rev=3016b4b15d13f3089db8a41ef937b13a9e33a8df";
+    nixpkgs.url = "github:nixos/nixpkgs?rev=4d113fe1f7bb454435a5cabae6cd283e64191bb7";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
     utils.url = "github:numtide/flake-utils";
     hercules-ci-effects.url = "github:hercules-ci/hercules-ci-effects";
     flake-compat = {
-      url = "github:edolstra/flake-compat";
+      url = "github:nixos/flake-compat";
       flake = false;
     };
   };
@@ -108,6 +108,7 @@
         treefmt-package = treefmt-eval.config.build.wrapper;
       in
       {
+        formatter = treefmt-package;
         packages = rec {
           treefmt = treefmt-package;
           default = pkgs.yarn-plugin-yarnpnp2nix;
@@ -153,7 +154,7 @@
             packages = with pkgs; [
               nodejs
               yarnBerry
-              nixfmt-rfc-style
+              nixfmt
               treefmt-package
               hci
             ];
