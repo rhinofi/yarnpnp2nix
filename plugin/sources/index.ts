@@ -348,6 +348,11 @@ class GeneratePnpFile extends BaseCommand {
     let topLevelPackageLocator = null
 
     const outDirectoryReal = fs.realpathSync(this.outDirectory)
+    const outDirectoryPortable = toPortablePath(outDirectoryReal)
+    const virtualBase = ppath.join(
+      outDirectoryPortable,
+      toPortablePath('.yarn/__virtual__'),
+    )
 
     for (const pkgIdent of Object.keys(packageRegistryData)) {
       const pkg = packageRegistryData[pkgIdent]
@@ -375,23 +380,29 @@ class GeneratePnpFile extends BaseCommand {
         }
       }
 
-      const packageLocationAbs = pkg.packageLocation
-        ?? (pkg.drvPath + '/node_modules/' + pkg.name)
-      const relativePackageLocation = path.relative(
-        outDirectoryReal,
-        packageLocationAbs,
+      const packageLocationAbs = toPortablePath(
+        pkg.packageLocation
+          ?? (pkg.drvPath + '/node_modules/' + pkg.name),
       )
-      let packageLocation = (relativePackageLocation
-          .startsWith('../')
-        ? relativePackageLocation
-        : ('./' + relativePackageLocation)) + '/'
 
+      let packageLocation: string
       if (isVirtual) {
-        packageLocation = './' + VirtualFS.makeVirtualPath(
-          toPortablePath('./.yarn/__virtual__'),
+        const absoluteVirtualPath = VirtualFS.makeVirtualPath(
+          virtualBase,
           structUtils.slugifyLocator(locator),
-          relativePackageLocation,
-        ) + '/'
+          packageLocationAbs,
+        )
+        packageLocation = './'
+          + ppath.relative(outDirectoryPortable, absoluteVirtualPath)
+          + '/'
+      } else {
+        const relativePackageLocation = ppath.relative(
+          outDirectoryPortable,
+          packageLocationAbs,
+        )
+        packageLocation = (relativePackageLocation.startsWith('../')
+          ? relativePackageLocation
+          : ('./' + relativePackageLocation)) + '/'
       }
 
       const packageData = {
@@ -414,7 +425,9 @@ class GeneratePnpFile extends BaseCommand {
         })
       }
 
-      if (`${pkg.name}@${pkg.reference}` === this.topLevelPackageLocatorString) {
+      if (
+        `${pkg.name}@${pkg.reference}` === this.topLevelPackageLocatorString
+      ) {
         topLevelPackageLocator = {
           name: structUtils.stringifyIdent(locator),
           reference: locator.reference,
@@ -441,7 +454,10 @@ class GeneratePnpFile extends BaseCommand {
       shebang,
     }
 
-    const loaderFile = generateInlinedScript(pnpSettings, topLevelPackageLocator)
+    const loaderFile = generateInlinedScript(
+      pnpSettings,
+      topLevelPackageLocator,
+    )
 
     await xfs.changeFilePromise(pnpPath, loaderFile, {
       automaticNewlines: true,
@@ -464,6 +480,11 @@ class MakePathWrappers extends BaseCommand {
     )
 
     const outDirectoryReal = fs.realpathSync(this.pnpOutDirectory)
+    const outDirectoryPortable = toPortablePath(outDirectoryReal)
+    const virtualBase = ppath.join(
+      outDirectoryPortable,
+      toPortablePath('.yarn/__virtual__'),
+    )
 
     for (const pkgIdent of Object.keys(packageRegistryData)) {
       const pkg = packageRegistryData[pkgIdent]
@@ -477,12 +498,11 @@ class MakePathWrappers extends BaseCommand {
 
       const isVirtual = structUtils.isVirtualLocator(pkg)
 
-      const packageLocationAbs = pkg.packageLocation
-        ?? (pkg.drvPath + '/node_modules/' + pkg.name)
-      const relativePackageLocation = path.relative(
-        outDirectoryReal,
-        packageLocationAbs,
+      const packageLocationAbs = toPortablePath(
+        pkg.packageLocation
+          ?? (pkg.drvPath + '/node_modules/' + pkg.name),
       )
+
       let packageLocation = packageLocationAbs
 
       const isTopLevelPackage = `${pkg.name}@${pkg.reference}` === this
@@ -490,13 +510,10 @@ class MakePathWrappers extends BaseCommand {
       if (isTopLevelPackage) continue
 
       if (isVirtual) {
-        packageLocation = path.join(
-          outDirectoryReal,
-          VirtualFS.makeVirtualPath(
-            toPortablePath('./.yarn/__virtual__'),
-            structUtils.slugifyLocator(locator),
-            relativePackageLocation,
-          ),
+        packageLocation = VirtualFS.makeVirtualPath(
+          virtualBase,
+          structUtils.slugifyLocator(locator),
+          packageLocationAbs,
         )
       }
 
