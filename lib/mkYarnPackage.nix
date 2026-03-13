@@ -253,7 +253,7 @@ let
                   cat << EOF > $out/bin/${binKey}
                   #!${pkgs.bashInteractive}/bin/bash
 
-                  pnpDir="\$(mktemp -d)"
+                  TMPDIR=/tmp pnpDir="\$(mktemp -d)"
                   (cd $out && ${yarnEnvVarsOneLine} ${yarnBin} nix generate-pnp-file \$pnpDir $out/packageRegistryData.json "${locatorString}")
                   binPackageLocation="\$(${nodeBin} -r \$pnpDir/.pnp.cjs -e 'console.log(require("pnpapi").getPackageInformation({ name: process.argv[1], reference: process.argv[2] })?.packageLocation)' "${pkg.name}" "${pkg.reference}")"
 
