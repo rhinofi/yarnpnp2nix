@@ -8,7 +8,7 @@
 let
   # Set this to true during development, to automatially rebuild
   # from source.
-  dynamic = false;
+  dynamic = true;
   build = writeShellApplication {
     name = "build-yarn-plugin";
     runtimeInputs = [

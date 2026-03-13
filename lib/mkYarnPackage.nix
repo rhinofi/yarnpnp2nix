@@ -259,6 +259,8 @@ let
 
                   export PATH="${nodejsPackage}/bin:\''$PATH"
 
+                  >&2 echo "pnpPath: \$pnpDir/.pnp.cjs"
+
                   nodeOptions="--require \$pnpDir/.pnp.cjs --loader ${./.pnp.loader.mjs}"
                   export NODE_OPTIONS="\''$NODE_OPTIONS \''$nodeOptions"
 
@@ -343,6 +345,8 @@ let
 
             cd $packageLocation
             nodeOptions="--require $out/.pnp.cjs --loader $out/.pnp.loader.mjs"
+            >&2 echo "pnpPath: $out/.pnp.cjs"
+
             oldNodeOptions="$NODE_OPTIONS"
             oldPath="$PATH"
             export NODE_OPTIONS="$NODE_OPTIONS $nodeOptions"
