@@ -2,7 +2,7 @@
   description = "yarnpnp2nix";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?rev=4d113fe1f7bb454435a5cabae6cd283e64191bb7";
+    nixpkgs.url = "github:nixos/nixpkgs?rev=01fbdeef22b76df85ea168fbfe1bfd9e63681b30";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
     utils.url = "github:numtide/flake-utils";
