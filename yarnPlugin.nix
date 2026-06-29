@@ -47,7 +47,6 @@ if dynamic then
 
       mv $tmpDir/@yarnpkg/* $out
     '';
-    meta.mainProgram = "yarn";
   }
 else
   # Using pre-built by default

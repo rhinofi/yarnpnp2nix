@@ -46,4 +46,5 @@ stdenv.mkDerivation {
     chmod +x $out/bin/yarn
     patchShebangs $out/bin/yarn
   '';
+  meta.mainProgram = "yarn";
 }
