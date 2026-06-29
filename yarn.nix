@@ -25,7 +25,7 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = [
-    yarn
+    (yarn.override { inherit nodejs; })
     rsync
     nodejs
   ];

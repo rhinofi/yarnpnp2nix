@@ -23,18 +23,27 @@
       ...
     }:
     let
-      overlay = final: prev: {
-        nodejs = final.nodejs_26;
-        yarnBerry = final.callPackage ./yarn.nix { };
-        yarn-plugin-yarnpnp2nix = final.callPackage ./yarnPlugin.nix { };
-        yarn-plugin-yarnpnp2nix-dynamic = final.callPackage ./yarnPlugin.nix {
-          yarnpnp2nixBuildBynamically = true;
+      overlay =
+        final: prev:
+        let
+          node26Override = {
+            nodejs = final.nodejs_26;
+          };
+        in
+        {
+          yarnBerry = final.callPackage ./yarn.nix node26Override;
+          yarn-plugin-yarnpnp2nix = final.callPackage ./yarnPlugin.nix node26Override;
+          yarn-plugin-yarnpnp2nix-dynamic = final.callPackage ./yarnPlugin.nix (
+            node26Override
+            // {
+              yarnpnp2nixBuildBynamically = true;
+            }
+          );
+          yarnpnp2nixLib = import ./lib/mkYarnPackage.nix {
+            defaultPkgs = final // node26Override;
+            lib = final.lib;
+          };
         };
-        yarnpnp2nixLib = import ./lib/mkYarnPackage.nix {
-          defaultPkgs = final;
-          lib = final.lib;
-        };
-      };
     in
     (utils.lib.eachDefaultSystem (
       system:
