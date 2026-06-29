@@ -2,7 +2,7 @@
   description = "yarnpnp2nix";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?rev=01fbdeef22b76df85ea168fbfe1bfd9e63681b30";
+    nixpkgs.url = "github:nixos/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
     utils.url = "github:numtide/flake-utils";
@@ -24,6 +24,7 @@
     }:
     let
       overlay = final: prev: {
+        nodejs = final.nodejs_26;
         yarnBerry = final.callPackage ./yarn.nix { };
         yarn-plugin-yarnpnp2nix = final.callPackage ./yarnPlugin.nix { };
         yarnpnp2nixLib = import ./lib/mkYarnPackage.nix {
