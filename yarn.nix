@@ -9,8 +9,8 @@
 stdenv.mkDerivation {
   name = "yarn-berry";
   src = fetchzip {
-    url = "https://github.com/yarnpkg/berry/archive/4287909fa6a0a1ec976a55776bff606864b31990.tar.gz";
-    sha256 = "sha256-Bw5uJixyPpLiLwr0BNO1ka2xVSAn5g1SE1WqPYLxW6o=";
+    url = "https://github.com/yarnpkg/berry/archive/352c4d67f4ba49a2aefd28cff98c61d88a5a5ac1.tar.gz";
+    sha256 = "sha256-5JH5k2ara3fzKwtDXUy5HIgztoAM4lMfs3f/DzncIoA=";
   };
 
   phases = [
