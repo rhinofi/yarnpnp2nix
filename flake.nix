@@ -27,6 +27,9 @@
         nodejs = final.nodejs_26;
         yarnBerry = final.callPackage ./yarn.nix { };
         yarn-plugin-yarnpnp2nix = final.callPackage ./yarnPlugin.nix { };
+        yarn-plugin-yarnpnp2nix-dynamic = final.callPackage ./yarnPlugin.nix {
+          yarnpnp2nixBuildBynamically = true;
+        };
         yarnpnp2nixLib = import ./lib/mkYarnPackage.nix {
           defaultPkgs = final;
           lib = final.lib;
@@ -112,7 +115,7 @@
         formatter = treefmt-package;
         packages = rec {
           treefmt = treefmt-package;
-          default = pkgs.yarn-plugin-yarnpnp2nix;
+          default = pkgs.yarn-plugin-yarnpnp2nix-dynamic;
           yarn-plugin = pkgs.yarn-plugin-yarnpnp2nix;
           yarnBerry = pkgs.yarnBerry;
           yarnpnp2nix-test = pkgs.writeShellApplication {
@@ -130,18 +133,21 @@
           };
           rebuild-plugin = pkgs.writeShellApplication {
             name = "rebuild-plugin";
-            text = ''
-              ${pkgs.gnused}/bin/sed -i 's/dynamic = false;/dynamic = true;/' yarnPlugin.nix
-              nix build .#yarn-plugin
-              cp result plugin.js
-              ${pkgs.gnused}/bin/sed -i 's/dynamic = true;/dynamic = false;/' yarnPlugin.nix
-              if ! git diff --quiet plugin.js; then
-                ${lib.getExe pkgs.git} add plugin.js
-                ${lib.getExe pkgs.git} commit -m "Update plugin.js"
-              else
-                echo "No changes in plugin.js"
-              fi
-            '';
+            text =
+              let
+                git = lib.getExe pkgs.git;
+              in
+              ''
+                result=$(nix build --no-link --print-out-paths)
+                echo "built plugin: $result"
+                cp "$result" plugin.js
+                if ! git diff --quiet plugin.js; then
+                  ${git} add plugin.js
+                  ${git} commit -m "Update plugin.js"
+                else
+                  echo "No changes in plugin.js"
+                fi
+              '';
           };
 
           tests = {

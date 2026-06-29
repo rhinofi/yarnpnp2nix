@@ -4,11 +4,9 @@
   yarnBerry,
   nodejs,
   writeShellApplication,
+  yarnpnp2nixBuildBynamically ? false,
 }:
 let
-  # Set this to true during development, to automatially rebuild
-  # from source.
-  dynamic = false;
   build = writeShellApplication {
     name = "build-yarn-plugin";
     runtimeInputs = [
@@ -17,10 +15,11 @@ let
     ];
     text = builtins.readFile ./plugin/build.sh;
   };
+  name = "yarn-plugin-yarnpnp2nix.js";
 in
-if dynamic then
+if yarnpnp2nixBuildBynamically then
   stdenv.mkDerivation {
-    name = "yarn-plugin-yarnpnp2nix.js";
+    inherit name;
     phases = [ "build" ];
 
     src = lib.fileset.toSource {
@@ -49,5 +48,7 @@ if dynamic then
     '';
   }
 else
-  # Using pre-built by default
-  ./plugin.js
+  builtins.path {
+    inherit name;
+    path = ./plugin.js;
+  }
