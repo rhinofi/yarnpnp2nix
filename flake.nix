@@ -128,6 +128,21 @@
               yarn up -E @yarnpkg/cli @yarnpkg/core @yarnpkg/fslib @yarnpkg/libzip @yarnpkg/plugin-file @yarnpkg/plugin-pnp @yarnpkg/pnp @yarnpkg/builder
             '';
           };
+          rebuild-plugin = pkgs.writeShellApplication {
+            name = "rebuild-plugin";
+            text = ''
+              ${pkgs.gnused}/bin/sed -i 's/dynamic = false;/dynamic = true;/' yarnPlugin.nix
+              nix build .#yarn-plugin
+              cp result plugin.js
+              ${pkgs.gnused}/bin/sed -i 's/dynamic = true;/dynamic = false;/' yarnPlugin.nix
+              if ! git diff --quiet plugin.js; then
+                ${lib.getExe pkgs.git} add plugin.js
+                ${lib.getExe pkgs.git} commit -m "Update plugin.js"
+              else
+                echo "No changes in plugin.js"
+              fi
+            '';
+          };
 
           tests = {
             patch =
