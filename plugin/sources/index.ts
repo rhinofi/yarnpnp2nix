@@ -327,10 +327,13 @@ class GeneratePnpFile extends BaseCommand {
       Filename.pnpCjs,
     )
 
-    const pnpFallbackMode = project.configuration.get(`pnpFallbackMode`)
+    const pnpFallbackMode = project.configuration.sources.has(`pnpFallbackMode`)
+      ? project.configuration.get(`pnpFallbackMode`).trim()
+      : `none`
 
     const dependencyTreeRoots = [] // project.workspaces.map(({anchoredLocator}) => ({name: structUtils.stringifyIdent(anchoredLocator), reference: anchoredLocator.reference}));
-    const enableTopLevelFallback = pnpFallbackMode !== `none`
+    const enableTopLevelFallback = pnpFallbackMode !== ``
+      && pnpFallbackMode !== `none`
     const fallbackPool = new Map()
     const ignorePattern = miscUtils.buildIgnorePattern([
       `.yarn/sdks/**`,
