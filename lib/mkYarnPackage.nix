@@ -1,9 +1,12 @@
-{ defaultPkgs, lib }:
+{
+  defaultPkgs,
+  lib,
+  nixPlugin ? defaultPkgs.yarn-plugin-yarnpnp2nix or (defaultPkgs.callPackage ../yarnPlugin.nix { }),
+}:
 
 with lib;
 
 let
-  nixPlugin = defaultPkgs.callPackage ../yarnPlugin.nix { };
   yarnBin = "${defaultPkgs.yarnBerry}/bin/yarn";
 
   yarnEnvVars = [

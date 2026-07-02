@@ -4,7 +4,7 @@
   yarnBerry,
   nodejs,
   writeShellApplication,
-  yarnpnp2nixBuildBynamically ? false,
+  yarnpnp2nixBuildDynamically ? false,
 }:
 let
   build = writeShellApplication {
@@ -17,7 +17,7 @@ let
   };
   name = "yarn-plugin-yarnpnp2nix.js";
 in
-if yarnpnp2nixBuildBynamically then
+if yarnpnp2nixBuildDynamically then
   stdenv.mkDerivation {
     inherit name;
     phases = [ "build" ];

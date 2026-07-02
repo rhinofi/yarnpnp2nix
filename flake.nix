@@ -29,19 +29,27 @@
           node26Override = {
             nodejs = final.nodejs_26;
           };
+          yarnpnp2nixBuildDynamically = final.yarnpnp2nixBuildDynamically or false;
+          yarnBerry = final.callPackage ./yarn.nix node26Override;
+          yarn-plugin-yarnpnp2nix = final.callPackage ./yarnPlugin.nix (
+            node26Override
+            // {
+              inherit yarnpnp2nixBuildDynamically;
+            }
+          );
         in
         {
-          yarnBerry = final.callPackage ./yarn.nix node26Override;
-          yarn-plugin-yarnpnp2nix = final.callPackage ./yarnPlugin.nix node26Override;
+          inherit yarnBerry yarn-plugin-yarnpnp2nix;
           yarn-plugin-yarnpnp2nix-dynamic = final.callPackage ./yarnPlugin.nix (
             node26Override
             // {
-              yarnpnp2nixBuildBynamically = true;
+              yarnpnp2nixBuildDynamically = true;
             }
           );
           yarnpnp2nixLib = import ./lib/mkYarnPackage.nix {
             defaultPkgs = final // node26Override;
             lib = final.lib;
+            nixPlugin = final.yarn-plugin-yarnpnp2nix or yarn-plugin-yarnpnp2nix;
           };
         };
     in
