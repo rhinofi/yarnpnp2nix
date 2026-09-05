@@ -2,7 +2,7 @@
   description = "yarnpnp2nix";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?rev=4d113fe1f7bb454435a5cabae6cd283e64191bb7";
+    nixpkgs.url = "github:nixos/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
     utils.url = "github:numtide/flake-utils";
@@ -23,14 +23,35 @@
       ...
     }:
     let
-      overlay = final: prev: {
-        yarnBerry = final.callPackage ./yarn.nix { };
-        yarn-plugin-yarnpnp2nix = final.callPackage ./yarnPlugin.nix { };
-        yarnpnp2nixLib = import ./lib/mkYarnPackage.nix {
-          defaultPkgs = final;
-          lib = final.lib;
+      overlay =
+        final: prev:
+        let
+          node26Override = {
+            nodejs = final.nodejs_26;
+          };
+          yarnpnp2nixBuildDynamically = final.yarnpnp2nixBuildDynamically or false;
+          yarnBerry = final.callPackage ./yarn.nix node26Override;
+          yarn-plugin-yarnpnp2nix = final.callPackage ./yarnPlugin.nix (
+            node26Override
+            // {
+              inherit yarnpnp2nixBuildDynamically;
+            }
+          );
+        in
+        {
+          inherit yarnBerry yarn-plugin-yarnpnp2nix;
+          yarn-plugin-yarnpnp2nix-dynamic = final.callPackage ./yarnPlugin.nix (
+            node26Override
+            // {
+              yarnpnp2nixBuildDynamically = true;
+            }
+          );
+          yarnpnp2nixLib = import ./lib/mkYarnPackage.nix {
+            defaultPkgs = final // node26Override;
+            lib = final.lib;
+            nixPlugin = final.yarn-plugin-yarnpnp2nix or yarn-plugin-yarnpnp2nix;
+          };
         };
-      };
     in
     (utils.lib.eachDefaultSystem (
       system:
@@ -111,7 +132,7 @@
         formatter = treefmt-package;
         packages = rec {
           treefmt = treefmt-package;
-          default = pkgs.yarn-plugin-yarnpnp2nix;
+          default = pkgs.yarn-plugin-yarnpnp2nix-dynamic;
           yarn-plugin = pkgs.yarn-plugin-yarnpnp2nix;
           yarnBerry = pkgs.yarnBerry;
           yarnpnp2nix-test = pkgs.writeShellApplication {
@@ -126,6 +147,24 @@
               cd plugin
               yarn up -E @yarnpkg/cli @yarnpkg/core @yarnpkg/fslib @yarnpkg/libzip @yarnpkg/plugin-file @yarnpkg/plugin-pnp @yarnpkg/pnp @yarnpkg/builder
             '';
+          };
+          rebuild-plugin = pkgs.writeShellApplication {
+            name = "rebuild-plugin";
+            text =
+              let
+                git = lib.getExe pkgs.git;
+              in
+              ''
+                result=$(nix build --no-link --print-out-paths)
+                echo "built plugin: $result"
+                cp "$result" plugin.js
+                if ! git diff --quiet plugin.js; then
+                  ${git} add plugin.js
+                  ${git} commit -m "Update plugin.js"
+                else
+                  echo "No changes in plugin.js"
+                fi
+              '';
           };
 
           tests = {

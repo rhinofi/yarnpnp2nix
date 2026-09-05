@@ -2,7 +2,7 @@
   description = "A very basic flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?rev=3016b4b15d13f3089db8a41ef937b13a9e33a8df";
+    nixpkgs.url = "github:nixos/nixpkgs?rev=567a49d1913ce81ac6e9582e3553dd90a955875f";
     utils.url = "github:gytis-ivaskevicius/flake-utils-plus";
     yarnpnp2nix.url = "../.";
     yarnpnp2nix.inputs.nixpkgs.follows = "nixpkgs";
@@ -29,7 +29,7 @@
             inherit packageOverrides;
           };
           packageOverrides = {
-            "canvas@npm:2.11.2" = {
+            "canvas@npm:3.2.3" = {
               # Let node-gyp find node headers
               # see:
               # - https://github.com/NixOS/nixpkgs/issues/195404
@@ -64,7 +64,7 @@
                     libuuid
                     python3Packages.distutils
                   ]
-                  ++ (if pkgs.stdenv.isDarwin then [ darwin.apple_sdk.frameworks.CoreText ] else [ ])
+                  ++ (if pkgs.stdenv.hostPlatform.isDarwin then [ darwin.apple_sdk.frameworks.CoreText ] else [ ])
                 );
             };
             "sharp@npm:0.31.1" = {
@@ -104,7 +104,7 @@
             testb = yarnPackages."testb@workspace:packages/testb";
             teste = yarnPackages."teste@workspace:packages/teste";
             sharp = yarnPackages."sharp@npm:0.31.1";
-            canvas = yarnPackages."canvas@npm:2.11.2";
+            canvas = yarnPackages."canvas@npm:3.2.3";
             open =
               yarnPackages."open@patch:open@npm%3A8.4.0#.yarn/patches/open-npm-8.4.0-df63cfe537::version=8.4.0&hash=68ae10&locator=root-workspace-0b6124%40workspace%3A.";
             test-tgz =
@@ -145,7 +145,7 @@
                 nodejs
                 yarnBerry
               ]
-              ++ packageOverrides."canvas@npm:2.11.2".buildInputs;
+              ++ packageOverrides."canvas@npm:3.2.3".buildInputs;
 
             # inputsFrom = builtins.filter (p: p.shouldBeUnplugged or false) allYarnPackages;
 

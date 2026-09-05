@@ -9,8 +9,8 @@
 stdenv.mkDerivation {
   name = "yarn-berry";
   src = fetchzip {
-    url = "https://github.com/yarnpkg/berry/archive/8452bc2b89e8cad69895d4fc8ba5f4363c7f0dcf.tar.gz";
-    sha256 = "sha256-irrXN5EgOm2vjAw9qZKfrvF1Joa/E5QDA3kBVhw4TaQ=";
+    url = "https://github.com/yarnpkg/berry/archive/352c4d67f4ba49a2aefd28cff98c61d88a5a5ac1.tar.gz";
+    sha256 = "sha256-5JH5k2ara3fzKwtDXUy5HIgztoAM4lMfs3f/DzncIoA=";
   };
 
   phases = [
@@ -25,7 +25,7 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = [
-    yarn
+    (yarn.override { inherit nodejs; })
     rsync
     nodejs
   ];
@@ -46,4 +46,5 @@ stdenv.mkDerivation {
     chmod +x $out/bin/yarn
     patchShebangs $out/bin/yarn
   '';
+  meta.mainProgram = "yarn";
 }

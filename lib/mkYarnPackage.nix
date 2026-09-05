@@ -1,9 +1,12 @@
-{ defaultPkgs, lib }:
+{
+  defaultPkgs,
+  lib,
+  nixPlugin ? defaultPkgs.yarn-plugin-yarnpnp2nix or (defaultPkgs.callPackage ../yarnPlugin.nix { }),
+}:
 
 with lib;
 
 let
-  nixPlugin = defaultPkgs.callPackage ../yarnPlugin.nix { };
   yarnBin = "${defaultPkgs.yarnBerry}/bin/yarn";
 
   yarnEnvVars = [
@@ -253,7 +256,7 @@ let
                   cat << EOF > $out/bin/${binKey}
                   #!${pkgs.bashInteractive}/bin/bash
 
-                  pnpDir="\$(mktemp -d)"
+                  TMPDIR=/tmp pnpDir="\$(mktemp -d)"
                   (cd $out && ${yarnEnvVarsOneLine} ${yarnBin} nix generate-pnp-file \$pnpDir $out/packageRegistryData.json "${locatorString}")
                   binPackageLocation="\$(${nodeBin} -r \$pnpDir/.pnp.cjs -e 'console.log(require("pnpapi").getPackageInformation({ name: process.argv[1], reference: process.argv[2] })?.packageLocation)' "${pkg.name}" "${pkg.reference}")"
 
@@ -369,7 +372,7 @@ let
             unzip
           ]
           ++ (
-            if stdenv.isDarwin then
+            if stdenv.hostPlatform.isDarwin then
               [
                 xcbuild
               ]
@@ -722,7 +725,7 @@ let
         in
         if
           (hasAttrNotNull "installCondition" resolvedPkg)
-          && (resolvedPkg.installCondition pkgs.stdenv) == false
+          && (resolvedPkg.installCondition pkgs.stdenv.hostPlatform) == false
         then
           null
         else
@@ -805,7 +808,8 @@ let
         }) data;
       topLevelPackageData =
         if
-          (hasAttrNotNull "installCondition" topLevel) && (topLevel.installCondition pkgs.stdenv) == false
+          (hasAttrNotNull "installCondition" topLevel)
+          && (topLevel.installCondition pkgs.stdenv.hostPlatform) == false
         then
           null
         else
