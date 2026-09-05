@@ -372,7 +372,7 @@ let
             unzip
           ]
           ++ (
-            if stdenv.isDarwin then
+            if stdenv.hostPlatform.isDarwin then
               [
                 xcbuild
               ]
@@ -725,7 +725,7 @@ let
         in
         if
           (hasAttrNotNull "installCondition" resolvedPkg)
-          && (resolvedPkg.installCondition pkgs.stdenv) == false
+          && (resolvedPkg.installCondition pkgs.stdenv.hostPlatform) == false
         then
           null
         else
@@ -808,7 +808,8 @@ let
         }) data;
       topLevelPackageData =
         if
-          (hasAttrNotNull "installCondition" topLevel) && (topLevel.installCondition pkgs.stdenv) == false
+          (hasAttrNotNull "installCondition" topLevel)
+          && (topLevel.installCondition pkgs.stdenv.hostPlatform) == false
         then
           null
         else

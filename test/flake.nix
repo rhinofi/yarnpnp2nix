@@ -64,7 +64,7 @@
                     libuuid
                     python3Packages.distutils
                   ]
-                  ++ (if pkgs.stdenv.isDarwin then [ darwin.apple_sdk.frameworks.CoreText ] else [ ])
+                  ++ (if pkgs.stdenv.hostPlatform.isDarwin then [ darwin.apple_sdk.frameworks.CoreText ] else [ ])
                 );
             };
             "sharp@npm:0.31.1" = {
