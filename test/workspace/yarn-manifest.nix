@@ -28,7 +28,7 @@ let
       flatName = "code-frame";
       languageName = "node";
       scope = "babel";
-      descriptorRange = "npm:^7.12.13";
+      descriptorRange = "npm:^7.18.6";
       checksum = "10c0/e3966f2717b7ebd9610524730e10b75ee74154f62617e5e115c97dbbbabc5351845c9aa850788012cb4d9aee85c3dc59fe6bef36690f244e8dcfca34bd35e9c9";
       dependencies = {
         "@babel/highlight" = packages."@babel/highlight@npm:7.18.6";
@@ -247,7 +247,7 @@ let
       flatName = "helper-plugin-utils";
       languageName = "node";
       scope = "babel";
-      descriptorRange = "npm:^7.0.0";
+      descriptorRange = "npm:^7.18.6";
       checksum = "10c0/9ae9c09cf7e3b6023be2bb66f3ca3b5fa8c2b21b58bd09819d494fcd7ab2a1844056c8dfd609ffb474e3c857a1bc979fa7a60931b0c71d69a3e939ba724498ac";
     };
     "@babel/helper-simple-access@npm:7.19.4" = {
@@ -987,7 +987,7 @@ let
       flatName = "types";
       languageName = "node";
       scope = "babel";
-      descriptorRange = "npm:^7.3.3";
+      descriptorRange = "npm:^7.18.6";
       checksum = "10c0/62d0d24fc87e36666874725b05bb0895a8834f09713ec76bf28eb2b615aa80287fd3f29801a923b9ff8a90d7f8ffd4b40bc7bc4840e4a530e165cdab3e6bfb78";
       dependencies = {
         "@babel/helper-string-parser" = packages."@babel/helper-string-parser@npm:7.19.4";
@@ -1616,7 +1616,7 @@ let
       flatName = "sourcemap-codec";
       languageName = "node";
       scope = "jridgewell";
-      descriptorRange = "npm:1.4.14";
+      descriptorRange = "npm:^1.4.10";
       checksum = "10c0/3fbaff1387c1338b097eeb6ff92890d7838f7de0dde259e4983763b44540bfd5ca6a1f7644dc8ad003a57f7e80670d5b96a8402f1386ba9aee074743ae9bad51";
     };
     "@jridgewell/trace-mapping@npm:0.3.17" = {
@@ -1628,7 +1628,7 @@ let
       flatName = "trace-mapping";
       languageName = "node";
       scope = "jridgewell";
-      descriptorRange = "npm:^0.3.15";
+      descriptorRange = "npm:^0.3.14";
       checksum = "10c0/40b65fcbdd7cc5a60dbe0a2780b6670ebbc1a31c96e43833e0bf2fee0773b1ba5137ab7d137b28fc3f215567bd5f9d06b7b30634ba15636c13bd8a863c20ae9a";
       dependencies = {
         "@jridgewell/resolve-uri" = packages."@jridgewell/resolve-uri@npm:3.1.0";
@@ -3682,7 +3682,7 @@ let
       flatName = "color-name";
       languageName = "node";
       scope = null;
-      descriptorRange = "npm:~1.1.4";
+      descriptorRange = "npm:^1.0.0";
       checksum = "10c0/a1a3f914156960902f46f7f56bc62effc6c94e84b2cae157a526b1c1f74b677a47ec602bf68a61abfa2b42d15b7c5651c6dbe72a43af720bc588dff885b10f95";
     };
     "color-string@npm:1.9.1" = {
@@ -4721,7 +4721,7 @@ let
       flatName = "fast-json-stable-stringify";
       languageName = "node";
       scope = null;
-      descriptorRange = "npm:^2.1.0";
+      descriptorRange = "npm:^2.0.0";
       checksum = "10c0/7f081eb0b8a64e0057b3bb03f974b3ef00135fbf36c1c710895cd9300f13c94ba809bb3a81cf4e1b03f6e5285610a61abbd7602d0652de423144dfee5a389c9b";
     };
     "fastest-levenshtein@npm:1.0.16" = {
@@ -5379,7 +5379,7 @@ let
       flatName = "ini";
       languageName = "node";
       scope = null;
-      descriptorRange = "npm:^1.3.4";
+      descriptorRange = "npm:~1.3.0";
       checksum = "10c0/ec93838d2328b619532e4f1ff05df7909760b6f66d9c9e2ded11e5c1897d6f2f9980c54dd638f88654b00919ce31e827040631eab0a3969e4d1abefa0719516a";
     };
     "interpret@npm:2.2.0" = {
@@ -6163,7 +6163,7 @@ let
         "jest-util" = packages."jest-util@npm:29.2.1";
         "jest-validate" = packages."jest-validate@npm:29.2.2";
         "resolve.exports" = packages."resolve.exports@npm:1.1.0";
-        "resolve" = packages."resolve@patch:resolve@npm%3A1.22.1#optional!builtin<compat/resolve>::version=1.22.1&hash=c3c19d";
+        "resolve" = packages."resolve@patch:resolve@npm%3A1.22.1#optional!builtin<compat/resolve>::version=1.22.1&hash=9bd1a5";
         "slash" = packages."slash@npm:3.0.0";
       };
     };
@@ -6418,7 +6418,7 @@ let
       flatName = "js-tokens";
       languageName = "node";
       scope = null;
-      descriptorRange = "npm:^4.0.0";
+      descriptorRange = "npm:^3.0.0 || ^4.0.0";
       checksum = "10c0/e248708d377aa058eacf2037b07ded847790e6de892bbad3dac0abba2e759cb9f121b00099a65195616badcb6eca8d14d975cb3e89eb1cfda644756402c8aeed";
     };
     "js-yaml@npm:3.14.1" = {
@@ -6999,7 +6999,7 @@ let
       flatName = "minipass";
       languageName = "node";
       scope = null;
-      descriptorRange = "npm:^3.1.6";
+      descriptorRange = "npm:^3.0.0";
       checksum = "10c0/f1bb39af4d6ce60f8a1e02e7ef7f09fffd882c83decb7edd5cb1711b6eff93b34833d1845b7883864f8fca2d2498b62c882fec735deff759c91444bf6e821266";
       dependencies = {
         "yallist" = packages."yallist@npm:4.0.0";
@@ -7795,7 +7795,7 @@ let
       flatName = "picomatch";
       languageName = "node";
       scope = null;
-      descriptorRange = "npm:^2.3.1";
+      descriptorRange = "npm:^2.3.0";
       checksum = "10c0/26c02b8d06f03206fc2ab8d16f19960f2ff9e81a658f831ecb656d8f17d9edc799e8364b1f4a7873e89d9702dff96204be0fa26fe4181f6843f040f819dac4be";
     };
     "pirates@npm:4.0.5" = {
@@ -8207,7 +8207,7 @@ let
       descriptorRange = "npm:^0.7.0";
       checksum = "10c0/22c565f89845f8b9a0574d8bbc157fe489612d2882d036b5520640d4395dc837a997225de535513a847c5fcc47b7e0530b8c84e0ca51fa17dff44a83f41b2568";
       dependencies = {
-        "resolve" = packages."resolve@patch:resolve@npm%3A1.22.1#optional!builtin<compat/resolve>::version=1.22.1&hash=c3c19d";
+        "resolve" = packages."resolve@patch:resolve@npm%3A1.22.1#optional!builtin<compat/resolve>::version=1.22.1&hash=9bd1a5";
       };
     };
     "rechoir@npm:0.8.0" = {
@@ -8222,7 +8222,7 @@ let
       descriptorRange = "npm:^0.8.0";
       checksum = "10c0/1a30074124a22abbd5d44d802dac26407fa72a0a95f162aa5504ba8246bc5452f8b1a027b154d9bdbabcd8764920ff9333d934c46a8f17479c8912e92332f3ff";
       dependencies = {
-        "resolve" = packages."resolve@patch:resolve@npm%3A1.22.1#optional!builtin<compat/resolve>::version=1.22.1&hash=c3c19d";
+        "resolve" = packages."resolve@patch:resolve@npm%3A1.22.1#optional!builtin<compat/resolve>::version=1.22.1&hash=9bd1a5";
       };
     };
     "redux@npm:4.2.0" = {
@@ -8339,17 +8339,17 @@ let
         "supports-preserve-symlinks-flag" = packages."supports-preserve-symlinks-flag@npm:1.0.0";
       };
     };
-    "resolve@patch:resolve@npm%3A1.22.1#optional!builtin<compat/resolve>::version=1.22.1&hash=c3c19d" = {
+    "resolve@patch:resolve@npm%3A1.22.1#optional!builtin<compat/resolve>::version=1.22.1&hash=9bd1a5" = {
       name = "resolve";
-      reference = "patch:resolve@npm%3A1.22.1#optional!builtin<compat/resolve>::version=1.22.1&hash=c3c19d";
+      reference = "patch:resolve@npm%3A1.22.1#optional!builtin<compat/resolve>::version=1.22.1&hash=9bd1a5";
       linkType = "HARD";
-      outputName = "resolve-1.22.1-61fc5136ce";
-      outputHash = "0d8ccceba5537769c42aa75e4aa75ae854aac866a11d7e9ffdb1663f0158ee646a0d48fc2818ed5e7fb364d64220a1fb9092a160e11e00cbdd5fbab39a13092c";
+      outputName = "resolve-1.22.1-3369d8d843";
+      outputHash = "9c8aebb446738574ce107f4afc16bff822b794120322422c77ff7291706b73ecb9b9081205dfc8f2bcecc42bcf6f4d6bec33fa4b963a37a6e0b825232e830e74";
       flatName = "resolve";
       languageName = "node";
       scope = null;
       descriptorRange = "patch:resolve@npm%3A^1.20.0#optional!builtin<compat/resolve>";
-      checksum = "10c0/0d8ccceba5537769c42aa75e4aa75ae854aac866a11d7e9ffdb1663f0158ee646a0d48fc2818ed5e7fb364d64220a1fb9092a160e11e00cbdd5fbab39a13092c";
+      checksum = "10c0/9c8aebb446738574ce107f4afc16bff822b794120322422c77ff7291706b73ecb9b9081205dfc8f2bcecc42bcf6f4d6bec33fa4b963a37a6e0b825232e830e74";
       bin = {
         "resolve" = "bin/resolve";
       };
@@ -8499,7 +8499,7 @@ let
       flatName = "semver";
       languageName = "node";
       scope = null;
-      descriptorRange = "npm:^7.3.7";
+      descriptorRange = "npm:^7.3.5";
       checksum = "10c0/7e581d679530db31757301c2117721577a2bb36a301a443aac833b8efad372cda58e7f2a464fe4412ae1041cc1f63a6c1fe0ced8c57ce5aca1e0b57bb0d627b9";
       bin = {
         "semver" = "bin/semver.js";
@@ -8622,7 +8622,7 @@ let
       flatName = "signal-exit";
       languageName = "node";
       scope = null;
-      descriptorRange = "npm:^3.0.3";
+      descriptorRange = "npm:^3.0.7";
       checksum = "10c0/25d272fa73e146048565e08f3309d5b942c1979a6f4a58a8c59d5fa299728e9c2fcd1a759ec870863b1fd38653670240cd420dad2ad9330c71f36608a6a1c912";
     };
     "simple-concat@npm:1.0.1" = {
@@ -8791,7 +8791,7 @@ let
       flatName = "source-map";
       languageName = "node";
       scope = null;
-      descriptorRange = "npm:^0.6.1";
+      descriptorRange = "npm:^0.6.0";
       checksum = "10c0/ab55398007c5e5532957cb0beee2368529618ac0ab372d789806f5718123cc4367d57de3904b4e6a4170eb5a0b0f41373066d02ca0735a0c4d75c7d328d3e011";
     };
     "split2@npm:4.1.0" = {
